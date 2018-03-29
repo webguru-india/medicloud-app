@@ -1,0 +1,5 @@
+RewriteEngine ON
+RewriteCond $1 !^(index.php|images\/*|robots.txt|assets|uploads|download\/*)
+RewriteRule ^(.*)$ index.php?/$1 [PT,L]
+Header add Access-Control-Allow-Origin "*"
+Header add Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
