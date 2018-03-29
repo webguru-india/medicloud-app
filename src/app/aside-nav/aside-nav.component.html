@@ -1,0 +1,224 @@
+<aside id="left-panel">
+    
+  <!-- User info -->
+  <div class="login-info">
+    <span> <!-- User image size is adjusted inside CSS, it should stay as is --> 
+      
+      <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+        <img src="assets/img/avatars/sunny.png" alt="me" class="online"> 
+        <span>
+          welcome to admin
+        </span>
+        <i class="fa fa-angle-down"></i>
+      </a> 
+      
+    </span>
+  </div>
+  <!-- end user info -->
+
+  <!-- NAVIGATION : This navigation is also responsive
+
+  To make this navigation dynamic please make sure to link the node
+  (the reference to the nav > ul) after page load. Or the navigation
+  will not initialize.
+  -->
+  <nav>
+    <!-- NOTE: Notice the gaps after each icon usage <i></i>..
+    Please note that these links work a bit different than
+    traditional hre="" links. See documentation for details.
+    -->
+    <ul style=""><li routerLinkActive="open"><a href="#" title="Dashboard">
+      <i class="fa fa-lg fa-fw fa-home"></i>
+      <span class="menu-item-parent">Dashboard </span>
+  </a><ul style="display: block;"><li routerLinkActive="active"><a routerLink="/app/dashboard" title="Application Dashboard">
+      
+      Application Dashboard 
+      
+    </a></li></ul></li><li><a href="javascript:void(0);" title="IMS">
+      <i class="fa fa-lg fa-fw fa-inbox"></i>
+      <span class="menu-item-parent">IMS </span> <span class="badge pull-right inbox-badge margin-right-13">14</span>
+      
+    </a></li><li><a href="javascript:void(0);" title="Ingresos">
+      <i class="fa fa-lg fa-fw fa-money"></i>
+      <span class="menu-item-parent">Ingresos </span>
+      
+    </a></li><li routerLinkActive="active"><a routerLink="/app/consultas-externas" title="Consultas Externas">
+      <i class="fa fa-lg fa-fw fa-user"></i>
+      <span class="menu-item-parent">Consultas Externas </span>
+      
+    </a></li><li><a href="javascript:void(0);" title="Quirofanos">
+      <i class="fa fa-lg fa-fw fa-heart"></i>
+      <span class="menu-item-parent">Quirofanos </span>
+      
+    </a></li><li><a href="javascript:void(0);" title="Urgencias">
+      <i class="fa fa-lg fa-fw fa-heartbeat"></i>
+      <span class="menu-item-parent">Urgencias </span>
+      
+    </a></li><li><a href="javascript:void(0);" title="Historial Clinico">
+      <i class="fa fa-lg fa-fw fa-medkit"></i>
+      <span class="menu-item-parent">Historial Clinico </span>
+      
+    </a></li><li><a href="javascript:void(0);" title="Tareas / Avisos">
+      <i class="fa fa-lg fa-fw fa-home"></i>
+      <span class="menu-item-parent">Tareas / Avisos </span>
+      
+    </a></li><li><a href="javascript:void(0);" title="Contabilidad">
+      <i class="fa fa-lg fa-fw fa-file-text-o"></i>
+      <span class="menu-item-parent">Contabilidad </span>
+    </a><ul><li><a href="javascript:void(0);" title="Otros Ingresos">
+      
+      Otros Ingresos 
+      
+    </a></li><li><a href="javascript:void(0);" title="Gastos">
+      
+      Gastos 
+      
+    </a></li><li><a href="" title="Listado de Actividad">
+      
+      Listado de Actividad 
+      
+    </a></li><li><a href="javascript:void(0);" title="Facturas A Mutuas">
+      
+      Facturas A Mutuas 
+      
+    </a></li><li><a href="javascript:void(0);" title="Facturas A Privados">
+      
+      Facturas A Privados 
+      
+    </a></li><li><a href="javascript:void(0);" title="Pago de Sueldos">
+      
+      Pago de Sueldos 
+      
+    </a></li><li><a href="javascript:void(0);" title="Pago Ayudantias">
+      
+      Pago Ayudantias 
+      
+    </a></li><li><a href="javascript:void(0);" title="Resumen Fiscal">
+      
+      Resumen Fiscal 
+      
+    </a></li></ul></li><li routerLinkActive="open"><a href="#" title="Configuraciones">
+      <i class="fa fa-lg fa-fw fa-cog"></i>
+      <span class="menu-item-parent">Configuraciones </span>
+  
+  </a>
+    <ul><li routerLinkActive="open"><a href="#" title="General">
+      General 
+  </a>
+    <ul><li routerLinkActive="active"><a routerLink="/app/datos-del-centro-medico" title="Datos Del Centro Medico">
+      
+      Datos Del Centro Medico 
+      
+    </a></li><li><a href="javascript:void(0);" title="Especialidades">
+      
+      Especialidades 
+      
+    </a></li><li routerLinkActive="active"><a routerLink="/app/facultativos" title="Facultativos">
+      
+      Facultativos 
+      
+    </a></li><li routerLinkActive="active"><a routerLink="/app/agendas-centros-de-coste" title="Agendas / Centros De Coste">
+      
+      Agendas / Centros De Coste 
+      
+    </a></li><li><a href="javascript:void(0);" title="Diagnosticos">
+      
+      Diagnosticos 
+      
+    </a></li><li><a href="javascript:void(0);" title="Mutuas">
+      
+      Mutuas 
+      
+    </a></li><li><a href="javascript:void(0);" title="SMS">
+      
+      SMS 
+      
+    </a></li><li><a href="javascript:void(0);" title="Cambio De Password">
+      
+      Cambio De Password 
+      
+    </a></li><li><a href="javascript:void(0);" title="Gestion De Usuarios">
+      
+      Gestion De Usuarios 
+      
+    </a></li></ul></li><li><a href="javascript:void(0);" title="Tarifas">
+      Tarifas 
+  </a><ul><li><a href="javascript:void(0);" title="Visitas">
+      
+      Visitas 
+      
+    </a></li><li><a href="javascript:void(0);" title="Procedimientos En Consultas">
+      
+      Procedimientos En Consultas 
+      
+    </a></li><li><a href="javascript:void(0);" title="Actos Quirurgicos">
+      
+      Actos Quirurgicos 
+      
+    </a></li></ul></li><li><a href="#" title="Contabilidad">
+      Contabilidad 
+  </a><ul><li><a href="javascript:void(0);" title="Sueldos">
+      
+      Sueldos 
+      
+    </a></li><li><a href="javascript:void(0);" title="Conceptos De Ingresos">
+      
+      Conceptos De Ingresos 
+      
+    </a></li><li><a href="javascript:void(0);" title="Conceptos De Gastos">
+      
+      Conceptos De Gastos 
+      
+    </a></li><li><a href="javascript:void(0);" title="Plantilla De Facturas">
+      
+      Plantilla De Facturas 
+      
+    </a></li></ul></li><li routerLinkActive="open"><a href="javascript:void(0);" title="Parametros de Agenda">
+      
+      Parametros de Agenda 
+  
+  </a><ul><li routerLinkActive="active"><a routerLink="/app/horario" title="Horario">
+      
+      Horario 
+      
+    </a></li><li><a href="javascript:void(0);" title="Fechas Bloqueadas">
+      
+      Fechas Bloqueadas 
+      
+    </a></li><li><a href="javascript:void(0);" title="Recetas">
+      
+      Recetas 
+      
+    </a></li><li><a href="javascript:void(0);" title="Peticiones">
+      
+      Peticiones 
+      
+    </a></li><li><a href="javascript:void(0);" title="Parametros">
+      
+      Parametros 
+      
+    </a></li><li><a href="javascript:void(0);" title="Ayudantes">
+      
+      Ayudantes 
+      
+    </a></li><li><a href="javascript:void(0);" title="Clinicas">
+      
+      Clinicas 
+      
+    </a></li><li><a href="javascript:void(0);" title="Plantilla De Informes">
+      
+      Plantilla De Informes 
+      
+    </a></li><li><a href="javascript:void(0);" title="Facturadores">
+      
+      Facturadores 
+      
+    </a></li><li><a href="javascript:void(0);" title="Consentimientos">
+      
+      Consentimientos 
+      
+    </a></li></ul></li></ul></li></ul>
+  </nav>
+  <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
+
+</aside>

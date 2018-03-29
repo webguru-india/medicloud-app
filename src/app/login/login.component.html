@@ -1,0 +1,80 @@
+
+
+<div id="ajax-data-loader">
+  <p><i class="fa fa fa-spinner fa-spin"></i> Getting profile data. Please wait!</p>
+</div>
+
+<header id="header">
+	<div id="logo-group">
+<span id="logo"><a href = "/" ><img src="./assets/img/logo.png" alt="SmartAdmin"></a></span>
+
+	<!-- END AJAX-DROPDOWN -->
+</div>
+
+<span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Need an account?</span> <a href="./register" class="btn btn-danger">Create account</a> </span>	
+</header>
+<div id="main" role="main">	
+	<div id="content" class="container">
+		<div class="row">	
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lg-offset-4">
+		<div class="well no-padding">
+			<form [formGroup]="formGroup" (ngSubmit)="logInValidate(formGroup.value)" id="login-form" class="smart-form client-form">
+				<header>
+					Estacion Clinica De Trabajo
+				</header>
+				<fieldset>
+				<div class="alert alert-block alert-success" id="success" *ngIf="loginSuccess == 1">
+					<a class="close" data-dismiss="alert" href="#">×</a>
+					<h4 class="alert-heading"><i class="fa fa-check-square-o"></i>&nbsp;Success</h4>
+					<p>
+						You have successfully logged in.
+					</p>
+				</div>
+				<div class="alert alert-block alert_msg" id="error" *ngIf="loginSuccess == 0">
+					<a class="close" data-dismiss="alert" href="#">×</a>
+					<h4 class="alert-heading"><i class="fa fa-warning"></i>&nbsp;Error</h4>
+					<p id="errorMsg">{{loginErrorMsg}}</p>
+				</div>
+
+					<!-- <section>
+						<label class="">
+              <i></i>Su IP es: 192.168.5.37
+            </label>
+					</section> -->
+          <section>
+            <label class="label">Centro:</label>
+            <label class="input">
+              <i class="icon-append fa fa-user"></i>
+              <input type="text" name="center" id="center" autocomplete="off" formControlName="formCenter">
+              <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter Centro</b>
+            </label>
+          </section>
+							<section>
+								<label class="label">Usuario:</label>
+								<label class="input"> <i class="icon-append fa fa-user"></i>
+									<input type="text" name="username" id = "username" autocomplete="off" formControlName="formUserName">
+									<b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter Usuario</b></label>
+								</section>
+
+								<section>
+									<label class="label">Clave:</label>
+									<label class="input"> <i class="icon-append fa fa-lock"></i>
+										<input type="password" name="password" id = "password" autocomplete="off" formControlName="formPassword">
+										<b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your Clave</b> </label>
+										<div class="note">
+											<a href="./forgot-password">He olvidado mi clave!!</a>
+										</div>
+									</section>
+
+								</fieldset>
+								<footer>
+									<button type="submit" class="btn btn-primary" [disabled]="!formGroup.valid">
+										Entrar
+									</button>
+								</footer>
+							</form>
+						</div>
+					</div>
+        </div>
+      </div>
+</div>

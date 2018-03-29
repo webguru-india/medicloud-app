@@ -1,0 +1,279 @@
+<!-- RIBBON -->
+<div id="ribbon">
+  
+    <span class="ribbon-button-alignment"> 
+      <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true"><i class="fa fa-refresh"></i></span> 
+    </span>
+  
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+      <li><a href="http://192.168.5.29:81/medicloude/">Home</a></li><li>Dashboard</li>		</ol>
+    <!-- <div class="cl-lg-4 col-md-4 col-sm-4 col-xs-12 pull-right ctop">
+      <p>User name / Organization name</p>
+    </div> -->
+    <!-- end breadcrumb -->
+  
+    <!-- You can also add more buttons to the
+    ribbon for further usability
+  
+    Example below:
+  
+    <span class="ribbon-button-alignment pull-right">
+    <span id="search" class="btn btn-ribbon hidden-xs" data-title="search"><i class="fa-grid"></i> Change Grid</span>
+    <span id="add" class="btn btn-ribbon hidden-xs" data-title="add"><i class="fa-plus"></i> Add</span>
+    <span id="search" class="btn btn-ribbon" data-title="search"><i class="fa-search"></i> <span class="hidden-mobile">Search</span></span>
+    </span> -->
+  
+  </div>
+  <!-- END RIBBON -->	
+  <div id="content">
+    <div class="row">
+      <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+        <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-home"></i> Agendas / Centros De Coste <!-- <span>> My Dashboard</span> --></h1>
+      </div>
+    </div>
+    <section id="widget-grid" class="">
+      <!-- row -->
+    
+      <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-12">
+          <div class="alert alert-block alert-success" id="success" *ngIf="agendaAddedSuccess == 1">
+            <a class="close" href="javascript:void(0);" (click)="dismissAlert()">×</a>
+            <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>&nbsp;Success</h4>
+            <p>{{agendaAddedSuccessMsg}}</p>
+          </div>
+          <div class="alert alert-block alert-error" id="error" *ngIf="agendaAddedSuccess == 0">
+            <a class="close" href="javascript:void(0);" (click)="dismissAlert()">×</a>
+            <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>&nbsp;Error</h4>
+            <p>Agendas Error</p>
+          </div>
+          <div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-18" data-widget-colorbutton="false" data-widget-editbutton="false">
+            <header>
+              <!-- <h2><strong>Fixed</strong> <i>Height</i></h2> -->		
+            </header>
+    
+            <!-- widget div-->
+            <div>
+    
+              <!-- widget edit box -->
+              <div class="jarviswidget-editbox">
+                <!-- This area used as dropdown edit box -->
+                <input class="form-control" type="text">
+                <span class="note"><i class="fa fa-check text-success"></i> Change title to update and save instantly!</span>
+    
+              </div>
+              <!-- end widget edit box -->
+    
+              <!-- widget content -->
+              <div class="widget-body no-padding">								
+                <div class="custom-scroll table-responsive" style="height:290px; overflow-y: scroll;">
+    
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <td style="width: 4%;" class="smart-form">
+                          <label class="checkbox left_gap">
+                            <input type="checkbox" name="checkbox" [(ngModel)]="selectAllChkBx" (change)="selectAllCheckboxClicked()" >
+                            <i></i>
+                          </label>
+                        </td>
+                        <th style="width: 25%;">NOMBRE</th>
+                        <th>ESPECIALIDAD</th>
+                        <th>PROFESIONAL</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let agendaData of costCenterListData">
+                        <!-- <td>
+                          <label class="radio smart-form left_gap selected-radio">
+                          <input type="radio" name="select_doctor" [value]="agendaData.ID" [(ngModel)]="selectedAgenda">
+                          <i></i></label>
+                        </td> -->
+                        <td class="smart-form">
+                          <label class="checkbox smart-form left_gap selected-radio">
+                          <input type="checkbox" name="select_doctor" [value]="agendaData.ID" [(ngModel)]="agendaData.selectedAgendas" (change)="checkIfAllSelected($event.target)">
+                          <i></i></label>
+                        </td>
+                        <td>{{agendaData.METGE}}</td>
+                        <td>{{agendaData.txtespe}}</td>
+                        <td>{{agendaData.medico}}</td>
+                      </tr>								
+                    </tbody>
+                  </table>
+    
+                </div>
+    
+    
+    
+              </div>
+              <!-- end widget content -->
+    
+            </div>
+            <!-- end widget div -->
+    
+          </div>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#Anadir" (click)="addAgendaModalIndication = 0">
+            Añadir
+          </button>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#Modificar" [disabled]="selectedAgendas.length == 0 || selectedAgendas.length >= 2" (click)="getAgendaData()">
+            Modificar
+          </button>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#Borrar" [disabled]="selectedAgendas.length == 0">
+            Borrar
+          </button>
+          <p>&nbsp;</p>
+        </article>
+    
+    
+      </div>
+    
+      <!-- end row -->
+    
+    </section>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="Anadir" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <form [formGroup]="formGroup" (ngSubmit)="addAgendaModalIndication == 0 ? addAgendaSubmit(formGroup.value) : updateAgendaSubmit(formGroup.value)">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                &times;
+              </button>
+              <h4 class="modal-title" id="myModalLabel">Anadir</h4>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class=" control-label">Nombre:</label>
+                    <div class="">
+                      <input class="form-control" name="nombre" placeholder="Nombre" type="text" formControlName="formNombre">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="category">Especialidad:</label>
+                    <select class="form-control" id="category" formControlName="formCategory">
+                      <option *ngFor="let data of especialidadData" [value]="data.id">{{data.especialitat}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>						
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class=" control-label">Medico:</label>
+                    <select class="form-control" id="metges" formControlName="formMetges">
+                      <option *ngFor="let data of metgesData" [value]="data.id">{{data.medico}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>		
+              <div class="row">
+                <div class="col-md-12">
+                  <h4>Porcentajes</h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class=" control-label">Visitas:</label>
+                    <div class="">
+                      <input class="form-control" name="visitas" placeholder="Visitas" type="text" formControlName="formVisitas">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class=" control-label">IVA:</label>
+                    <div class="">
+                      <input class="form-control" name="iva" placeholder="IVA" type="text" formControlName="formIva">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class=" control-label">Procedim.:</label>
+                    <div class="">
+                      <input class="form-control" name="procedim" placeholder="Procedim" type="text" formControlName="formProcedim">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class=" control-label">IRPF:</label>
+                    <div class="">
+                      <input class="form-control" name="irpf" placeholder="IRPF" type="text" formControlName="formIrpf">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class=" control-label">Cirugias:</label>
+                    <div class="">
+                      <input class="form-control" name="cirugias" placeholder="Cirugias" type="text" formControlName="formCirugias">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group smart-form">
+                    <label class="checkbox">
+                      <input type="checkbox" value="1" name="bloqueo" checked="checked" formControlName="formBloqueo">
+                      <i></i>Agenda Bloqueada
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">
+                Cancel
+              </button>
+              <button type="submit" value="save" name="save" class="btn btn-primary" [disabled]="!formGroup.valid">
+                Grabar
+              </button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->		
+      </form>	
+    </div><!-- /.modal -->
+    
+      <!-- Borrar Modal -->
+      <div class="modal fade" id="Borrar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                &times;
+              </button>
+              <h4 class="modal-title" id="myModalLabel">Borrar</h4>
+            </div>
+            <div class="modal-body">						
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class=" control-label">Confirme Eliminacion.anulara {{selectedAgendas.length}} Visitas.</label>
+                  </div>
+                </div>
+              </div>		
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">
+                Cancel
+              </button>
+              <button type="button" class="btn btn-primary" (click)="deleteAgenda()">
+                Grabar
+              </button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  </div>

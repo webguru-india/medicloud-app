@@ -1,0 +1,100 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "medicloud"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "../node_modules/font-awesome/css/font-awesome.min.css",
+        "./assets/css/smartadmin-production-plugins.min.css",
+        "./assets/css/smartadmin-production.min.css",
+        "./assets/css/smartadmin-skins.min.css",
+        "./assets/css/smartadmin-rtl.min.css",
+        "./assets/css/your_style.css",
+        "./assets/css/demo.min.css",
+        "styles.css"
+      ],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/jquery-ui-npm/jquery-ui.min.js",
+        "./assets/js/plugin/pace/pace.min.js",
+        "./assets/js/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js",
+        "./assets/js/plugin/flot/jquery.flot.cust.min.js",
+        "./assets/js/plugin/flot/jquery.flot.resize.min.js",
+        "./assets/js/plugin/flot/jquery.flot.time.min.js",
+        "./assets/js/plugin/flot/jquery.flot.tooltip.min.js",
+        "./assets/js/plugin/moment/moment.min.js",
+        "./assets/js/plugin/summernote/summernote.min.js",
+        "./assets/js/plugin/fullcalendar/jquery.fullcalendar.min.js",
+        "./assets/js/schedule.js",
+        "./assets/js/app.config.js",
+        "./assets/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js",
+        "./assets/js/bootstrap/bootstrap.min.js",
+        "./assets/js/notification/SmartNotification.min.js",
+        "./assets/js/smartwidgets/jarvis.widget.min.js",
+        "./assets/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js",
+        "./assets/js/plugin/sparkline/jquery.sparkline.min.js",
+        "./assets/js/plugin/jquery-validate/jquery.validate.min.js",
+        "./assets/js/plugin/masked-input/jquery.maskedinput.min.js",
+        "./assets/js/plugin/select2/select2.min.js",
+        "./assets/js/plugin/bootstrap-slider/bootstrap-slider.min.js",
+        "./assets/js/plugin/msie-fix/jquery.mb.browser.min.js",
+        "./assets/js/plugin/fastclick/fastclick.min.js",
+        "./assets/js/demo.min.js",
+        "./assets/js/app.min.js",
+        "./assets/js/speech/voicecommand.min.js",
+        "./assets/js/smart-chat-ui/smart.chat.ui.min.js",
+        "./assets/js/smart-chat-ui/smart.chat.manager.min.js"
+      ],
+
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "src/tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "css",
+    "component": {}
+  }
+}

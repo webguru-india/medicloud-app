@@ -1,0 +1,188 @@
+<!-- RIBBON -->
+<div id="ribbon">
+  
+  <span class="ribbon-button-alignment"> 
+    <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true"><i class="fa fa-refresh"></i></span> 
+  </span>
+
+  <!-- breadcrumb -->
+  <ol class="breadcrumb">
+    <li><a href="http://192.168.5.29:81/medicloude/">Home</a></li><li>Dashboard</li>		</ol>
+  <!-- <div class="cl-lg-4 col-md-4 col-sm-4 col-xs-12 pull-right ctop">
+    <p>User name / Organization name</p>
+  </div> -->
+  <!-- end breadcrumb -->
+
+  <!-- You can also add more buttons to the
+  ribbon for further usability
+
+  Example below:
+
+  <span class="ribbon-button-alignment pull-right">
+  <span id="search" class="btn btn-ribbon hidden-xs" data-title="search"><i class="fa-grid"></i> Change Grid</span>
+  <span id="add" class="btn btn-ribbon hidden-xs" data-title="add"><i class="fa-plus"></i> Add</span>
+  <span id="search" class="btn btn-ribbon" data-title="search"><i class="fa-search"></i> <span class="hidden-mobile">Search</span></span>
+  </span> -->
+
+</div>
+<!-- END RIBBON -->	
+<div id="content">
+  <div class="row">
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+      <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-home"></i> Datos Del Centro Medico <!-- <span>> My Dashboard</span> --></h1>
+    </div>
+  </div>
+  <!-- widget grid -->
+  <section id="widget-grid" class="">
+    <!-- row -->
+    <div class="row">
+      <form [formGroup]="formGroup" (ngSubmit)="addUpdateCenterSubmit(formGroup.value)">
+        <article class="col-sm-12 col-md-12 col-lg-8">
+          <div class="alert alert-block alert-success" id="success" *ngIf="medicalCenterSavedSuccess == 1">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>&nbsp;Success</h4>
+            <p>{{medicalCenterSavedSuccessMsg}}</p>
+          </div>
+          <div class="alert alert-block alert-error" id="error" *ngIf="medicalCenterSavedSuccess == 0">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>&nbsp;Error</h4>
+            <p>Agendas Error</p>
+          </div>
+          
+          <div class="jarviswidget well" id="" data-widget-editbutton="false" data-widget-colorbutton="false">
+            <div class="input-group smart-form">		
+              <label class="label">Nombre Del Centro:</label>
+              <label class="input">
+                <input type="text" name="center_name" id="center_name" formControlName="formCenterName">
+              </label>
+            </div>
+            <div class="input-group smart-form">		
+              <label class="label">NIF:</label>
+              <label class="input">
+                <input type="text" name="nif" id="nif" formControlName="formNif">
+              </label>
+            </div>					
+            <div class="input-group smart-form">		
+              <label class="label">Responsable:</label>
+              <label class="input">
+                <input type="text" name="responsable" id = "responsable" formControlName="formResponsable">
+              </label>
+            </div>				
+            <div class="input-group smart-form">		
+              <label class="label">Direccion:</label>
+              <label class="input">
+                <input type="text" name="address" id = "address" formControlName="formAddress">
+              </label>
+            </div>			
+            <div class="input-group smart-form">		
+              <label class="label">CIP:</label>
+              <label class="input">
+                <input type="text" name="cip" id="cip" formControlName="formCip">
+              </label>
+            </div>		
+            <div class="input-group smart-form">		
+              <label class="label">Poblacion:</label>
+              <label class="input">
+                <input type="text" name="population" id="population" formControlName="formPopulation">
+              </label>
+            </div>		
+            <div class="input-group smart-form">		
+              <label class="label">Telefonos:</label>
+              <label class="input">
+                <input type="text" name="phone" id="phone" formControlName="formPhone">
+              </label>
+            </div>	
+            <div class="input-group">
+              <button type="submit" name="save" value="grabar" class="btn btn-primary">
+                Grabar
+              </button>	
+            </div>
+            <p>&nbsp;</p>
+          </div>
+  
+  
+          <p>&nbsp;</p>
+        </article>
+      </form>
+  
+  
+      <article class="col-sm-12 col-md-12 col-lg-4">
+  
+  
+        <div class="jarviswidget jarviswidget-color-greenDark"  data-widget-colorbutton="false" data-widget-editbutton="false">						
+          <header>
+            <h2><strong>Facturas </strong> <i>Emitidas</i></h2>
+          </header>
+          <div>
+  
+            <!-- widget edit box -->
+            <div class="jarviswidget-editbox">
+              <!-- This area used as dropdown edit box -->
+              <input class="form-control" type="text">
+              <span class="note"><i class="fa fa-check text-success"></i> Change title to update and save instantly!</span>
+  
+            </div>
+            <!-- end widget edit box -->
+  
+            <!-- widget content -->
+            <div class="widget-body no-padding">
+  
+              <div class="custom-scroll table-responsive" style="height:290px; overflow-y: scroll;">
+  
+  
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>F.EMISION</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> Lorem Ipsum is simply dummy text.</td>
+                    </tr>
+                    <tr>
+                      <td> Lorem Ipsum is simply dummy text.</td>
+                    </tr>
+                    <tr>
+                      <td> Lorem Ipsum is simply dummy text.</td>	
+                    </tr>
+                    <tr>
+                      <td> Lorem Ipsum is simply dummy text.</td>
+                    </tr>
+                    <tr>
+                      <td> Lorem Ipsum is simply dummy text.</td>
+                    </tr>
+                    <tr>
+                      <td> Lorem Ipsum is simply dummy text.</td>	
+                    </tr>
+                    <tr>
+                      <td> Lorem Ipsum is simply dummy text.</td>
+                    </tr>
+                    <tr>
+                      <td> Lorem Ipsum is simply dummy text.</td>
+                    </tr>
+                  </tbody>
+                </table>
+  
+              </div>			
+            </div>
+            <!-- end widget content -->							
+          </div>
+          <!-- end widget div -->						
+        </div>
+        <div class="input-group">
+          <button type="submit" class="btn btn-primary">
+            VER
+          </button>	
+        </div>
+        <p>&nbsp;</p>
+      </article>
+  
+  
+    </div>
+  
+    <!-- end row -->
+  
+  </section>
+      <!-- end widget grid -->
+</div>

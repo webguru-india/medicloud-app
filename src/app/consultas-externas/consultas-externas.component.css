@@ -1,0 +1,90 @@
+.margin-right-15 {
+	margin-right: 15px;
+}
+
+.ui-sortable {
+	padding-bottom: 50px;
+	/*border: 1px solid #f00;*/
+ }
+.add_cal .fc-left h2{
+	margin-top: -30px !important;
+	/*border: 1px solid #f00;*/
+}
+.tab_height_290{
+	height: 290px;
+}
+.overflowH{
+	overflow: hidden;
+}
+.overflowS{
+	overflow: scroll;
+}
+
+.tab_height_180{
+	height: 180px;
+}
+
+.tab_height_450{
+	height: 450px;
+}
+
+.tab_height_130{
+	height: 130px;
+}
+
+.tab_height_200{
+	height: 200px;
+}
+
+.fc-state-highlight {
+	background: #a0a4a9 !important;
+}
+
+.ui-datepicker-inline {
+	width: 100%;
+}
+.ui-datepicker table {
+	width: 100%;
+}
+
+.dropdown-menu>li>a.disabled, .dropdown-menu>li>a.disabled:focus, .dropdown-menu>li>a.disabled:hover {
+	background: #eee;
+	color: #b4b4b4;
+	cursor: not-allowed;
+}
+
+.sms-required-error:not(.ng-invalid.ng-touched), .ng-invalid.ng-touched {
+	border-color: #f00;
+}
+
+.patient-searched-result {
+	cursor: pointer;
+}
+.patient-searched-result:hover {
+	font-weight: bold;
+}
+
+#calendar .has-visiting a {
+	font-weight: 700;
+	color: #000000;
+}
+
+.note-editable {
+	min-height: 200px;
+}
+
+#ToWright .jarviswidget {
+	margin-bottom: 0;
+}
+
+.ng-invalid {
+	border-color: #f00 !important;
+}
+
+
+@media only screen and (max-width:767px){
+	.mobile_row{
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+}

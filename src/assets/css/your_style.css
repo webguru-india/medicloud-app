@@ -1,0 +1,147 @@
+/*
+ * It is advised not to edit the smartadmin_production.css
+ * as this will override any changes you make in the 
+ * later versions of this theme. 
+ * 
+ * We advise that you use use this CSS to override 
+ * SmartAdmin styles. 
+ * 
+ * Rename the stylesheet to whatever your liking so it will stay
+ * unique to you with each update of SmartAdmin.
+ */
+
+/*
+ * INDEX
+ * 
+ * - HTML
+ * - BODY
+ * - CUSTOM STYLES
+ */
+
+/* .login-info{
+ 	background-color: #ea6e25 !important;
+ 	color: #fff !important;
+ }
+  .login-info a{
+  	color: #fff; 
+  }
+ nav{
+ 	background-color: #4592d6 !important; 	
+ }
+ nav li a{
+ 	color: #fff !important;
+ 	transition: all ease-in-out 0.5s;
+ 	-moz-transition: all ease-in-out 0.5s;
+ 	-webkit-transition: all ease-in-out 0.5s;
+ 	-o-transition: all ease-in-out 0.5s;
+ }
+  nav li {
+  	border-bottom: 1px dashed #557b9d;
+  }
+   nav li a:hover{
+ 	color: #004b8d !important;
+ }
+ nav li a i{
+ 	color: #020100;
+ }
+ #left-panel{
+ 	background-color: #004b8d !important; 	
+ }*/
+ #left-panel {
+	 padding-bottom: 35px;
+	 padding-top: 0;
+ }
+ app-aside-nav {
+	 position: absolute;
+ }
+ .ctop{
+ 	color: #fff;
+ 	line-height: 36px;
+ }
+ #ui-datepicker-div{
+ 	z-index: 99999999 !important;
+ }
+ .listado_left{
+ 	background: #fff;
+ 	border-bottom: 1px solid #ccc;
+ 	width: 100%;
+ 	float: left;
+ }
+ .PacienteNuevo .modal-dialog{
+ 	width: 80%;
+ }
+
+ /*---------6.9.17--------*/
+ .alert_msg{
+ background-color: #f8d5dd;
+    border-color: #a90329;
+    color: #a90329;
+ }
+ /*----------14.9.17---------*/
+ .left_gap{
+ 	margin-left: 25px !important;
+ }
+
+ body.modal-open {
+	 overflow-y: visible !important;
+ }
+
+ #content {
+	padding-left: 15px;
+	padding-right: 15px;
+ }
+
+ .page-footer {
+	 /* padding-left: 15px; */
+	 padding-right: 15px;
+ }
+
+ .specialty-loader {
+	 position: absolute;
+	 left: calc(100%);
+	 top: 0;
+	 font-size: 15px;
+	 line-height: 34px;
+ }
+
+ .smart-form .checkbox i, .smart-form .radio i {
+	 top: 0;
+ }
+
+ .fa{
+ 	text-align: left;
+ }
+ .no_top_gap{
+ 	margin-top: 0px;
+ }
+  .no_left_gap{
+ 	padding-left: 0px;
+ }
+
+ .qx-table td {
+	 vertical-align: middle;
+ }
+
+	#ajax-data-loader {
+		position: fixed;
+		right: -300px;
+		top: calc(100vh - 25px - 33px);
+		background: rgba(255,255,255,0.8);
+		z-index: 9999999;
+		border: 1px solid #b7b7b7;
+		border-right: none;
+		box-shadow: -2px 2px 5px #4e4e4e;
+		padding: 10px 20px;
+		color: #436043;
+		-webkit-transition: all 0.3s ease-in-out;
+		-moz-transition: all 0.3s ease-in-out;
+		-o-transition: all 0.3s ease-in-out;
+		-ms-transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out;
+	}
+	#ajax-data-loader p {
+		margin-bottom: 0;
+	}
+	#ajax-data-loader p .fa {
+		margin-right: 10px;
+	}

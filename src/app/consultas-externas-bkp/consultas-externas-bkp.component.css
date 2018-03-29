@@ -1,0 +1,57 @@
+.ui-sortable {
+	padding-bottom: 50px;
+	/*border: 1px solid #f00;*/
+ }
+.add_cal .fc-left h2{
+	margin-top: -30px !important;
+	/*border: 1px solid #f00;*/
+}
+.tab_height_290{
+	height: 290px;
+}
+.overflowH{
+	overflow: hidden;
+}
+.overflowS{
+	overflow: scroll;
+}
+
+.tab_height_180{
+	height: 180px;
+}
+
+.tab_height_450{
+	height: 450px;
+}
+
+.tab_height_130{
+	height: 130px;
+}
+
+.tab_height_200{
+	height: 200px;
+}
+
+.tab_height_150{
+	height: 150px;
+}
+
+.image_wrapper{
+	float: left;
+	width: 100%;
+	position: relative;
+}
+
+.image_wrapper img{
+	width: auto;
+	max-width: 100%;
+	padding: 2px;
+	border: 1px solid #ededed;
+}
+
+@media only screen and (max-width:767px){
+	.mobile_row{
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+}

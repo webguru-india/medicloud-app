@@ -1,0 +1,362 @@
+<!-- RIBBON -->
+<div id="ribbon">
+  
+    <span class="ribbon-button-alignment"> 
+      <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true"><i class="fa fa-refresh"></i></span> 
+    </span>
+  
+    <!-- breadcrumb -->
+    <ol class="breadcrumb">
+      <li><a href="http://192.168.5.29:81/medicloude/">Home</a></li><li>Dashboard</li>		</ol>
+    <!-- <div class="cl-lg-4 col-md-4 col-sm-4 col-xs-12 pull-right ctop">
+      <p>User name / Organization name</p>
+    </div> -->
+    <!-- end breadcrumb -->
+  
+    <!-- You can also add more buttons to the
+    ribbon for further usability
+  
+    Example below:
+  
+    <span class="ribbon-button-alignment pull-right">
+    <span id="search" class="btn btn-ribbon hidden-xs" data-title="search"><i class="fa-grid"></i> Change Grid</span>
+    <span id="add" class="btn btn-ribbon hidden-xs" data-title="add"><i class="fa-plus"></i> Add</span>
+    <span id="search" class="btn btn-ribbon" data-title="search"><i class="fa-search"></i> <span class="hidden-mobile">Search</span></span>
+    </span> -->
+  
+  </div>
+  <!-- END RIBBON -->	
+  <div id="content">
+    <div class="row">
+      <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+        <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-home"></i> Horario</h1>
+      </div>
+    </div>
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+    
+      <!-- row -->
+    
+      <div class="row">
+    
+        <article class="col-sm-12 col-md-12 col-lg-12">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="widget-body-toolbar">
+              <div class="row">
+                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      <select class="form-control fetch-hours" id="especialidad" (change)="specialtyOnChange($event.target.value)">
+                        <option disabled selected>Select Specialty</option>
+                        <option *ngFor="let data of especialidadData" [value]="data.id">{{data.especialitat}}</option>
+                      </select>
+
+                      <i class="fa fa-spinner fa-spin specialty-loader" *ngIf="loadingAgendas"></i>
+                    </div>
+    
+                  </div>
+    
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      <select class="form-control fetch-hours" id="agendas" (change)="agendasOnChange($event.target.value)">
+                        <option disabled selected>Select Agendas</option>
+                        <ng-container *ngIf="!agendasData === false">
+                          <option *ngFor="let data of agendasData" [value]="data.ID">{{data.METGE}}</option>
+                        </ng-container>
+                      </select>
+                    </div>					            
+                  </div>					         
+                </div>
+    
+              </div>
+              <div class="row">
+                <p>&nbsp;</p>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <h4>Dia De La Semana:</h4><br />
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-1">
+                  <div class="input-group smart-form">
+                    <label class="radio">
+                      <input value="1" type="radio" class="select-day" name="day" [checked]="selectedDay == 1" (change)="selecteDayOnChange(1)" />
+                      <i></i>Lunes
+                    </label>					            
+                  </div>
+                </div>
+    
+                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-1">
+                  <div class="input-group smart-form">
+                    <label class="radio">
+                      <input value="2" type="radio" class="select-day" name="day" [checked]="selectedDay == 2" (change)="selecteDayOnChange(2)" />
+                      <i></i>Martes</label>					            
+                  </div>
+                </div>
+  
+                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-1">
+                  <div class="input-group smart-form">
+                    <label class="radio">
+                      <input value="3" type="radio" class="select-day" name="day" [checked]="selectedDay == 3" (change)="selecteDayOnChange(3)" />
+                      <i></i>Miercoles</label>					            
+                  </div>
+                </div>
+
+                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-1">
+                  <div class="input-group smart-form">
+                    <label class="radio">
+                      <input value="4" type="radio" class="select-day" name="day" [checked]="selectedDay == 4" (change)="selecteDayOnChange(4)" />
+                      <i></i>Jueves</label>					            
+                  </div>
+                </div>
+
+                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-1">
+                  <div class="input-group smart-form">
+                    <label class="radio">
+                      <input value="5" type="radio" name="day" class="select-day" [checked]="selectedDay == 5" (change)="selecteDayOnChange(5)">
+                      <i></i>Viernes</label>					            
+                  </div>
+                </div>
+
+                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-1">
+                  <div class="input-group smart-form">
+                    <label class="radio">
+                      <input value="6" type="radio" name="day"  class="select-day" [checked]="selectedDay == 6" (change)="selecteDayOnChange(6)">
+                      <i></i>Sabado</label>					            
+                  </div>
+                </div>
+
+                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-1">
+                  <div class="input-group smart-form">
+                    <label class="radio">
+                      <input value="7" type="radio" name="day" class="select-day" [checked]="selectedDay == 7" (change)="selecteDayOnChange(7)">
+                      <i></i>Domingo</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="clear: both;"></div>
+    
+    <div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-18" data-widget-colorbutton="false" data-widget-editbutton="false">
+      <header>
+        <h2><strong>HORA</strong></h2>
+      </header>
+      <div>
+        <div class="jarviswidget-editbox">
+          <input class="form-control" type="text">
+            <span class="note"><i class="fa fa-check text-success"></i> Change title to update and save instantly!</span>
+        </div>
+        <div class="widget-body no-padding">
+          <div class="widget-body-toolbar" *ngIf="hoursData">
+                      
+                      <div class="row">
+                        
+                        <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2 smart-form">
+                          <label class="checkbox">
+                                <input type="checkbox" name="checkbox" [(ngModel)]="selectAllChkBx" (change)="selectAllCheckboxClicked()" >
+                                <i></i>Select All</label>
+                        </div>
+                        
+                        
+                      </div>
+                      
+                        
+    
+                    </div>
+          <div class="custom-scroll table-responsive" style="height:290px; overflow-y: scroll;">
+            <table class="table table-bordered" id="hoursList">
+              <tbody>
+                <tr *ngIf="!hoursData">
+                  <!-- <td style="width: 10%;">
+                                <div class="smart-form">
+                                  <label class="checkbox">
+                                        <input type="checkbox" name="checkbox" checked="checked">
+                                        <i></i></label>
+                                </div>
+                            </td> -->
+                  <td>No record found</td>
+                </tr>
+
+                <ng-container *ngIf="hoursData !== false">
+                  <tr *ngFor="let data of hoursData">
+                    <td style="width: 10%;">
+                      <div class="smart-form">
+                        <label class="checkbox">
+                          <input type="checkbox" name="checkbox" [(ngModel)]="data.selected" (change)="checkIfAllSelected($event.target)" [value]="data.hora">
+                          <i></i>
+                        </label>
+                      </div>
+                    </td>
+                    <td>{{timeFormatting(data.hora)}}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    <!-- end widget content -->
+    </div>
+    <!-- end widget div -->
+    </div>
+    <!-- new widget -->
+    <button class="btn btn-primary" data-toggle="modal" data-target="#DefinirIntervalo" [disabled]="selectedAgendasData == null || selectedAgendasData == '' || selectedAgendasData === 'undefined'">
+      Definir  Intervalo
+    </button>
+    
+    <button class="btn btn-primary" data-toggle="modal" data-target="#Borrar" [disabled]="selectedTimeToEditOrDelete.length == 0">
+      Borrar
+    </button>
+    <!-- end widget -->
+    <!-- new widget -->					
+    <!-- end widget -->
+    
+    </article>
+    
+    </div>
+    
+    <!-- end row -->
+    
+    </section>
+    <!--Añadir Modal -->
+    <div class="modal fade" id="DefinirIntervalo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <form method="post" action="javascript:void(0);" id="saveHours">
+          <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Definir Intervalo</h4>
+          </div>
+          <div class="modal-body widget-body">
+            <div class="row">		
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>Desde:</label>
+                      <div class="input-group">
+                        <input class="form-control gentime" id="startTime" type="time" placeholder="Select time" (input)="startTime = $event.target.value">
+                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                      </div>
+                    </div>
+                  </div>
+    
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>Hasta:</label>
+                      <div class="input-group">
+                        <input class="form-control gentime" id="endTime" type="time" placeholder="Select time" (input)="endTime = $event.target.value">
+                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                      </div>
+                    </div>
+                  </div>
+    
+    
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>Minutos:</label>
+                      <div class="input-group">
+                        <input class="form-control gentime" id="interval" type="number" placeholder="Select time" (input)="intervalsTime = $event.target.value">
+                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label></label>
+                      <div class="input-group">										
+                        <button class="btn btn-success" id="generate" type="button" (click)="setRangeFunc()" [disabled]="startTime == '' || endTime == '' || intervalsTime==''">
+                          Aplicar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+    
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="">
+                  <div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-18" data-widget-colorbutton="false" data-widget-editbutton="false">
+                    <header>
+                      <h2><strong>HORA</strong></h2>
+                    </header>
+                    <div>
+                      <div class="jarviswidget-editbox">
+                        <input class="form-control" type="text">
+                          <span class="note"><i class="fa fa-check text-success"></i> Change title to update and save instantly!</span>
+                      </div>
+                      <div class="widget-body no-padding">
+                        <div class="custom-scroll table-responsive" style="height:290px; overflow-y: scroll;">
+                          <table class="table table-bordered" id="generatedhoursList">
+                            <tbody>
+                              <tr *ngIf="!finalTimeIntervals || finalTimeIntervals == '' || finalTimeIntervals.length == 0">
+                                <td>No time slot found</td>
+                              </tr>
+
+                              <ng-container *ngIf="finalTimeIntervals && finalTimeIntervals.length > 0">
+                                <tr *ngFor="let data of finalTimeIntervals">
+                                  <td>{{data}}</td>
+                                </tr>
+                              </ng-container>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                  <!-- end widget content -->
+                  </div>
+    <!-- end widget div -->
+    
+    </div>
+                </div>
+              </div>
+    
+            </div>							
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              no
+            </button>
+            <button type="submit" name="submit" class="btn btn-primary" [disabled]="finalTimeIntervals.length == 0" (click)="saveHours()">
+              si
+            </button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->		
+      </form>
+    
+    </div><!-- /.modal -->
+    
+    <!-- Añadir Modal Ends -->
+    
+    <!-- Borrar Modal -->
+    <div class="modal fade" id="Borrar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Borrar</h4>
+          </div>
+          <div class="modal-body">						
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class=" control-label">Confirme Eliminacion.anulara Visitas.</label>
+                </div>
+              </div>
+            </div>		
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Cancel
+            </button>
+            <button type="button" class="btn btn-primary" (click)="deleteHour()">
+              Grabar
+            </button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  </div>

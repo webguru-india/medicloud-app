@@ -1,0 +1,65 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+
+@keyframes successErrorMsgAnim {
+  0% {
+    right: -100%;
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  100% {
+    right: 25px;
+    opacity: 1;
+  }
+}
+
+.success-error-msg-wrapper {
+  position: fixed;
+  top: calc(100vh - 25px - 33px);
+  right: -100%;
+  z-index: 999999;
+  opacity: 0;
+}
+.success-error-msg-wrapper.show {
+  animation-name: successErrorMsgAnim;
+  animation-delay: 0.5s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
+.success-error-msg-wrapper .msg-wrapper {
+  padding: 18px 30px 15px 15px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px #000;
+}
+.success-error-msg-wrapper .msg-wrapper.success-msg-wrapper {
+  background: rgb(177, 214, 142);
+  /* border: 1px solid rgb(98, 109, 88); */
+  color: rgb(22, 112, 0);
+}
+.success-error-msg-wrapper .msg-wrapper.error-msg-wrapper {
+  background: rgb(214, 144, 142);
+  /* border: 1px solid rgb(98, 109, 88); */
+  color: rgb(112, 26, 0);
+}
+.success-error-msg-wrapper .msg-wrapper-close {
+  position: absolute;
+  right: 10px;
+  top: 47%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.avalable-hour .selected {
+  color: #fff;
+  background: #337ab7;
+}
