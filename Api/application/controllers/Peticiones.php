@@ -66,10 +66,10 @@ class Peticions extends REST_Controller{
 		);
 		if($res){
 			$rd = $this->list_post(true);
-			$message = "Peticion deleted successfully"
+			$message = "Peticion deleted successfully";
 			echo returnJsonResponse($message,true,$rd);
 		}else{
-			$message = "Some error occoured."
+			$message = "Some error occoured.";
 			echo returnJsonResponse($message,false,array());
 		}
 	}

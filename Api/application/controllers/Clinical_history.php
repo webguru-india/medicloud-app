@@ -65,30 +65,73 @@ class Clinical_history extends REST_Controller{
 		 * @var html encoded
 		 */
 		$curso = $this->post('course'); 
+		/**
+		 * the patient ID 
+		 * @var [type]
+		 */
 		$id_malat = $this->post('patient_id');
-		$user_name = $this->post('user_name');
+		/**
+		 * get login user data
+		 */
+		$user = get_login_userdata( $this->user_id , $this->access_token);
+		/**
+		 * username
+		 * @var [type]
+		 */		
+		$user_name = $user->UserName;
+		/**
+		 * agenda id selected from the dropdown the page
+		 * @var [type]
+		 */
 		$agenda = $this->post('agenda_id');		
 		$params = array(
-			"hora"=> $now_time, "data"=> $today, "usuario"=> $user_name, "curso" => base64_encode($curso), "id_malalt"=> $this->post('id_malalt'));		
+			"hora"=> $now_time, "data"=> $today, "usuario"=> $user_name, "curso" => base64_encode($curso), "id_malalt"=>$id_malat,'agenda'=>$agenda);
+		//print_r($params);
 		$res = $this->Common_model->execute_sp(array(
 			'sp_name'=>'mediagenda.clinica_cursclinic_grabar','db_name' => 'default','return_type'=>'row-array',
 			'params'=>$params
 		));
 		/** start save audit information   */
-		$datetime = date(); $type_of_event = "ESCRIBIR CURSO CLINICO"; $malalt_id = $this->post('rmalalt'); $ip = $this->post('my_ip');
+		$datetime = date('Y-m-d H:i:s'); $type_of_event = "ESCRIBIR CURSO CLINICO"; $malalt_id = $id_malat; $ip = $this->post('my_ip');
 		$params = array("tipo"=> $type_of_event, "malalt`"=> $malalt_id, "usu"=> $user_name, "fecha" => $datetime, "ip"=> $ip);
 		$result = $this->Common_model->execute_sp(array(
 			'sp_name'=>'mediagenda.audit_insert','db_name' => 'default','return_type'=>'row-array',
 			'params'=>$params
 		));
 		if(!isset($result['code'])){
-			$message = "cource saved successfully";
+			$message = "Course saved successfully";
 			$success = true;
 		}else{
 			$message = $result['code'];
-			$success = true;
+			$success = false;			
 		}
 		echo returnJsonResponse($message,$success,array());
+	}
+	/**
+	 * load patient history of the clinic , of individual patients
+	 * @route   load-clinic-history
+	 * @author Koushik Sen <koushik.sen@webguru-developement.com> 
+	 * @version 1.0.0
+	 * @date    2018-04-03
+	 * @return  json 	returns json response
+	 */
+	function load_clinic_courses_post(){
+		$agenda_id = ($this->post('aganda_id'))?$this->post('aganda_id'):false;
+		$patient_id = ($this->post('patient_id'))?$this->post('patient_id'):false;
+		$params = array();
+		if($agenda_id)$params['agenda'] = $agenda_id;$sp = "mediagenda.clinica_cursclinic_leer_agenda";
+		if($patient_id)$params['id_malalt'] = $patient_id;$sp = "mediagenda.clinica_cursclinic_leer";
+		$result = $this->Common_model->execute_sp(array('sp_name'=>$sp,'db_name' => 'default','return_type'=>'array','params'=>$params));		
+		$return_data =array();
+		if(!isset($result['code'])){
+			$message = "";
+			$success = true;			
+			$return_data['course_history'] = $result;
+		}else{
+			$message = $result['code'];
+			$success = false;			
+		}
+		echo returnJsonResponse($message,$success,$return_data);		
 	}
 	/**
 	 * "incluir en qx" module 
@@ -407,7 +450,27 @@ class Clinical_history extends REST_Controller{
 		}	
 		echo returnJsonResponse($message,$success,$rd);
 	}
-	function assign_peticons_to_clinic_post(){
-		
+	function assign_peticons_to_clinic_post(){		
+		$params = array(
+			'peticion'	=>	$this->post('peticion_id'),
+			'fecha'	  	=> 	date('Y-m-d H:i:s'),
+			'usuario' 	=>	$this->post('usuario'), // username
+			'id_malalt'	=>	$this->post('patient_id'),
+			'agenda'	=>	$this->post('agenda_id'),
+			'cabecera'	=>	false,
+			'texto'		=>	$this->post('texto')
+		);	
+		if($this->post('has_peticion')){
+			$res = $this->Common_model->execute_sp(array('sp_name'=>'clinica_solicitud_insert','db_name'=>'default','return_type'=>'row-array','params'=>$params));
+		}
+		if(!isset($res['code'])){
+			echo json_encode(array('success'=>true,'message'=>'peticions assigned successfully'));
+		}else{
+			echo json_encode(array('success'=>false,'message'=>$res['code']));
+		}
+    /*    Dim IM As Boolean = False
+        Dim info As New cinformes.infos("PDF", Context.Session("bd").ToString, False, richtextbox1.Value, agenda, Context.Session("usu").ToString)
+        dat = Nothing
+        */
 	}
 }

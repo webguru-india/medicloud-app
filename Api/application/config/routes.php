@@ -88,7 +88,8 @@ $route['update-patient-visit'] = 'External_consultations/update_patient';
 $route['change-of-date'] = 'External_consultations/change_of_date';
 $route['visit-time-change'] = 'External_consultations/visit_time_change';
 
-$route['save-clinic-history'] = 'External_consultations/save_clinic_course';
+$route['save-clinic-history'] = 'Clinical_history/save_clinic_course';
+$route['load-clinic-history'] = 'Clinical_history/load_clinic_courses';
 //$route['edit-visit'] = 'External_consultations/get_patient_data';
 /*-------------------------------------------------*/
 

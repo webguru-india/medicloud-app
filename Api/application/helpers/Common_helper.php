@@ -56,8 +56,7 @@ if(!function_exists('checkUserAuth')){
 }
 if(!function_exists('returnJsonResponse')){
     /**
-     * build and returns json encoded response WITH data needed to ne fetched
-     * @package helper
+     * build and returns json encoded response WITH data needed to ne fetched     
      * @author Koushik Sen
      * @version 1.0.0
      * @date    2018-02-19
@@ -117,26 +116,32 @@ if(!function_exists('buildErrorResponse')){
                 MCRYPT_MODE_CBC,$iv),"\0");
             return $decrypted;        
         }
-    }
-    if (!function_exists('checkDatevalid')){
+    }   
+    if(!function_exists('get_login_userdata')){
         /**
-         * [checkDatevalid description]
-         * @package {[namespace]}
-         * @author Koushik Sen
-         * @version 1.0.0
-         * @date    2018-02-20
-         * @param   string        $format date format for checking if date is valid
-         * @param   string        $date   the actual date which we need to compare or check
-         * @return  boolean               return true if date is valid else it will return false
+         * fetch data of logged in user 
+         *
+         * @param varchar $user_id
+         * @param varchar $security_stamp
+         * @return obejct
          */
-        function checkDatevalid($date = "",$format = 'Y-m-d'){
-            if($date!=""){
-                $d = DateTime::createFromFormat($format, $date);
-                return $d && $d->format($format) == $date;
-            }else{
-                return false;
-            }
+        function get_login_userdata($user_id,$security_stamp){            
+        /**
+         * get ci instance
+         * @var object
+         */
+        $CI = get_instance();        
+        $CI->load->model('Common_model');
+        $params = array('user_id'=>$user_id,'auth_key'=>$security_stamp);
+        $validate_data = $CI->Common_model->execute_sp(
+            array('sp_name'=>'getUserData',
+                'params' => $params,
+                'db_name' => 'identities',
+                'return_type' => 'row'
+            )
+        );        
+        return $validate_data;
         }
-    }
+    }    
 }
 ?>
