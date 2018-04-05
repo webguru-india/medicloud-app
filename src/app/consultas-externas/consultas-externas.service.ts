@@ -840,5 +840,65 @@ export class ConsultasExternasService {
       }
     )
   }
+  
+  loadPersonalData5(appAccessToken, appUserToken, agendaId, patientId, personalData5AllAgendasCheckbox) {
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("patient_id", patientId);
+    if(!personalData5AllAgendasCheckbox) {
+      fd.append("agenda_id", agendaId);
+    }
+
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'load-clinic-history',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+  
+  setPersonalData5ToWriteData(appAccessToken, appUserToken, agendaId, patientId, course) {
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("course", course);
+    fd.append("patient_id", patientId);
+    fd.append("user_name", "Static Test User");
+    fd.append("agenda_id", agendaId);
+
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'save-clinic-history',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
 
 }

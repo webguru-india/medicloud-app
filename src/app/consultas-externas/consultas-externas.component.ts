@@ -100,6 +100,8 @@ export class ConsultasExternasComponent implements OnInit {
   public personalData5SelectedMutuas: any = [];
   public personalData5SelectedAgendasData = '';
   public personalData5AgendasData = [];
+  public personalData5ToWriteText = '';
+  public personalData5AllAgendasCheckbox: boolean = false;
 
   public personalData51SelectedMutuas: any = [];
   public personalData51SelectedAgendasData = '';
@@ -413,7 +415,20 @@ export class ConsultasExternasComponent implements OnInit {
   }
   /* ==================== Change Date Section On Open Ends ======================= */
 
-  /* ==================== Personal Data Starts ===================== */
+  /* ==================== 5 Personal Data Starts ===================== */
+  getPersonalData5OnLoad() {
+    this.personalData5ToWriteText = '';
+    this.consultasExternasService.loadPersonalData5(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5AllAgendasCheckbox)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        for(let i=0; i<resp.course_history.length; i++) {
+          this.personalData5ToWriteText += resp.course_history[i].decoded_curso;
+        }
+      }
+    });
+  }
+
   personalDataFunc() {
     $('.summernote').summernote({
       toolbar: [
@@ -426,8 +441,29 @@ export class ConsultasExternasComponent implements OnInit {
         ['height', ['height']]
       ]
     });
+
+    this.getPersonalData5OnLoad();
+
+    $('#ToWright').on('show.bs.modal', ()=>{
+      $(".summernote").summernote("code", "");
+    });
   }
-  /* ===================== Personal Data Ends ====================== */
+
+  saveClinicHistoryData() {
+    let editorText = $(".summernote").summernote("code");
+    this.consultasExternasService.setPersonalData5ToWriteData(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, editorText)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.showSuccessErrorAlert = 1;
+        this.successErrorMessage = resp.message;
+        this.autoCloseSuccessErrorMsg();
+        
+        this.personalData5ToWriteText += editorText;
+      }
+    });
+  }
+  /* ===================== 5 Personal Data Ends ====================== */
 
   /* ==================== 5.1 Include In QX Starts ===================== */
   includeInQxFunction() {
