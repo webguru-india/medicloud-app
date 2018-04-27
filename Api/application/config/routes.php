@@ -119,7 +119,10 @@ $route['print-report-part'] = 'Clinical_history/print_report_part';
 $route['save-diagnostic'] = 'Diagnostic/save';
 $route['show-all-diagnostic'] = 'Diagnostic/show';
 $route['delete-diagnostic'] = 'Diagnostic/delete';
-$route['edit-diagnostic'] = 'Diagnostic/edit';
+$route['assign-diagnostic'] = 'Clinical_history/save_diagnostic_patient';
+$route['show-assign-diagnostic'] = 'Clinical_history/show_assigned_diagnostic';
+
+
 /*============ end External Consultation====================================*/
 
 /*------------common api------------*/

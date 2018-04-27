@@ -272,13 +272,18 @@ class Clinical_history extends REST_Controller{
 		));		
 	}
 	/*============================================*/
+	/**
+	 * display list of selected patient visits
+	 * @return json return lists of all previous activity in json array format	 
+	 * 
+	 */
 	function previous_activity_post(){
 		$params = array("malalt"=>$this->post('patient_id'));
 		$res['previous_activity'] = $this->Common_model->execute_sp(
 			array(
 				'sp_name'=>'mediagenda.visitas_malalt_sele',
 				'db_name' => 'default',
-				'return_type'=>'row',
+				'return_type'=>'array',
 				'params'=>$params
 			)
 		);
@@ -406,7 +411,7 @@ class Clinical_history extends REST_Controller{
 		echo json_encode(array("diagnostic"=>$diagnostic_dropdown,'success'=>true));
 	}
 
-	function show_assigned_diagnostic_post(){
+	function show_assigned_diagnostic_post($return = false){
 		$all = $this->post("show_all"); $agenda_id = $this->post("agenda_id"); $patient_id = $this->post("patient_id");
 		if($all){
 			$sp_name = "mediagenda.clinica_diagnosticos_sele"; $params  = array("malalt"=>$patient_id);
@@ -416,14 +421,30 @@ class Clinical_history extends REST_Controller{
 		$diagnostic_list = $this->Common_model->execute_sp(array(
 			'sp_name'=>$sp_name,'db_name' => 'default','return_type'=>'array',
 			'params'=> $params));
+		if($return){
+			return $diagnostic_list;
+		}
 		echo json_encode(array("assign_diagnostic_list"=>$diagnostic_list,'success'=>true));
 	}
 	function save_diagnostic_patient_post(){
-		$params = array('nuevo'=>$new,'diagnostico'=>$diagnostic_id,'id_malalt'=>$patient_id,'id'=>$id);
+		$new = true;
+		$id= 0;
+		$diagnostic_id = $this->post('diagnostic_id');
+		$patient_id = $this->post('patient_id');
+		$agenda = $this->post('agenda_id');
+		if($this->post('id')){
+			$id = $this->post('id'); $new =false;
+		}
+		$params = array('nuevo'=>$new,'diagnostico'=>$diagnostic_id,'id_malalt'=>$patient_id,'agenda'=>$agenda,'id'=>$id);
 		$res = $this->Common_model->execute_sp(array(
-			'sp_name'=>'mediagenda.clinica_diagnosticos_grabar_paciente','db_name' => 'default','return_type'=>'row',
-			'params'=> $params));
-		echo json_encode(array("assign_diagnostic_list"=>$diagnostic_list,'success'=>true));
+			'sp_name'=>'mediagenda.clinica_diagnosticos_grabar_paciente','db_name' => 'default','return_type'=>'row-array',
+			'params'=> $params));		
+		if(!isset($res['code'])){
+			echo json_encode(array("assign_diagnostic_list"=>$this->show_assigned_diagnostic_post(true),'success'=>true,'message'=>"Diagnostic assigned to patient"));			
+		}else{
+			echo json_encode(array('message'=>$res['message'],'success'=>false));			
+		}
+		
 	}
 	function delete_diagnostic_patient_post(){
 		$res = $this->Common_model->execute_sp(array(
