@@ -88,3 +88,11 @@
 		margin-right: -15px;
 	}
 }
+
+#modal-popup-scroll-horizontal{
+	overflow: scroll;
+}
+
+.smart-form .checkbox i{
+	top: 3px;
+}

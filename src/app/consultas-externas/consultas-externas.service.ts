@@ -901,4 +901,201 @@ export class ConsultasExternasService {
     )
   }
 
+  getPreviousActivityData(appAccessToken, appUserToken, patientId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("patient_id", patientId);
+
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'previous-activity',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  saveDiagnosticData(appAccessToken, appUserToken, agendaId, diagnosticData){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("agenda_id", agendaId);
+    fd.append("diagnostic", diagnosticData);
+    // fd.append("diagnostic_id", diagnosticId);
+
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'save-diagnostic',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  modifyDiagnosticData(appAccessToken, appUserToken, agendaId, diagnosticData, diagnosticId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("agenda_id", agendaId);
+    fd.append("diagnostic", diagnosticData);
+    fd.append("diagnostic_id", diagnosticId);
+
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'save-diagnostic',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  borrarDiagnosticData(appAccessToken, appUserToken, diagnosticId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("id", diagnosticId);
+
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'delete-diagnostic',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData56ShowAllDiagnosticData(appAccessToken, appUserToken, agendaId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("agenda_id", agendaId);
+
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'show-all-diagnostic',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData56SelectDiagnosticGrabar(appAccessToken, appUserToken, diagnosticId, patientId, agendaId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("diagnostic_id", diagnosticId);
+    fd.append("patient_id", patientId);
+    fd.append("agenda_id", agendaId);
+
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'assign-diagnostic',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData56ShowAssignDiagnosticList(appAccessToken, appUserToken, showAll, agendaId, patientId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("show_all", showAll);
+    fd.append("agenda_id", agendaId);
+    fd.append("patient_id", patientId);
+
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'show-assign-diagnostic',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
 }

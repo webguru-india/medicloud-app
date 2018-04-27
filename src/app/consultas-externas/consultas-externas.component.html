@@ -3,10 +3,10 @@
 <div [class]="showSuccessErrorAlert > 0 ? 'success-error-msg-wrapper show' : 'success-error-msg-wrapper'" *ngIf="showSuccessErrorAlert > 0">
   <div class="msg-wrapper-close" (click)="closeSuccessErrorMsg()">x</div>
   <div class="msg-wrapper success-msg-wrapper" *ngIf="showSuccessErrorAlert == 1">
-    <i class="fa fa-thumbs-up"></i> {{successErrorMessage}}
+    <i class="fa fa-thumbs-up"></i> <span [innerHtml]="successErrorMessage"></span>
   </div>
   <div class="msg-wrapper error-msg-wrapper" *ngIf="showSuccessErrorAlert == 2">
-    <i class="fa fa-warning"></i> {{successErrorMessage}}
+    <i class="fa fa-warning"></i>  <span [innerHtml]="successErrorMessage"></span>
   </div>
 </div>
 
@@ -127,7 +127,7 @@
 					<div style="clear: both;"></div>
 					<div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-18" data-widget-colorbutton="false" data-widget-editbutton="false" *ngIf="selectedAgendasData && selectedAgendasData != null && selectedAgendasData != ''">
 						<header>
-							<h2><strong>Fixed</strong> <i>Height</i></h2>
+							<h2><strong></strong> <i></i></h2>
 						</header>
 						<!-- widget div-->
 						<div>
@@ -463,6 +463,7 @@
         </div>
 
         <!-- <p>&nbsp;</p> -->
+        
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5">
           <div class="row">
@@ -504,9 +505,10 @@
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5">
                       <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5.1, $event.target)">Include in QX</a>
-                      <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5.1, $event.target)">Previous Activity</a>
+                      <a class="btn btn-primary" href="javascript:void(0);" (click)="personalData5PreviousActivity()">Previous Activity</a>
                       <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(0, $event.target)">Cancelar</a>
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -546,46 +548,39 @@
                             <div class="widget-body-toolbar">
                               <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                  <a class="btn btn-primary btn-xs" href="#" data-toggle="modal" data-target="#DiagonosticsAdd">Adanir</a>
-                                  <a class="btn btn-primary btn-xs" href="#" data-toggle="modal" data-target="#DiagonosticsAdd">Edit</a>
-                                  <a class="btn btn-primary btn-xs" href="javascript:void(0);">Delete</a>
+                                  <a class="btn btn-primary btn-xs" href="#" data-toggle="modal" data-target="#DiagonosticsAdd" (click)="personalData56ShowAllDiagnostic()">Adanir</a>
+                                  <button class="btn btn-primary btn-xs" href="" data-toggle="modal" data-target="#DiagonosticsAdd" [disabled]="personalData56DiagnosticListSelectedDataDiagnostico5.length != 1">Edit</button>
+                                  <button class="btn btn-primary btn-xs" href="javascript:void(0);" [disabled]="personalData56DiagnosticListSelectedDataDiagnostico5.length < 1">Delete</button>
                                 </div>
                               </div>
                             </div>
                             <div class="custom-scroll table-responsive tab_height_130" style="overflow-y: scroll;">
+                              <!-- PersonalData56 body when adanir, grabar is hit -->
                               <table class="table table-bordered">
                                 <thead>
                                   <tr>
-                                    <th>Option1</th>
-                                    <th>Option2</th>
-                                    <th>Option3</th>
+                                    <th width="100">
+                                      <div class="smart-form">
+                                        <label class="checkbox">
+                                          <input type="checkbox" name="checkbox" [(ngModel)]="personalData56DiagnosticListSelectAllChkBxDiagnostico5" (change)="personalData56DiagnosticListSelectAllChkBxClickedDiagnostico5()">
+                                          <i></i>Select All
+                                        </label>
+                                      </div>
+                                    </th>
+                                    <th>DIAGNOSTICO</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <td>Lorem Ipsum is simply dummy text.</td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Lorem Ipsum is simply dummy text.</td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Lorem Ipsum is simply dummy text.</td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Lorem Ipsum is simply dummy text.</td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Lorem Ipsum is simply dummy text.</td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
+                                  <tr *ngFor="let data of personalData56ShowAssignDiagnostic5">
+                                    <td>
+                                      <div class="smart-form">
+                                        <label class="checkbox">
+                                          <input type="checkbox" name="checkbox" [value]="data.id" [(ngModel)]="data.personalData56DiagnosticListSelectedDataDiagnostico5" (change)="personalData56DiagnosticListSelectedDiagnostico5($event.target)">
+                                          <i></i>
+                                        </label>
+                                      </div>
+                                    </td>
+                                    <td>{{data.DIAGNOSTIC}}</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -1640,22 +1635,18 @@
                   <p>&nbsp;</p>
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                     <div class="row">
-                      <select class="form-control" id="select-1">
-                        <option>Specially</option>
-                        <option>option1</option>
-                        <option>option1</option>
-                        <option>option1</option>
-                        <option>option1</option>
+                      <select class="form-control" id="select-1" (change)="personalData5SpecialtyOnChange($event.target.value)">
+                          <ng-container *ngIf="especialidadData?.length > 0">
+                            <option *ngFor="let data of especialidadData" [value]="data.id" [selected]="data.id == specialtySelectedId" disabled>{{data.especialitat}}</option>
+                          </ng-container>
                       </select>
                     </div>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                    <select class="form-control" id="select-1">
-                      <option>Dairy</option>
-                      <option>option1</option>
-                      <option>option1</option>
-                      <option>option1</option>
-                      <option>option1</option>
+                    <select class="form-control" id="select-2" (change)="personalData5AgendasOnChange($event.target.value)">
+                      <ng-container *ngIf="!personalData5AgendasData === false">
+                        <option *ngFor="let data of personalData5AgendasData" [value]="data.ID" [selected]="data.ID == personalData5SelectedAgendasData" disabled>{{data.METGE}}</option>
+                      </ng-container>
                     </select>
                   </div>
                   <p style="clear: both;">&nbsp;</p>
@@ -1663,7 +1654,7 @@
                     <div class="row">
                       <div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-18" data-widget-colorbutton="false" data-widget-editbutton="false">
                         <header>
-                          <h2><strong></strong>  </h2>
+                          <h2><strong>DIAGNOSTICO</strong></h2>
                         </header>
                         <!-- widget div-->
                         <div>
@@ -1680,27 +1671,28 @@
                               <table class="table table-bordered">
                                 <thead>
                                   <tr>
-                                    <th>Department</th>
+                                    <th width="100">
+                                      <div class="smart-form">
+                                          <label class="checkbox">
+                                            <input type="checkbox" name="checkbox" [(ngModel)]="personalData56DiagnosticListSelectAllChkBx" (change)="personalData56DiagnosticListSelectAllChkBxClicked()">
+                                            <i></i>Select All
+                                          </label>
+                                        </div>
+                                    </th>
+                                    <th>Diagnostic</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                  </tr>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                  </tr>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                  </tr>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                  </tr>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                  </tr>
-                                  <tr>
-                                    <td>&nbsp;</td>
+                                  <tr *ngFor="let data of personalData56ShowAllDiagnosticDataList">
+                                    <td>
+                                      <div class="smart-form">
+                                        <label class="checkbox">
+                                          <input type="checkbox" name="checkbox" [value]="data.id" [(ngModel)]="data.personalData56DiagnosticListSelectedData" (change)="personalData56DiagnosticListSelected($event.target)">
+                                          <i></i>
+                                        </label>
+                                      </div>
+                                    </td>
+                                    <td>{{data.diagnostic}}</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -1714,10 +1706,13 @@
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="row"> 
-                      <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#DiagonosticsAddBtnPopup">Adanir</a>
-                      <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#DiagonosticsAddBtnPopup">Modificar</a>
-                      <a class="btn btn-primary" href="javascript:void(0);">Borrar</a>
-                      <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5, $event.target); openDiagonisticModal()">Cancelar</a>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DiagonosticsAddBtnPopupAdanir" [disabled]="personalData56DiagnosticListSelectedData.length > 0">Adanir</button>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DiagonosticsAddBtnPopupModificar" [disabled]="personalData56DiagnosticListSelectedData.length != 1">Modificar</button>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DiagonosticsAddBtnPopupBorrar" [disabled]="personalData56DiagnosticListSelectedData.length == 0">Borrar</button>
+                      <button class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5, $event.target); openDiagonisticModal()">Cancelar</button>
+                      <!-- <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5, $event.target)">
+                        Cancelar
+                      </a> -->
                     </div>
                   </div>
                 </div>
@@ -2684,10 +2679,9 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12">
-            <select class="form-control" id="select-1">
-              <option>Agenda</option>
-              <option>DR.GONZALEZ</option>
-              <option>DR.GONZALEZ</option>
+            <select class="form-control" id="select-1" [(ngModel)]="personalData56DiagnosticSelectDiagnosticIdForGrabar">
+              <option [selected] disabled value="">Select Diagnostic</option>
+              <option *ngFor="let data of personalData56ShowAllDiagnosticDataList" [value]="data.id">{{data.diagnostic}}</option>
             </select>
           </div>
         </div>
@@ -2696,7 +2690,7 @@
         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="hoursMenuClick(5.6, $event.target)">
         Configuration
         </button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData56AssignDiagnostic()" [disabled]="personalData56DiagnosticSelectDiagnosticIdForGrabar == ''">
         Grabar
         </button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">
@@ -2709,11 +2703,13 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
 <!--DiagonosticsAdd  Modal -->
-<div class="modal fade" id="DiagonosticsAddBtnPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="DiagonosticsAddBtnPopupAdanir" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
+          <span>Adanir</span>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
         &times;
         </button>
@@ -2722,12 +2718,12 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12">
-            <input class="form-control" type="text">
+            <input class="form-control" type="text" [(ngModel)]="personalData56DiagnosisAdd">
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData56DiagnosisAddButton()" [disabled]="personalData56DiagnosisAdd == ''">
         Adanir
         </button>
       </div>
@@ -2737,6 +2733,66 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!--DiagonosticsModify  Modal -->
+<div class="modal fade" id="DiagonosticsAddBtnPopupModificar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>Modificar</span>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;
+        </button>
+        <!-- <h4 class="modal-title" id="myModalLabel">Diagnosis Add</h4> -->
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <input class="form-control" type="text" [(ngModel)]="personalData56DiagnosisModify" [value]="personalData56DiagnosticListModifiedName">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData56DiagnosisModifyButton()">
+        Adanir
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<!--DiagonosticsBorrar  Modal -->
+<div class="modal fade" id="DiagonosticsAddBtnPopupBorrar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <span>CONFIRME ELIMINACION</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData56DiagnosisBorrarButton()">
+        YES
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+        NO
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <!--Paciente Nuevo  Modal -->
 <div class="modal fade PacienteNuevo" id="PacienteNuevo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -3475,6 +3531,51 @@
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="saveClinicHistoryData()">
           Salvar
         </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<!-- Model of Previous Activity -->
+
+<div class="modal fade bd-example-modal-lg" id="my-modal-previous-activity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Previous Activity</h4>
+      </div>
+      <div class="modal-body" id="modal-popup-scroll-horizontal">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>FECHA:</th>
+              <th>HORA:</th>
+              <th>ACTO:</th>
+              <th>MUTUA:</th>
+              <th>AGENDA:</th>
+              <th>ESPECIALIDAD:</th>
+              <th>CONFIRMADA:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of personalData5PreviousActivityData">
+              <td>{{personalData5PreviousActivityGetDate(data?.data)}}</td>
+              <td>{{personalData5PreviousActivityGetHour(data?.hora)}}</td>
+              <td>{{data.concepto}}</td>
+              <td>{{data.mutua}}</td>
+              <td>{{data.agenda}}</td>
+              <td>{{data.ESPE}}</td>
+              <td>{{data.confirmada}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
     <!-- /.modal-content -->

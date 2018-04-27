@@ -31,6 +31,10 @@ export class ConsultasExternasComponent implements OnInit {
   public selectedVisit: any = [];
   public isSelectedVisitConfirmed: boolean = false;
   public reportAddShowMore: boolean = false;
+  public agendaId: any;
+  public diagnosticData: any;
+  public diagnosticId: any;
+  public convertAllCheckBooleanToInteger: number;
 
   public forEdit: boolean = false;
 
@@ -102,6 +106,7 @@ export class ConsultasExternasComponent implements OnInit {
   public personalData5AgendasData = [];
   public personalData5ToWriteText = '';
   public personalData5AllAgendasCheckbox: boolean = false;
+  public personalData5PreviousActivityData: any = [];
 
   public personalData51SelectedMutuas: any = [];
   public personalData51SelectedAgendasData = '';
@@ -147,6 +152,18 @@ export class ConsultasExternasComponent implements OnInit {
   public personalData55IsProcessEdit: boolean = false;
   public personalData55Ayudante;
 
+  public personalData56DiagnosisAdd: any = '';
+  public personalData56DiagnosisModify: any = '';
+  public personalData56ShowAllDiagnosticDataList: any = [];
+  public personalData56DiagnosticListSelectAllChkBx: boolean = false;
+  public personalData56DiagnosticListSelectAllChkBxDiagnostico5: boolean = false;
+  public personalData56DiagnosticListSelectedData: any = [];
+  public personalData56DiagnosticListSelectedDataDiagnostico5: any = [];
+  public personalData56DiagnosticListModifiedId: number;
+  public personalData56DiagnosticListModifiedName: string;
+  public personalData56DiagnosticSelectDiagnosticIdForGrabar: any = '';
+  public personalData56ShowAssignDiagnostic5: any = [];
+  
   
 
   constructor(private _formBuilder: FormBuilder, private globalConfigs: GlobalConfigs, private cookieService: CookieService, public pageTitle: Title, private consultasExternasService: ConsultasExternasService) {
@@ -427,6 +444,20 @@ export class ConsultasExternasComponent implements OnInit {
         }
       }
     });
+
+    console.log(this.personalData5AllAgendasCheckbox);
+    console.log(this.personalData5SelectedAgendasData);
+    console.log(this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt);
+    this.convertAllCheckBooleanToInteger = (this.personalData5AllAgendasCheckbox == true) ? 1 : 0;
+    console.log(this.convertAllCheckBooleanToInteger);
+    this.consultasExternasService.personalData56ShowAssignDiagnosticList(this.appAccessToken, this.appUserToken, this.personalData5AllAgendasCheckbox, this.personalData5SelectedAgendasData, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.personalData56ShowAssignDiagnostic5 = resp.assign_diagnostic_list;
+        console.log(this.personalData56ShowAssignDiagnostic5);
+      }
+    });
   }
 
   personalDataFunc() {
@@ -447,6 +478,8 @@ export class ConsultasExternasComponent implements OnInit {
     $('#ToWright').on('show.bs.modal', ()=>{
       $(".summernote").summernote("code", "");
     });
+
+    // this.personalData56AssignDiagnosticListShow();
   }
 
   saveClinicHistoryData() {
@@ -462,6 +495,26 @@ export class ConsultasExternasComponent implements OnInit {
         this.personalData5ToWriteText += editorText;
       }
     });
+  }
+
+  personalData5PreviousActivity() {
+    this.consultasExternasService.getPreviousActivityData(this.appAccessToken, this.appUserToken, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.personalData5PreviousActivityData = resp.previous_activity;
+        console.log(this.personalData5PreviousActivityData);
+        $('#my-modal-previous-activity').modal('show');
+      }
+    });
+  }
+
+  personalData5PreviousActivityGetDate(dateString) {
+    return dateString.split(' ')[0];
+  }
+  
+  personalData5PreviousActivityGetHour(hourString) {
+    return hourString.split('.')[0];
   }
   /* ===================== 5 Personal Data Ends ====================== */
 
@@ -533,6 +586,9 @@ export class ConsultasExternasComponent implements OnInit {
     });
 
     let petientId = this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt;
+
+    // this.personalData56PatientId = petientId;
+    // console.log(this.personalData56PatientId);
 
     this.consultasExternasService.getSelectedPatientData(this.appAccessToken, this.appUserToken, petientId)
     .subscribe(resp => {
@@ -777,6 +833,161 @@ export class ConsultasExternasComponent implements OnInit {
   }
   /* ====================== 5.3 personalData53PageOpenFunc Ends ======================= */
 
+  /* ===================== 5.6 personalData56 Func Starts ====================== */
+
+  personalData56DiagnosisAddButton(){
+    this.consultasExternasService.saveDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData, this.personalData56DiagnosisAdd)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.successErrorMessage = resp.message;
+        this.showSuccessErrorAlert = 1;
+        this.autoCloseSuccessErrorMsg();
+        this.personalData56ShowAllDiagnostic();
+        this.personalData56DiagnosticListSelectedData = [];
+        this.personalData56DiagnosisAdd = '';
+      }
+    });
+  }
+
+  personalData56DiagnosisModifyButton(){
+    console.log(this.personalData56DiagnosisModify);
+    console.log(this.personalData56DiagnosticListModifiedId);
+    // console.log(this.personalData56DiagnosticListModifiedName);
+    this.consultasExternasService.modifyDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData, this.personalData56DiagnosisModify, this.personalData56DiagnosticListModifiedId)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.successErrorMessage = resp.message;
+        this.showSuccessErrorAlert = 1;
+        this.autoCloseSuccessErrorMsg();
+        this.personalData56ShowAllDiagnostic();
+        this.personalData56DiagnosticListSelectedData = [];
+      }
+    });
+  }
+
+  personalData56DiagnosisBorrarButton(){
+    console.log(this.personalData56DiagnosticListSelectedData);
+    this.consultasExternasService.borrarDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData56DiagnosticListSelectedData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.successErrorMessage = resp.message;
+        this.showSuccessErrorAlert = 1;
+        this.autoCloseSuccessErrorMsg();
+        this.personalData56ShowAllDiagnostic();
+        this.personalData56DiagnosticListSelectedData = [];
+      }
+    });
+  }
+
+  personalData56ShowAllDiagnostic(){
+    //console.log(this.personalData5SelectedAgendasData);
+    //console.log(this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt);
+    this.consultasExternasService.personalData56ShowAllDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.personalData56ShowAllDiagnosticDataList = resp.diagnostic_list;
+        console.log(this.personalData56ShowAllDiagnosticDataList);
+      }
+    });
+  }
+
+  personalData56AssignDiagnostic(){
+    console.log(this.personalData5SelectedAgendasData);
+    console.log(this.personalData56DiagnosticSelectDiagnosticIdForGrabar);
+    console.log(this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt);
+    this.consultasExternasService.personalData56SelectDiagnosticGrabar(this.appAccessToken, this.appUserToken, this.personalData56DiagnosticSelectDiagnosticIdForGrabar, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.personalData56ShowAssignDiagnostic5 = resp.assign_diagnostic_list;
+        console.log(this.personalData56ShowAssignDiagnostic5);
+      }
+    });
+  }
+
+  
+      //-------------------------All Checked for 56 personal main page------------------------------
+  personalData56DiagnosticListSelectAllChkBxClicked() {
+    if(typeof this.personalData56ShowAllDiagnosticDataList !== 'undefined') {
+      this.personalData56DiagnosticListSelectedData = [];
+      for (var i = 0; i < this.personalData56ShowAllDiagnosticDataList.length; i++) {
+        this.personalData56ShowAllDiagnosticDataList[i].personalData56DiagnosticListSelectedData = this.personalData56DiagnosticListSelectAllChkBx;
+        if(!(!this.personalData56DiagnosticListSelectAllChkBx)) {
+          this.personalData56DiagnosticListSelectedData.push(this.personalData56ShowAllDiagnosticDataList[i].id);
+        }
+      }
+    }
+  }
+      //--------------------------Check Individual for 56 personal main page-------------------------
+  personalData56DiagnosticListSelected(targetElem) {
+    this.personalData56DiagnosticListSelectAllChkBx = this.personalData56ShowAllDiagnosticDataList.every(function(item:any) {
+      return item.personalData56DiagnosticListSelectedData == true;
+    })
+    if(targetElem.checked == true) {
+      this.personalData56DiagnosticListSelectedData.push(parseInt(targetElem.value));
+      console.log(this.personalData56DiagnosticListSelectedData);
+      this.personalData56DiagnosticListModifiedId = parseInt(targetElem.value);
+      // console.log(this.personalData56DiagnosticListModifiedId);
+      // console.log(this.personalData56ShowAllDiagnosticDataList);
+      for(let i=0; i<this.personalData56ShowAllDiagnosticDataList.length; i++){
+        if(this.personalData56ShowAllDiagnosticDataList[i].id == this.personalData56DiagnosticListModifiedId){
+          this.personalData56DiagnosticListModifiedName = this.personalData56ShowAllDiagnosticDataList[i].diagnostic;
+          console.log(this.personalData56DiagnosticListModifiedName);
+        }
+      }
+    }
+    else {
+      // console.log(this.personalData56DiagnosticListSelectedData.indexOf(parseInt(targetElem.value)))
+      this.personalData56DiagnosticListSelectedData.splice(this.personalData56DiagnosticListSelectedData.indexOf(parseInt(targetElem.value)), 1);
+    }
+  }
+
+
+      //-------------------------All Checked for 56Diagonostics page------------------------------
+  personalData56DiagnosticListSelectAllChkBxClickedDiagnostico5() {
+    if(typeof this.personalData56ShowAssignDiagnostic5 !== 'undefined') {
+      this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
+      for (var i = 0; i < this.personalData56ShowAssignDiagnostic5.length; i++) {
+        this.personalData56ShowAssignDiagnostic5[i].personalData56DiagnosticListSelectedDataDiagnostico5 = this.personalData56DiagnosticListSelectAllChkBxDiagnostico5;
+        if(!(!this.personalData56DiagnosticListSelectAllChkBxDiagnostico5)) {
+          this.personalData56DiagnosticListSelectedDataDiagnostico5.push(this.personalData56ShowAssignDiagnostic5[i].id);
+        }
+      }
+    }
+  }
+
+ //--------------------------Check Individual for 56Diagonostics page-------------------------
+  personalData56DiagnosticListSelectedDiagnostico5(targetElem) {
+    this.personalData56DiagnosticListSelectAllChkBxDiagnostico5 = this.personalData56ShowAssignDiagnostic5.every(function(item:any) {
+      return item.personalData56DiagnosticListSelectedDataDiagnostico5 == true;
+    })
+    if(targetElem.checked == true) {
+      this.personalData56DiagnosticListSelectedDataDiagnostico5.push(parseInt(targetElem.value));
+      console.log(this.personalData56DiagnosticListSelectedDataDiagnostico5);
+      //this.personalData56DiagnosticListModifiedId = parseInt(targetElem.value);
+      // console.log(this.personalData56DiagnosticListModifiedId);
+      // console.log(this.personalData56ShowAssignDiagnostic5);
+      // for(let i=0; i<this.personalData56ShowAssignDiagnostic5.length; i++){
+      //   if(this.personalData56ShowAssignDiagnostic5[i].id == this.personalData56DiagnosticListModifiedId){
+      //     this.personalData56DiagnosticListModifiedName = this.personalData56ShowAssignDiagnostic5[i].diagnostic;
+      //     console.log(this.personalData56DiagnosticListModifiedName);
+      //   }
+      // }
+    }
+    else {
+      // console.log(this.personalData56DiagnosticListSelectedData.indexOf(parseInt(targetElem.value)))
+      this.personalData56DiagnosticListSelectedDataDiagnostico5.splice(this.personalData56DiagnosticListSelectedDataDiagnostico5.indexOf(parseInt(targetElem.value)), 1);
+    }
+  }
+
+
+
+  /* ===================== 5.6 personalData56 Func Ends ====================== */
+  
   hoursMenuClick(value, elem) {
     if(typeof $(elem).attr('class') !== 'undefined' && $(elem).attr('class').indexOf('disabled') > -1) {
       return false;
@@ -852,6 +1063,9 @@ export class ConsultasExternasComponent implements OnInit {
       }
       else if(value == 5.5) {
         this.includeInQxConfigurationAnadir();
+      }
+      else if(value == 5.6) {
+        this.personalData56ShowAllDiagnostic();
       }
       else if(value == 5.14) {
         /*--Data Chart--*/
