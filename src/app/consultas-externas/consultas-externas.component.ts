@@ -163,8 +163,23 @@ export class ConsultasExternasComponent implements OnInit {
   public personalData56DiagnosticListModifiedName: string;
   public personalData56DiagnosticSelectDiagnosticIdForGrabar: any = '';
   public personalData56ShowAssignDiagnostic5: any = [];
+  public personalData56DiagnosticDiagnosticIdForSelectedDiagnostic: any ='';
+  public personalData56ShowAllDiagnosticDataListToHoldItIndDiagnosticEdit: any = [];
+  public personalData56DiagnosticListSelectedDataDiagnosticName: string = '';
   
-  
+  public personalData57DepartmentName: any = '';
+  public personalData57ShowDepartmentlist: any = [];
+  public personalData57DepartmentListSelectAllChkBx: boolean = false;
+  public personalData57DepartmentListSelectedData: any = [];
+  public personalData57DepartmentModificarNamePick: string = '';
+  public personalData57DepartmentModifiedName: string = '';
+  public personalData57PeticionTextareaVal: any = '';
+  public personalData57ObservacionesTextareaVal: any = '';
+  public personalData57PlantillaSelectVal: number = 0;
+  public personalData57selectedDepartmentId: number = 0;
+  public personalData57ShowPeticionlist: any = [];
+  public personalData57PeticionListSelectedData: any = [];
+  public personalData57PeticionListSelectAllChkBx: boolean = false;
 
   constructor(private _formBuilder: FormBuilder, private globalConfigs: GlobalConfigs, private cookieService: CookieService, public pageTitle: Title, private consultasExternasService: ConsultasExternasService) {
     if(typeof this.appAccessToken === 'undefined' || this.appAccessToken == '') {
@@ -450,12 +465,18 @@ export class ConsultasExternasComponent implements OnInit {
     console.log(this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt);
     this.convertAllCheckBooleanToInteger = (this.personalData5AllAgendasCheckbox == true) ? 1 : 0;
     console.log(this.convertAllCheckBooleanToInteger);
-    this.consultasExternasService.personalData56ShowAssignDiagnosticList(this.appAccessToken, this.appUserToken, this.personalData5AllAgendasCheckbox, this.personalData5SelectedAgendasData, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt)
+    this.consultasExternasService.personalData56ShowAssignDiagnosticList(this.appAccessToken, this.appUserToken, this.convertAllCheckBooleanToInteger, this.personalData5SelectedAgendasData, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt)
     .subscribe(resp => {
       console.log(resp);
       if(resp.success === true) {
+        if(resp.assign_diagnostic_list === false){
+          this.personalData56ShowAssignDiagnostic5 = [];
+          this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
+        }else{
         this.personalData56ShowAssignDiagnostic5 = resp.assign_diagnostic_list;
         console.log(this.personalData56ShowAssignDiagnostic5);
+        this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
+        }
       }
     });
   }
@@ -479,7 +500,6 @@ export class ConsultasExternasComponent implements OnInit {
       $(".summernote").summernote("code", "");
     });
 
-    // this.personalData56AssignDiagnosticListShow();
   }
 
   saveClinicHistoryData() {
@@ -587,8 +607,6 @@ export class ConsultasExternasComponent implements OnInit {
 
     let petientId = this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt;
 
-    // this.personalData56PatientId = petientId;
-    // console.log(this.personalData56PatientId);
 
     this.consultasExternasService.getSelectedPatientData(this.appAccessToken, this.appUserToken, petientId)
     .subscribe(resp => {
@@ -869,10 +887,16 @@ export class ConsultasExternasComponent implements OnInit {
 
   personalData56DiagnosisBorrarButton(){
     console.log(this.personalData56DiagnosticListSelectedData);
-    this.consultasExternasService.borrarDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData56DiagnosticListSelectedData)
+    this.consultasExternasService.borrarDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData56DiagnosticListSelectedData, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       console.log(resp);
       if(resp.success === true) {
+        if(resp.diagnostic_list === false){
+          this.personalData56ShowAllDiagnosticDataList = [];
+          this.personalData56DiagnosticListSelectAllChkBx = false;
+        }else{
+          this.personalData56ShowAllDiagnosticDataList = resp.diagnostic_list;
+        }
         this.successErrorMessage = resp.message;
         this.showSuccessErrorAlert = 1;
         this.autoCloseSuccessErrorMsg();
@@ -881,16 +905,18 @@ export class ConsultasExternasComponent implements OnInit {
       }
     });
   }
-
+  
   personalData56ShowAllDiagnostic(){
     //console.log(this.personalData5SelectedAgendasData);
     //console.log(this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt);
+    
+    this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
     this.consultasExternasService.personalData56ShowAllDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       console.log(resp);
       if(resp.success === true) {
-        this.personalData56ShowAllDiagnosticDataList = resp.diagnostic_list;
-        console.log(this.personalData56ShowAllDiagnosticDataList);
+      this.personalData56ShowAllDiagnosticDataList = resp.diagnostic_list;
+      console.log(this.personalData56ShowAllDiagnosticDataList);
       }
     });
   }
@@ -903,8 +929,95 @@ export class ConsultasExternasComponent implements OnInit {
     .subscribe(resp => {
       console.log(resp);
       if(resp.success === true) {
+        this.showSuccessErrorAlert = 1;
+        this.successErrorMessage = resp.message;
+        this.autoCloseSuccessErrorMsg();
         this.personalData56ShowAssignDiagnostic5 = resp.assign_diagnostic_list;
+        console.log(this.personalData56ShowAllDiagnosticDataList);
+        this.personalData56DiagnosticSelectDiagnosticIdForGrabar = '';
+      }
+    });
+  }
+
+
+  personalData56SelectedDiagnosticEdit(){
+    console.log(this.personalData56DiagnosticListSelectedDataDiagnostico5);
+  }
+
+  personalData56AssignDiagnosticEditGrabar(){
+    this.consultasExternasService.personalData56ShowAllDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.personalData56ShowAllDiagnosticDataList = resp.diagnostic_list;
         console.log(this.personalData56ShowAssignDiagnostic5);
+        console.log(this.personalData56ShowAllDiagnosticDataList);
+        for(let i=0; i< this.personalData56ShowAssignDiagnostic5.length; i++){
+          if(this.personalData56ShowAssignDiagnostic5[i].personalData56DiagnosticListSelectedDataDiagnostico5 == true){
+            this.personalData56DiagnosticListSelectedDataDiagnosticName = this.personalData56ShowAssignDiagnostic5[i].DIAGNOSTIC;
+          }
+        }
+        console.log(this.personalData56DiagnosticListSelectedDataDiagnosticName);
+        for(let j=0; j<this.personalData56ShowAllDiagnosticDataList.length; j++){
+          if(this.personalData56ShowAllDiagnosticDataList[j].diagnostic === this.personalData56DiagnosticListSelectedDataDiagnosticName){
+            this.personalData56DiagnosticDiagnosticIdForSelectedDiagnostic = this.personalData56ShowAllDiagnosticDataList[j].id;
+          }
+        }
+        console.log(this.personalData56DiagnosticDiagnosticIdForSelectedDiagnostic); //diagnostic_id
+        console.log(this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt);  //patient_id
+        console.log(this.personalData56DiagnosticListSelectedDataDiagnostico5); //id
+        console.log(this.convertAllCheckBooleanToInteger); // All sheckbox true(1) or false(0)
+        console.log(this.personalData5SelectedAgendasData); //agenda id
+        this.consultasExternasService.personalData56SelectDiagnosticEditGrabar(this.appAccessToken, this.appUserToken, this.personalData56DiagnosticDiagnosticIdForSelectedDiagnostic, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData56DiagnosticListSelectedDataDiagnostico5, this.convertAllCheckBooleanToInteger, this.personalData5SelectedAgendasData)
+        .subscribe(resp => {
+          console.log(resp);
+          if(resp.success === true) {
+            this.successErrorMessage = resp.message;
+            this.showSuccessErrorAlert = 1;
+            this.autoCloseSuccessErrorMsg();
+            this.personalData56ShowAssignDiagnostic5 = resp.assign_diagnostic_list;
+            this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
+          }
+        });
+      } 
+    });
+  }
+
+  personalData56AssignDiagnosticEditCancelar(){
+    //this.convertAllCheckBooleanToInteger = (this.personalData5AllAgendasCheckbox == true) ? 1 : 0;
+    console.log(this.convertAllCheckBooleanToInteger);
+    this.consultasExternasService.personalData56ShowAssignDiagnosticList(this.appAccessToken, this.appUserToken, this.convertAllCheckBooleanToInteger, this.personalData5SelectedAgendasData, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        if(resp.assign_diagnostic_list === false){
+          this.personalData56ShowAssignDiagnostic5 = [];
+        }else{
+        this.personalData56ShowAssignDiagnostic5 = resp.assign_diagnostic_list;
+        this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
+        }
+      }
+    });
+  }
+
+  personalData56DiagnosisDelete(){
+    // console.log(this.personalData56DiagnosticListSelectedDataDiagnostico5);
+    // console.log(this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt);
+    // console.log(this.personalData5SelectedAgendasData);
+    this.consultasExternasService.personalData56SelectDiagnosticDeleted(this.appAccessToken, this.appUserToken, this.personalData56DiagnosticListSelectedDataDiagnostico5, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        if(resp.assign_diagnostic_list === false){
+          this.personalData56ShowAssignDiagnostic5 = [];
+          this.personalData56DiagnosticListSelectAllChkBxDiagnostico5 = false;
+        }else{
+          this.personalData56ShowAssignDiagnostic5 = resp.assign_diagnostic_list;
+        }
+        this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
+        this.showSuccessErrorAlert = 1;
+        this.successErrorMessage = resp.message;
+        this.autoCloseSuccessErrorMsg();
       }
     });
   }
@@ -967,16 +1080,7 @@ export class ConsultasExternasComponent implements OnInit {
     })
     if(targetElem.checked == true) {
       this.personalData56DiagnosticListSelectedDataDiagnostico5.push(parseInt(targetElem.value));
-      console.log(this.personalData56DiagnosticListSelectedDataDiagnostico5);
-      //this.personalData56DiagnosticListModifiedId = parseInt(targetElem.value);
-      // console.log(this.personalData56DiagnosticListModifiedId);
-      // console.log(this.personalData56ShowAssignDiagnostic5);
-      // for(let i=0; i<this.personalData56ShowAssignDiagnostic5.length; i++){
-      //   if(this.personalData56ShowAssignDiagnostic5[i].id == this.personalData56DiagnosticListModifiedId){
-      //     this.personalData56DiagnosticListModifiedName = this.personalData56ShowAssignDiagnostic5[i].diagnostic;
-      //     console.log(this.personalData56DiagnosticListModifiedName);
-      //   }
-      // }
+      // console.log(this.personalData56DiagnosticListSelectedDataDiagnostico5);
     }
     else {
       // console.log(this.personalData56DiagnosticListSelectedData.indexOf(parseInt(targetElem.value)))
@@ -984,9 +1088,189 @@ export class ConsultasExternasComponent implements OnInit {
     }
   }
 
-
-
   /* ===================== 5.6 personalData56 Func Ends ====================== */
+  
+
+  /* ===================== 5.7 personalData56 Func Starts ====================== */
+  // personalData57ShowAllDepartmentList(){
+  //   this.consultasExternasService.personalData57ShowDepartment(this.appAccessToken, this.appUserToken,this.personalData5SelectedAgendasData)
+  //   .subscribe(resp => {
+  //     console.log(resp);
+  //     if(resp.success === true) {
+  //       this.personalData57ShowDepartmentlist = resp.department_list;
+  //     }
+  //   });
+  // }
+
+  // personalData57DepartmentAnadirBtn(){
+  //   this.personalData57DepartmentName = '';
+  // }
+
+  // personalData57DepartmentAnadirGrabarBtn(){
+  //   // console.log(this.personalData57DepartmentName);
+  //   // console.log(this.personalData5SelectedAgendasData);
+  //   this.consultasExternasService.personalData57DepartmentSave(this.appAccessToken, this.appUserToken, this.personalData57DepartmentName, this.personalData5SelectedAgendasData)
+  //   .subscribe(resp => {
+  //     console.log(resp);
+  //     if(resp.success === true) {
+  //       this.showSuccessErrorAlert = 1;
+  //       this.successErrorMessage = resp.message;
+  //       this.autoCloseSuccessErrorMsg();
+  //       this.personalData57ShowDepartmentlist = resp.department_list;
+  //     }
+  //   });
+  // }
+
+  // personalData57DepartmentModificarBtn(){
+  //   console.log(this.personalData57DepartmentListSelectedData);
+  //   this.consultasExternasService.personalData57ShowDepartment(this.appAccessToken, this.appUserToken,this.personalData5SelectedAgendasData)
+  //   .subscribe(resp => {
+  //     console.log(resp);
+  //     if(resp.success === true) {
+  //       this.personalData57ShowDepartmentlist = resp.department_list;
+  //       for(let i=0; i<this.personalData57ShowDepartmentlist.length; i++){
+  //         if(this.personalData57ShowDepartmentlist[i].id == this.personalData57DepartmentListSelectedData){
+  //           this.personalData57DepartmentModificarNamePick = this.personalData57ShowDepartmentlist[i].departamento;
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
+  
+  // personalData57DepartmentModificarGrabarBtn(){
+  //   console.log(this.personalData57DepartmentListSelectedData);
+  //   console.log(this.personalData57DepartmentModifiedName);
+  //   this.consultasExternasService.personalData57DepartmentModificar(this.appAccessToken, this.appUserToken, this.personalData57DepartmentListSelectedData, this.personalData57DepartmentModifiedName, this.personalData5SelectedAgendasData)
+  //   .subscribe(resp => {
+  //     console.log(resp);
+  //     if(resp.success === true) {
+  //       this.showSuccessErrorAlert = 1;
+  //       this.successErrorMessage = resp.message;
+  //       this.autoCloseSuccessErrorMsg();
+  //       this.personalData57ShowDepartmentlist = resp.department_list;
+  //       this.personalData57DepartmentListSelectedData = [];
+  //     }
+  //   });
+  // }
+
+  // personalData57DepartmentBorrarButton(){
+  //   console.log(this.personalData57DepartmentListSelectedData);
+  //   this.consultasExternasService.personalData57DepartmentDelete(this.appAccessToken, this.appUserToken, this.personalData57DepartmentListSelectedData, this.personalData5SelectedAgendasData)
+  //   .subscribe(resp => {
+  //     console.log(resp);
+  //     if(resp.success === true) {
+  //       this.showSuccessErrorAlert = 1;
+  //       this.successErrorMessage = resp.message;
+  //       this.autoCloseSuccessErrorMsg();
+  //       if(resp.department_list === false){
+  //         this.personalData57ShowDepartmentlist = [];
+  //         this.personalData57DepartmentListSelectAllChkBx = false;
+  //       }else{
+  //       this.personalData57ShowDepartmentlist = resp.department_list;
+  //       }
+  //       this.personalData57DepartmentListSelectedData = [];
+  //     }
+  //   });
+  // }
+
+
+  //     //-------------------------All Checked for 57Department page------------------------------
+  //   personalData57DepartmentListSelectAllChkBxClicked() {
+  //     if(typeof this.personalData57ShowDepartmentlist !== 'undefined') {
+  //       this.personalData57DepartmentListSelectedData = [];
+  //       for (var i = 0; i < this.personalData57ShowDepartmentlist.length; i++) {
+  //         this.personalData57ShowDepartmentlist[i].personalData57DepartmentListSelectedData = this.personalData57DepartmentListSelectAllChkBx;
+  //         if(!(!this.personalData57DepartmentListSelectAllChkBx)) {
+  //           this.personalData57DepartmentListSelectedData.push(this.personalData57ShowDepartmentlist[i].id);
+  //         }
+  //       }
+  //     }
+  //   }
+    
+  //    //--------------------------Check Individual for 57Department page-------------------------
+  //   personalData57DepartmentListSelected(targetElem) {
+  //     this.personalData57DepartmentListSelectAllChkBx = this.personalData57ShowDepartmentlist.every(function(item:any) {
+  //       return item.personalData57DepartmentListSelectedData == true;
+  //     })
+  //     if(targetElem.checked == true) {
+  //       this.personalData57DepartmentListSelectedData.push(parseInt(targetElem.value));
+  //       // console.log(this.personalData57DepartmentListSelectedData);
+  //     }
+  //     else {
+  //       // console.log(this.personalData56DiagnosticListSelectedData.indexOf(parseInt(targetElem.value)))
+  //       this.personalData57DepartmentListSelectedData.splice(this.personalData57DepartmentListSelectedData.indexOf(parseInt(targetElem.value)), 1);
+  //     }
+  //   }
+
+
+  //   personalData57ShowAllPeticionList(){
+  //     this.consultasExternasService.personalData57ShowPeticionList(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId,this.personalData5SelectedAgendasData)
+  //     .subscribe(resp => {
+  //       console.log(resp);
+  //       if(resp.success === true) {
+  //         if(resp.peticion_list === false){
+  //           this.showSuccessErrorAlert = 1;
+  //           this.successErrorMessage = resp.message;
+  //           this.autoCloseSuccessErrorMsg();
+  //           this.personalData57ShowPeticionlist = [];
+  //         }else{
+  //         this.personalData57ShowPeticionlist = resp.peticion_list;
+  //         // this.personalData57selectedDepartmentId = 0;
+  //         // console.log(this.personalData57PeticionListSelectedData);
+  //         }
+  //       }
+  //     });
+  //   }
+
+  //   personalData57PruebaAnadirGrabar(){
+  //     console.log(this.personalData57selectedDepartmentId); //department_id
+  //     console.log(this.personalData57ObservacionesTextareaVal); //prueba
+  //     console.log(this.personalData57PeticionTextareaVal);  //peticion
+  //     console.log(this.personalData5SelectedAgendasData); //agenda_id
+  //     console.log(this.personalData57PlantillaSelectVal); //plantilla
+  //     this.consultasExternasService.personalData57PruebaAnadirGrabar(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId, this.personalData57ObservacionesTextareaVal, this.personalData57PeticionTextareaVal, this.personalData5SelectedAgendasData, this.personalData57PlantillaSelectVal)
+  //     .subscribe(resp => {
+  //       console.log(resp);
+  //       if(resp.success === true) {
+  //         this.showSuccessErrorAlert = 1;
+  //         this.successErrorMessage = resp.message;
+  //         this.autoCloseSuccessErrorMsg();
+  //         this.personalData57ShowPeticionlist = resp.peticion_list;
+  //         this.personalData57selectedDepartmentId = 0;
+  //       }
+  //     });
+  //   }
+
+
+  //     //-------------------------All Checked for 57Peticion page------------------------------
+  //     personalData57PeticionListSelectAllChkBxClicked() {
+  //       if(typeof this.personalData57ShowPeticionlist !== 'undefined') {
+  //         this.personalData57PeticionListSelectedData = [];
+  //         for (var i = 0; i < this.personalData57ShowPeticionlist.length; i++) {
+  //           this.personalData57ShowPeticionlist[i].personalData57PeticionListSelectedData = this.personalData57PeticionListSelectAllChkBx;
+  //           if(!(!this.personalData57PeticionListSelectAllChkBx)) {
+  //             this.personalData57PeticionListSelectedData.push(this.personalData57ShowPeticionlist[i].id);
+  //           }
+  //         }
+  //       }
+  //     }
+      
+  //      //--------------------------Check Individual for 57Peticion page-------------------------
+  //     personalData57PeticionListSelected(targetElem) {
+  //       this.personalData57PeticionListSelectAllChkBx = this.personalData57ShowPeticionlist.every(function(item:any) {
+  //         return item.personalData57PeticionListSelectedData == true;
+  //       })
+  //       if(targetElem.checked == true) {
+  //         this.personalData57PeticionListSelectedData.push(parseInt(targetElem.value));
+  //         // console.log(this.personalData57PeticionListSelectedData);
+  //       }
+  //       else {
+  //         // console.log(this.personalData56DiagnosticListSelectedData.indexOf(parseInt(targetElem.value)))
+  //         this.personalData57PeticionListSelectedData.splice(this.personalData57PeticionListSelectedData.indexOf(parseInt(targetElem.value)), 1);
+  //       }
+  //     }
+
+  /* ===================== 5.7 personalData56 Func Ends ====================== */
   
   hoursMenuClick(value, elem) {
     if(typeof $(elem).attr('class') !== 'undefined' && $(elem).attr('class').indexOf('disabled') > -1) {
@@ -1067,6 +1351,12 @@ export class ConsultasExternasComponent implements OnInit {
       else if(value == 5.6) {
         this.personalData56ShowAllDiagnostic();
       }
+      // else if(value == 5.8) {
+      //   this.personalData57ShowAllDepartmentList();
+      // }
+      // else if(value == 5.9) {
+      //   this.personalData57ShowAllDepartmentList();
+      // }
       else if(value == 5.14) {
         /*--Data Chart--*/
         let data = [], totalPoints = 200, $UpdatingChartColors = $("#updating-chart").css('color');
@@ -1254,6 +1544,12 @@ export class ConsultasExternasComponent implements OnInit {
   personalData54AgendasOnChange(agendasValue) {
     this.personalData54SelectedAgendasData = agendasValue;
   }
+
+  // personalData57departmentOnChange(departmentId){
+  //   console.log(departmentId);
+  //   this.personalData57selectedDepartmentId = departmentId;
+  //   this.personalData57ShowAllPeticionList();
+  // }
 
   getInsuranceNameFormId(mutuaId) {
     let mutuaName: string = '';

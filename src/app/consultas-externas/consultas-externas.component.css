@@ -96,3 +96,12 @@
 .smart-form .checkbox i{
 	top: 3px;
 }
+
+#header-fixed {
+	position: fixed;
+	top: 0px; display:none;
+}
+
+textarea{
+	resize: vertical;
+}
