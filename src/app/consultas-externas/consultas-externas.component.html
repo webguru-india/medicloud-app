@@ -1841,7 +1841,8 @@
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 smart-form">
                     <select class="form-control" id="select-1" (change)="personalData57departmentOnChange($event.target.value)">
                       <option selected disabled>Select Departamento</option>
-                      <option *ngFor="let data of personalData57ShowDepartmentlist" [value]="data.id">{{data.departamento}}</option>
+                      <!-- <option *ngFor="let data of personalData57ShowDepartmentlist" [value]="data.id">{{data.departamento}}
+                      </option> -->
                     </select>
                   </div>
                   <p style="clear: both;">&nbsp;</p>
@@ -1853,19 +1854,15 @@
                         </header>
                         <!-- widget div-->
                         <div>
-                          <!-- widget edit box -->
                           <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
                             <input class="form-control" type="text">
                             <span class="note"><i class="fa fa-check text-success"></i> Change title to update and save instantly!</span>
                           </div>
-                          <!-- end widget edit box -->
-                          <!-- widget content -->
                           <div class="widget-body no-padding">
                             <div class="custom-scroll table-responsive tab_height_200" style="overflow-y: scroll;">
                               <table class="table table-bordered">
                                 <thead>
-                                  <tr>
+                                  <!-- <tr>
                                     <th width="100">
                                       <div class="smart-form">
                                           <label class="checkbox">
@@ -1875,7 +1872,7 @@
                                         </div>
                                     </th>
                                     <th>Departamento Nombre</th>
-                                  </tr>
+                                  </tr> -->
                                 </thead>
                                 <tbody>
                                   <tr *ngFor="let data of personalData57ShowPeticionlist">
@@ -1893,7 +1890,6 @@
                               </table>
                             </div>
                           </div>
-                          <!-- end widget content -->
                         </div>
                         <!-- end widget div -->
                       </div>
@@ -2002,7 +1998,7 @@
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="row"> 
-                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DepartmentAnadirPopup" (click)="personalData57DepartmentAnadirBtn()" [disabled]="personalData57DepartmentListSelectedData.length > 0">Anadir</button>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DepartmentAnadirPopup" [disabled]="personalData57DepartmentListSelectedData.length > 0">Anadir</button>
                       <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DepartmentModificarPopup" (click)="personalData57DepartmentModificarBtn()" [disabled]="personalData57DepartmentListSelectedData.length != 1">Modificar</button>
                       <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DepartmentBorrarPopup" [disabled]="personalData57DepartmentListSelectedData.length < 1">Borrar</button>
                       <button class="btn btn-primary" href="" (click)="hoursMenuClick(5.8, $event.target);">Cancelar</button>
@@ -2860,7 +2856,7 @@
 <!-- /.modal -->
 
 <!-- ================================= Modal Popup for personalData57 =====================================-->
-<!--DepartmentAnadir Modal Start
+<!--DepartmentAnadir Modal Start  -->
 
 <div class="modal fade" id="DepartmentAnadirPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -2887,17 +2883,14 @@
   </div>
 </div>
 
-DepartmentAnadir End -->
+<!--  DepartmentAnadir End -->
 
-<!--DepartmentModificar Modal Start
-<div class="modal fade" id="DepartmentModificarPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!--  DepartmentModificar Modal Start -->
+<div class="modal fade" id="DepartmentModificarPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <span>DEPARTMENTO</span>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-        &times;
-        </button>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -2910,13 +2903,16 @@ DepartmentAnadir End -->
         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData57DepartmentModificarGrabarBtn()" [disabled]="personalData57DepartmentModifiedName == ''">
         Grabar
         </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="personalData57DepartmentModificarCancelarBtn()">
+        Cancelar
+        </button>
       </div>
     </div>
   </div>
 </div>
-DepartmentModificar End -->
+<!--  DepartmentModificar End -->
 
-<!--DepartmentBorrar Modal Start
+<!--  DepartmentBorrar Modal Start  -->
 <div class="modal fade" id="DepartmentBorrarPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -2940,9 +2936,9 @@ DepartmentModificar End -->
     </div>
   </div>
 </div>
-DepartmentBorrar End -->
+<!--  DepartmentBorrar End -->
 
-<!--peticionPruebaAnadir Modal Start
+<!--peticionPruebaAnadir Modal Start  
 <div class="modal fade" id="peticionPruebaAnadirPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -2975,7 +2971,7 @@ DepartmentBorrar End -->
     </div>
   </div>
 </div>
-peticionPruebaAnadir End -->
+ peticionPruebaAnadir End -->
 
 <!--======================================== personalData57 END ========================================-->
 
