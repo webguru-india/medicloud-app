@@ -166,7 +166,7 @@
 														<li><a href="javascript: void(0);" data-filter-col="staydate" [class]="selectedVisit.length != 1 || !(!isSelectedVisitConfirmed) ? 'disabled' : ''" (click)="confirmVisitMenuClicked($event.target)">Confirmar Visita</a></li>
 														<li><a href="javascript: void(0);" data-filter-col="snapshotat" (click)="hoursMenuClick(5, $event.target)" [class]="selectedVisit.length != 1 ? 'disabled' : ''">Hª Clinica / Datos Personales</a></li>
 														<li><a href="javascript: void(0);" data-filter-col="snapshotat" (click)="hoursMenuClick(6, $event.target)" [class]="selectedVisit.length != 1 ? 'disabled' : ''">Procedimientos</a></li>
-														<li><a href="javascript: void(0);" data-filter-col="staydate" (click)="hoursMenuClick(7, $event.target)" [class]="selectedVisit.length != 1 ? 'disabled' : ''">Adanir Tareas Pendientes</a></li>
+														<li><a href="javascript: void(0);" data-filter-col="staydate" (click)="hoursMenuClick(7, $event.target)" [class]="selectedVisit.length != 1 ? 'disabled' : ''">Anadir Tareas Pendientes</a></li>
 														<li><a href="javascript: void(0);" data-filter-col="snapshotat" [class]="selectedVisit.length == 0 ? 'disabled' : ''">Enviar SMS</a></li>
 													</ul>
 												</div>
@@ -548,7 +548,7 @@
                             <div class="widget-body-toolbar">
                               <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                  <button class="btn btn-primary btn-xs" href="#" data-toggle="modal" data-target="#DiagonosticsAdd" (click)="personalData56ShowAllDiagnostic()" [disabled]="personalData56DiagnosticListSelectedDataDiagnostico5.length > 0">Adanir</button>
+                                  <button class="btn btn-primary btn-xs" href="#" data-toggle="modal" data-target="#DiagonosticsAdd" (click)="personalData56ShowAllDiagnostic()" [disabled]="personalData56DiagnosticListSelectedDataDiagnostico5.length > 0">Anadir</button>
                                   <button class="btn btn-primary btn-xs" href="" data-toggle="modal" data-target="#DiagonosticsAddEdit" [disabled]="personalData56DiagnosticListSelectedDataDiagnostico5.length != 1" (click)="personalData56SelectedDiagnosticEdit()">Edit</button>
                                   <button class="btn btn-primary btn-xs" href="" data-toggle="modal" data-target="#DiagonosticsAddDelete" [disabled]="personalData56DiagnosticListSelectedDataDiagnostico5.length < 1">Delete</button>
                                 </div>
@@ -685,7 +685,7 @@
                         <div class="widget-body-toolbar">
                           <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                              <a class="btn btn-primary btn-xs" href="javascript:void(0);" (click)="hoursMenuClick(5.11, $event.target)">Adanir</a>
+                              <a class="btn btn-primary btn-xs" href="javascript:void(0);" (click)="hoursMenuClick(5.11, $event.target)">Anadir</a>
                               <a class="btn btn-primary btn-xs" href="javascript:void(0);">See</a>
                             </div>
                           </div>
@@ -760,7 +760,7 @@
                                     <i></i>Select Individual</label>
                               </div> -->
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                              <a class="btn btn-primary btn-xs" href="#" data-toggle="modal" data-target="#ReportsAdd" (click)="reportAddShowMore = false">Adanir</a>
+                              <a class="btn btn-primary btn-xs" href="#" data-toggle="modal" data-target="#ReportsAdd" (click)="reportAddShowMore = false">Anadir</a>
                               <a class="btn btn-primary btn-xs" href="javascript:void(0);">See</a>
                             </div>
                           </div>
@@ -830,7 +830,7 @@
                         <div class="widget-body-toolbar">
                           <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                              <a class="btn btn-primary btn-xs" href="javascript:void(0);" (click)="hoursMenuClick(5.12, $event.target)">Adanir</a>
+                              <a class="btn btn-primary btn-xs" href="javascript:void(0);" (click)="hoursMenuClick(5.12, $event.target)">Anadir</a>
                             </div>
                           </div>
                         </div>
@@ -899,7 +899,7 @@
                         <div class="widget-body-toolbar">
                           <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                              <a class="btn btn-primary btn-xs" href="#" data-toggle="modal" data-target="#settingsadd">Adanir</a>
+                              <a class="btn btn-primary btn-xs" href="#" data-toggle="modal" data-target="#settingsadd">Anadir</a>
                               <a class="btn btn-primary btn-xs" href="#" data-toggle="modal" data-target="#settingsadd">Modificar</a>
                               <a class="btn btn-primary btn-xs" href="javascript:void(0);">Borrar</a>
                               <a class="btn btn-primary btn-xs" href="javascript:void(0);" (click)="hoursMenuClick(5.14, $event.target)">Grafico</a>
@@ -1706,7 +1706,7 @@
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="row"> 
-                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DiagonosticsAddBtnPopupAdanir" [disabled]="personalData56DiagnosticListSelectedData.length > 0">Adanir</button>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DiagonosticsAddBtnPopupAdanir" [disabled]="personalData56DiagnosticListSelectedData.length > 0">Anadir</button>
                       <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DiagonosticsAddBtnPopupModificar" [disabled]="personalData56DiagnosticListSelectedData.length != 1">Modificar</button>
                       <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DiagonosticsAddBtnPopupBorrar" [disabled]="personalData56DiagnosticListSelectedData.length == 0">Borrar</button>
                       <button class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5, $event.target); openDiagonisticModal()">Cancelar</button>
@@ -1841,8 +1841,8 @@
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 smart-form">
                     <select class="form-control" id="select-1" (change)="personalData57departmentOnChange($event.target.value)">
                       <option selected disabled>Select Departamento</option>
-                      <!-- <option *ngFor="let data of personalData57ShowDepartmentlist" [value]="data.id">{{data.departamento}}
-                      </option> -->
+                      <option *ngFor="let data of personalData57ShowDepartmentlist" [value]="data.id">{{data.departamento}}
+                      </option>
                     </select>
                   </div>
                   <p style="clear: both;">&nbsp;</p>
@@ -1862,7 +1862,7 @@
                             <div class="custom-scroll table-responsive tab_height_200" style="overflow-y: scroll;">
                               <table class="table table-bordered">
                                 <thead>
-                                  <!-- <tr>
+                                  <tr>
                                     <th width="100">
                                       <div class="smart-form">
                                           <label class="checkbox">
@@ -1872,7 +1872,7 @@
                                         </div>
                                     </th>
                                     <th>Departamento Nombre</th>
-                                  </tr> -->
+                                  </tr>
                                 </thead>
                                 <tbody>
                                   <tr *ngFor="let data of personalData57ShowPeticionlist">
@@ -1899,7 +1899,7 @@
                     <div class="row"> 
                       <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5.9, $event.target);">Configuracion</a>
                       <button class="btn btn-primary" href="" data-toggle="modal" data-target="#peticionPruebaAnadirPopup" [disabled]="personalData57selectedDepartmentId == 0 || personalData57PeticionListSelectedData.length > 0">Anadir</button>
-                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#peticionPruebaModificarPopup" [disabled]="personalData57selectedDepartmentId === 0 || personalData57PeticionListSelectedData.length != 1">Modificar</button>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#peticionPruebaModificarPopup" [disabled]="personalData57selectedDepartmentId === 0 || personalData57PeticionListSelectedData.length != 1" (click)="personalData57PruebaModificarBtn()">Modificar</button>
                       <button class="btn btn-primary" href="" data-toggle="modal" data-target="#peticionPruebaBorrarPopup" [disabled]="personalData57selectedDepartmentId === 0 || personalData57PeticionListSelectedData.length < 1">Borrar</button>
                       <button class="btn btn-primary" (click)="hoursMenuClick(5.7, $event.target);">Cancelar</button>
                     </div>
@@ -2240,7 +2240,7 @@
                   <p>&nbsp;</p>
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="row"> 
-                      <a class="btn btn-primary" href="javascript:void(0);">Adanir</a>
+                      <a class="btn btn-primary" href="javascript:void(0);">Anadir</a>
                     </div>
                   </div>
                   <p style="clear: both;">&nbsp;</p>
@@ -2409,7 +2409,7 @@
                       </div>
                     </div>
                   </div>
-                  <a class="btn btn-primary" href="javascript:void(0);">Adanir</a>
+                  <a class="btn btn-primary" href="javascript:void(0);">Anadir</a>
                   <a class="btn btn-primary" href="javascript:void(0);">Borrar</a>
                   <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(6.1, $event.target)">Configuracion</a>
                   <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(0, $event.target)">Cancelar</a>
@@ -2550,7 +2550,7 @@
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="row"> 
                       <!-- <a class="btn btn-primary" href="javascript:void(0);">Configuration</a> -->
-                      <a class="btn btn-primary" href="javascript:void(0);">Adanir</a>
+                      <a class="btn btn-primary" href="javascript:void(0);">Anadir</a>
                       <a class="btn btn-primary" href="javascript:void(0);">Modificar</a>
                       <a class="btn btn-primary" href="javascript:void(0);">Borrar</a>
                       <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(6, $event.target)">Cancelar</a>
@@ -2647,7 +2647,7 @@
                       </div>
                     </div>
                   </div>
-                  <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#AddTaskAdd">Adanir</a>
+                  <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#AddTaskAdd">Anadir</a>
                   <a class="btn btn-primary" href="javascript:void(0);">Borrar</a>
                   <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(0, $event.target)">Cancelar</a>
                 </div>
@@ -2772,7 +2772,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-          <span>Adanir</span>
+          <span>Anadir</span>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
         &times;
         </button>
@@ -2938,7 +2938,7 @@
 </div>
 <!--  DepartmentBorrar End -->
 
-<!--peticionPruebaAnadir Modal Start  
+<!--peticionPruebaAnadir Modal Start  -->
 <div class="modal fade" id="peticionPruebaAnadirPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -2950,28 +2950,88 @@
       <div class="modal-body" >
         <div class="row">
           <div class="col-md-12">
-            <div>
-              <label>PETICION:</label>
-              <textarea class="form-control" rows="3" [(ngModel)]="personalData57PeticionTextareaVal"></textarea><br/><br/>
-              <label>OBSERVACIONES:</label>
-              <textarea class="form-control" rows="3" [(ngModel)]="personalData57ObservacionesTextareaVal"></textarea><br/><br/>
-              <label>PLANTILLA</label>
-                <select class="form-control" id="select-1">
-                  <option selected disabled [(ngModel)]="personalData57PlantillaSelectVal">Select Plantilla</option>
-                </select>
-            </div>
+            <label>PETICION:</label>
+            <textarea class="form-control" rows="3" [(ngModel)]="personalData57PeticionTextareaVal" name="personalData57PeticionTextareaVal"></textarea><br/><br/>
+            <label>OBSERVACIONES:</label>
+            <textarea class="form-control" rows="3" [(ngModel)]="personalData57ObservacionesTextareaVal" name="personalData57ObservacionesTextareaVal"></textarea><br/><br/>
+            <label>PLANTILLA</label>
+            <select class="form-control" id="select-1">
+              <option selected disabled [ngValue]="0">Select Plantilla</option>
+            </select>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData57PruebaAnadirGrabar()" [disabled]="personalData57PeticionTextareaVal === '' || personalData57ObservacionesTextareaVal === ''">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" name="buttonNamePeticion" (click)="personalData57PruebaAnadirGrabar()" [disabled]="personalData57PeticionTextareaVal == '' || personalData57ObservacionesTextareaVal == ''">
         Grabar
         </button>
       </div>
     </div>
   </div>
 </div>
- peticionPruebaAnadir End -->
+
+<!--  peticionPruebaAnadir End -->
+
+<!--peticionPruebaModificar Modal Start  -->
+<div class="modal fade" id="peticionPruebaModificarPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;
+        </button>
+      </div> -->
+      <div class="modal-body" >
+        <div class="row">
+          <div class="col-md-12">
+            <label>PETICION:</label>
+            <textarea class="form-control" rows="3" [(ngModel)]="personalData57PeticionModificarTextareaVal" name="personalData57PeticionModificarTextareaVal" [value]="personalData57PeticionTextareaPick"></textarea><br/><br/>
+            <label>OBSERVACIONES:</label>
+            <textarea class="form-control" rows="3" [(ngModel)]="personalData57ObservacionesModificarTextareaVal" name="personalData57ObservacionesModificarTextareaVal" [value]="personalData57ObservacionesTextareaPick" [ngModelOptions]="{standalone: true}"></textarea><br/><br/>
+            <label>PLANTILLA</label>
+            <select class="form-control" id="select-1">
+              <option selected disabled [ngValue]="0">Select Plantilla</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData57PruebaModificarGrabarBtn()" [disabled]="personalData57PeticionModificarTextareaVal == '' || personalData57ObservacionesModificarTextareaVal == ''">Grabar
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="personalData57PruebaModificarCancelarBtn()">
+        Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  peticionPruebaModificar End -->
+
+<!--  peticionPruebaBorrar Modal Start  -->
+<div class="modal fade" id="peticionPruebaBorrarPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <span>CONFIRME ELIMINACION</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData57PruebaBorrarButton()">
+        YES
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+        NO
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  peticionPruebaBorrar End -->
 
 <!--======================================== personalData57 END ========================================-->
 
@@ -3365,7 +3425,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
         &times;
         </button>
-        <h4 class="modal-title" id="myModalLabel">Adanir</h4>
+        <h4 class="modal-title" id="myModalLabel">Anadir</h4>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -3468,7 +3528,7 @@
                   </div>
                 </div>
               </div>
-              <button type="button" class="btn btn-primary">Adanir</button>
+              <button type="button" class="btn btn-primary">Anadir</button>
               <button type="button" class="btn btn-primary">Grabar</button>
               <button type="button" class="btn btn-default" (click)="reportAddShowMore = false">Cancelar</button>
             </div>

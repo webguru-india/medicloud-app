@@ -1329,4 +1329,65 @@ export class ConsultasExternasService {
       }
     )
   }
+
+  personalData57PruebaModificarGrabar(appAccessToken, appUserToken, departmentId, pruebaText, peticionText, agendaId, plantillaNo, peticionId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("department_id", departmentId);
+    fd.append("prueba", pruebaText);
+    fd.append("peticion", peticionText);
+    fd.append("agenda_id", agendaId);
+    fd.append("plantilla", plantillaNo);
+    fd.append("peticion_id", peticionId);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'save-peticions',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData57PruebaBorrar(appAccessToken, appUserToken, peticionId, departmentId, agendaId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("id", peticionId);
+    fd.append("department_id", departmentId);
+    fd.append("agenda_id", agendaId);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'delete-peticions',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
 }

@@ -180,6 +180,10 @@ export class ConsultasExternasComponent implements OnInit {
   public personalData57ShowPeticionlist: any = [];
   public personalData57PeticionListSelectedData: any = [];
   public personalData57PeticionListSelectAllChkBx: boolean = false;
+  public personalData57PeticionTextareaPick: any = '';
+  public personalData57ObservacionesTextareaPick: any = '';
+  public personalData57PeticionModificarTextareaVal: any = '';
+  public personalData57ObservacionesModificarTextareaVal: any = '';
 
   constructor(private _formBuilder: FormBuilder, private globalConfigs: GlobalConfigs, private cookieService: CookieService, public pageTitle: Title, private consultasExternasService: ConsultasExternasService) {
     if(typeof this.appAccessToken === 'undefined' || this.appAccessToken == '') {
@@ -471,6 +475,7 @@ export class ConsultasExternasComponent implements OnInit {
       if(resp.success === true) {
         if(resp.assign_diagnostic_list === false){
           this.personalData56ShowAssignDiagnostic5 = [];
+          this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
         }else{
           this.personalData56ShowAssignDiagnostic5 = resp.assign_diagnostic_list;
           console.log(this.personalData56ShowAssignDiagnostic5);
@@ -652,6 +657,7 @@ export class ConsultasExternasComponent implements OnInit {
       }
     });
   }
+
   personalData54GetProcessList() {
     if(this.personalData54SelectedPrivatMutuas == '' || this.personalData54SelectedPrivatMutuas == null) {
       return false;
@@ -664,6 +670,7 @@ export class ConsultasExternasComponent implements OnInit {
       }
     });
   }
+
   includeInQxConfiguration() {
     this.personalData54SelectedMutuas = this.personalData51SelectedMutuas;
     this.personalData54AgendasData = this.personalData51AgendasData;
@@ -672,6 +679,7 @@ export class ConsultasExternasComponent implements OnInit {
     this.personalData54GetPrivatMutualList(this.personalData54SelectedAgendasData);
     this.personalData54GetProcessList();
   }
+
   personalData54PrivatMutuasOnChange(privatMutuasData) {
     this.personalData54SelectedPrivatMutuas = privatMutuasData;
     this.personalData54GetProcessList();
@@ -688,6 +696,7 @@ export class ConsultasExternasComponent implements OnInit {
       }
     }
   }
+
   personalData54ProcessListSelected(targetElem) {
     this.personalData54ProcessListSelectAllChkBx = this.personalData54ProcessListData.every(function(item:any) {
       return item.personalData54SelectedProcess == true;
@@ -761,6 +770,7 @@ export class ConsultasExternasComponent implements OnInit {
       this.personalData55SelectedPrivatMutuasName = 'Privat';
     }
   }
+
   personalData55AddData() {
     let mutualId, privat, perayuda, processId = '', ayudante;
     if(this.personalData54SelectedPrivatMutuas == 'privat') {
@@ -839,6 +849,7 @@ export class ConsultasExternasComponent implements OnInit {
       }
     });
   }
+
   personalData52InterventionAllFieldsFilledChk() {
     this.personalData52TotalTarifa = 0;
     this.personalData52InterventionAllFieldsFilledup = 0;
@@ -1023,7 +1034,7 @@ export class ConsultasExternasComponent implements OnInit {
   }
 
   
-      //-------------------------All Checked for 56 personal main page------------------------------
+  //-------------------------All Checked for 56 personal main page------------------------------
   personalData56DiagnosticListSelectAllChkBxClicked() {
     if(typeof this.personalData56ShowAllDiagnosticDataList !== 'undefined') {
       this.personalData56DiagnosticListSelectedData = [];
@@ -1035,7 +1046,8 @@ export class ConsultasExternasComponent implements OnInit {
       }
     }
   }
-      //--------------------------Check Individual for 56 personal main page-------------------------
+
+  //--------------------------Check Individual for 56 personal main page-------------------------
   personalData56DiagnosticListSelected(targetElem) {
     this.personalData56DiagnosticListSelectAllChkBx = this.personalData56ShowAllDiagnosticDataList.every(function(item:any) {
       return item.personalData56DiagnosticListSelectedData == true;
@@ -1060,7 +1072,7 @@ export class ConsultasExternasComponent implements OnInit {
   }
 
 
-      //-------------------------All Checked for 56Diagonostics page------------------------------
+  //-------------------------All Checked for 56Diagonostics page------------------------------
   personalData56DiagnosticListSelectAllChkBxClickedDiagnostico5() {
     if(typeof this.personalData56ShowAssignDiagnostic5 !== 'undefined') {
       this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
@@ -1073,7 +1085,7 @@ export class ConsultasExternasComponent implements OnInit {
     }
   }
 
- //--------------------------Check Individual for 56Diagonostics page-------------------------
+  //--------------------------Check Individual for 56Diagonostics page-------------------------
   personalData56DiagnosticListSelectedDiagnostico5(targetElem) {
     this.personalData56DiagnosticListSelectAllChkBxDiagnostico5 = this.personalData56ShowAssignDiagnostic5.every(function(item:any) {
       return item.personalData56DiagnosticListSelectedDataDiagnostico5 == true;
@@ -1115,6 +1127,7 @@ export class ConsultasExternasComponent implements OnInit {
         this.successErrorMessage = resp.message;
         this.autoCloseSuccessErrorMsg();
         this.personalData57ShowDepartmentlist = resp.department_list;
+        this.personalData57DepartmentListSelectedData = [];
         this.personalData57DepartmentName = '';
       }
     });
@@ -1178,102 +1191,171 @@ export class ConsultasExternasComponent implements OnInit {
 
 
 
-      //-------------------------All Checked for 57Department page------------------------------
-    personalData57DepartmentListSelectAllChkBxClicked() {
-      if(typeof this.personalData57ShowDepartmentlist !== 'undefined') {
-        this.personalData57DepartmentListSelectedData = [];
-        for (var i = 0; i < this.personalData57ShowDepartmentlist.length; i++) {
-          this.personalData57ShowDepartmentlist[i].personalData57DepartmentListSelectedData = this.personalData57DepartmentListSelectAllChkBx;
-          if(!(!this.personalData57DepartmentListSelectAllChkBx)) {
-            this.personalData57DepartmentListSelectedData.push(this.personalData57ShowDepartmentlist[i].id);
-          }
+  //-------------------------All Checked for 57Department page------------------------------
+  personalData57DepartmentListSelectAllChkBxClicked() {
+    if(typeof this.personalData57ShowDepartmentlist !== 'undefined') {
+      this.personalData57DepartmentListSelectedData = [];
+      for (var i = 0; i < this.personalData57ShowDepartmentlist.length; i++) {
+        this.personalData57ShowDepartmentlist[i].personalData57DepartmentListSelectedData = this.personalData57DepartmentListSelectAllChkBx;
+        if(!(!this.personalData57DepartmentListSelectAllChkBx)) {
+          this.personalData57DepartmentListSelectedData.push(this.personalData57ShowDepartmentlist[i].id);
         }
       }
     }
+  }
     
-     //--------------------------Check Individual for 57Department page-------------------------
-    personalData57DepartmentListSelected(targetElem) {
-      this.personalData57DepartmentListSelectAllChkBx = this.personalData57ShowDepartmentlist.every(function(item:any) {
-        return item.personalData57DepartmentListSelectedData == true;
-      })
-      if(targetElem.checked == true) {
-        this.personalData57DepartmentListSelectedData.push(parseInt(targetElem.value));
-        // console.log(this.personalData57DepartmentListSelectedData);
-      }
-      else {
-        // console.log(this.personalData56DiagnosticListSelectedData.indexOf(parseInt(targetElem.value)))
-        this.personalData57DepartmentListSelectedData.splice(this.personalData57DepartmentListSelectedData.indexOf(parseInt(targetElem.value)), 1);
-      }
+  //--------------------------Check Individual for 57Department page-------------------------
+  personalData57DepartmentListSelected(targetElem) {
+    this.personalData57DepartmentListSelectAllChkBx = this.personalData57ShowDepartmentlist.every(function(item:any) {
+      return item.personalData57DepartmentListSelectedData == true;
+    })
+    if(targetElem.checked == true) {
+      this.personalData57DepartmentListSelectedData.push(parseInt(targetElem.value));
+      // console.log(this.personalData57DepartmentListSelectedData);
     }
-
-
-    personalData57ShowAllPeticionList(){
-      this.consultasExternasService.personalData57ShowPeticionList(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId,this.personalData5SelectedAgendasData)
-      .subscribe(resp => {
-        console.log(resp);
-        if(resp.success === true) {
-          if(resp.peticion_list === false){
-            this.showSuccessErrorAlert = 1;
-            this.successErrorMessage = resp.message;
-            this.autoCloseSuccessErrorMsg();
-            this.personalData57ShowPeticionlist = [];
-          }else{
-          this.personalData57ShowPeticionlist = resp.peticion_list;
-          // this.personalData57selectedDepartmentId = 0;
-          // console.log(this.personalData57PeticionListSelectedData);
-          }
-        }
-      });
+    else {
+      // console.log(this.personalData56DiagnosticListSelectedData.indexOf(parseInt(targetElem.value)))
+      this.personalData57DepartmentListSelectedData.splice(this.personalData57DepartmentListSelectedData.indexOf(parseInt(targetElem.value)), 1);
     }
+  }
 
-    personalData57PruebaAnadirGrabar(){
-      console.log(this.personalData57selectedDepartmentId); //department_id
-      console.log(this.personalData57ObservacionesTextareaVal); //prueba
-      console.log(this.personalData57PeticionTextareaVal);  //peticion
-      console.log(this.personalData5SelectedAgendasData); //agenda_id
-      console.log(this.personalData57PlantillaSelectVal); //plantilla
-      this.consultasExternasService.personalData57PruebaAnadirGrabar(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId, this.personalData57ObservacionesTextareaVal, this.personalData57PeticionTextareaVal, this.personalData5SelectedAgendasData, this.personalData57PlantillaSelectVal)
-      .subscribe(resp => {
-        console.log(resp);
-        if(resp.success === true) {
+
+  personalData57ShowAllPeticionList(){
+    this.consultasExternasService.personalData57ShowPeticionList(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId,this.personalData5SelectedAgendasData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        if(resp.peticion_list === false){
           this.showSuccessErrorAlert = 1;
           this.successErrorMessage = resp.message;
           this.autoCloseSuccessErrorMsg();
-          this.personalData57ShowPeticionlist = resp.peticion_list;
-          this.personalData57selectedDepartmentId = 0;
+          this.personalData57ShowPeticionlist = [];
+        }else{
+        this.personalData57ShowPeticionlist = resp.peticion_list;
+        // this.personalData57selectedDepartmentId = 0;
+        // console.log(this.personalData57PeticionListSelectedData);
         }
-      });
-    }
+      }
+    });
+  }
 
+  personalData57PruebaAnadirGrabar(){
+    console.log(this.personalData57selectedDepartmentId); //department_id
+    console.log(this.personalData57ObservacionesTextareaVal); //prueba
+    console.log(this.personalData57PeticionTextareaVal);  //peticion
+    console.log(this.personalData5SelectedAgendasData); //agenda_id
+    console.log(this.personalData57PlantillaSelectVal); //plantilla
+    this.consultasExternasService.personalData57PruebaAnadirGrabar(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId, this.personalData57ObservacionesTextareaVal, this.personalData57PeticionTextareaVal, this.personalData5SelectedAgendasData, this.personalData57PlantillaSelectVal)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.showSuccessErrorAlert = 1;
+        this.successErrorMessage = resp.message;
+        this.autoCloseSuccessErrorMsg();
+        this.personalData57ShowPeticionlist = resp.peticion_list;
+        this.personalData57DepartmentListSelectedData = [];
+        this.personalData57PeticionTextareaVal = '';
+        this.personalData57ObservacionesTextareaVal = '';
+      }
+    });
+  }
 
-      //-------------------------All Checked for 57Peticion page------------------------------
-      personalData57PeticionListSelectAllChkBxClicked() {
-        if(typeof this.personalData57ShowPeticionlist !== 'undefined') {
-          this.personalData57PeticionListSelectedData = [];
-          for (var i = 0; i < this.personalData57ShowPeticionlist.length; i++) {
-            this.personalData57ShowPeticionlist[i].personalData57PeticionListSelectedData = this.personalData57PeticionListSelectAllChkBx;
-            if(!(!this.personalData57PeticionListSelectAllChkBx)) {
-              this.personalData57PeticionListSelectedData.push(this.personalData57ShowPeticionlist[i].id);
-            }
+  personalData57PruebaModificarBtn(){
+    //console.log(this.personalData57PeticionListSelectedData);
+    this.consultasExternasService.personalData57ShowPeticionList(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId,this.personalData5SelectedAgendasData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.personalData57ShowPeticionlist = resp.peticion_list;
+        console.log(this.personalData57ShowPeticionlist);
+        for(let i=0; i<this.personalData57ShowPeticionlist.length; i++){
+          if(this.personalData57ShowPeticionlist[i].id == this.personalData57PeticionListSelectedData){
+            this.personalData57PeticionTextareaPick = this.personalData57ShowPeticionlist[i].peticion;
+            this.personalData57ObservacionesTextareaPick = this.personalData57ShowPeticionlist[i].prueba;
           }
         }
       }
-      
-       //--------------------------Check Individual for 57Peticion page-------------------------
-      personalData57PeticionListSelected(targetElem) {
-        this.personalData57PeticionListSelectAllChkBx = this.personalData57ShowPeticionlist.every(function(item:any) {
-          return item.personalData57PeticionListSelectedData == true;
-        })
-        if(targetElem.checked == true) {
-          this.personalData57PeticionListSelectedData.push(parseInt(targetElem.value));
-          // console.log(this.personalData57PeticionListSelectedData);
+    });
+  }
+
+  personalData57PruebaModificarGrabarBtn(){
+    console.log(this.personalData57selectedDepartmentId); //department_id
+    console.log(this.personalData57ObservacionesModificarTextareaVal); //prueba
+    console.log(this.personalData57PeticionModificarTextareaVal);  //peticion
+    console.log(this.personalData5SelectedAgendasData); //agenda_id
+    console.log(this.personalData57PlantillaSelectVal); //plantilla
+    console.log(this.personalData57PeticionListSelectedData); //peticion_id
+    this.consultasExternasService.personalData57PruebaModificarGrabar(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId, this.personalData57ObservacionesModificarTextareaVal, this.personalData57PeticionModificarTextareaVal, this.personalData5SelectedAgendasData, this.personalData57PlantillaSelectVal, this.personalData57PeticionListSelectedData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.showSuccessErrorAlert = 1;
+        this.successErrorMessage = resp.message;
+        this.autoCloseSuccessErrorMsg();
+        this.personalData57ShowPeticionlist = resp.peticion_list;
+        this.personalData57PeticionListSelectedData = [];
+        this.personalData57PeticionModificarTextareaVal = '';
+        this.personalData57ObservacionesModificarTextareaVal = '';
+      }
+    });
+  }
+
+  personalData57PruebaModificarCancelarBtn(){
+    this.personalData57PeticionListSelectedData = [];
+    this.personalData57PeticionModificarTextareaVal = '';
+    this.personalData57ObservacionesModificarTextareaVal = '';
+  }
+
+  personalData57PruebaBorrarButton(){
+    console.log(this.personalData57PeticionListSelectedData); //peticion_id
+    console.log(this.personalData57selectedDepartmentId); //department_id
+    console.log(this.personalData5SelectedAgendasData); //agenda_id
+    this.consultasExternasService.personalData57PruebaBorrar(this.appAccessToken, this.appUserToken, this.personalData57PeticionListSelectedData, this.personalData57selectedDepartmentId, this.personalData5SelectedAgendasData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.showSuccessErrorAlert = 1;
+        this.successErrorMessage = resp.message;
+        this.autoCloseSuccessErrorMsg();
+        if(resp.peticion_list === false){
+          this.personalData57ShowPeticionlist = [];
+          this.personalData57PeticionListSelectAllChkBx = false;
+        }else{
+        this.personalData57ShowPeticionlist = resp.peticion_list;
         }
-        else {
-          // console.log(this.personalData56DiagnosticListSelectedData.indexOf(parseInt(targetElem.value)))
-          this.personalData57PeticionListSelectedData.splice(this.personalData57PeticionListSelectedData.indexOf(parseInt(targetElem.value)), 1);
+        this.personalData57PeticionListSelectedData = [];
+      }
+    });
+
+  }
+
+  //-------------------------All Checked for 57Peticion page------------------------------
+  personalData57PeticionListSelectAllChkBxClicked() {
+    if(typeof this.personalData57ShowPeticionlist !== 'undefined') {
+      this.personalData57PeticionListSelectedData = [];
+      for (var i = 0; i < this.personalData57ShowPeticionlist.length; i++) {
+        this.personalData57ShowPeticionlist[i].personalData57PeticionListSelectedData = this.personalData57PeticionListSelectAllChkBx;
+        if(!(!this.personalData57PeticionListSelectAllChkBx)) {
+          this.personalData57PeticionListSelectedData.push(this.personalData57ShowPeticionlist[i].id);
         }
       }
-
+    }
+  }
+  
+  //--------------------------Check Individual for 57Peticion page-------------------------
+  personalData57PeticionListSelected(targetElem) {
+    this.personalData57PeticionListSelectAllChkBx = this.personalData57ShowPeticionlist.every(function(item:any) {
+      return item.personalData57PeticionListSelectedData == true;
+    })
+    if(targetElem.checked == true) {
+      this.personalData57PeticionListSelectedData.push(parseInt(targetElem.value));
+      // console.log(this.personalData57PeticionListSelectedData);
+    }
+    else {
+      // console.log(this.personalData56DiagnosticListSelectedData.indexOf(parseInt(targetElem.value)))
+      this.personalData57PeticionListSelectedData.splice(this.personalData57PeticionListSelectedData.indexOf(parseInt(targetElem.value)), 1);
+    }
+  }
   /* ===================== 5.7 personalData56 Func Ends ====================== */
   
   hoursMenuClick(value, elem) {
@@ -1336,6 +1418,8 @@ export class ConsultasExternasComponent implements OnInit {
       }
       else if(value == 5) {
         this.personalDataFunc();
+        this.personalData56DiagnosticListSelectedData = [];
+        this.personalData56DiagnosticListSelectAllChkBx = false;
       }
       else if(value == 5.1) {
         this.includeInQxFunction();
@@ -1355,9 +1439,20 @@ export class ConsultasExternasComponent implements OnInit {
       else if(value == 5.6) {
         this.personalData56ShowAllDiagnostic();
       }
+      else if(value == 5.7) {
+        this.personalData57PeticionListSelectAllChkBx = false;
+        this.personalData57PeticionListSelectedData = [];
+      }
       else if(value == 5.8) {
         this.personalData57ShowAllDepartmentList();
+        this.personalData57selectedDepartmentId = 0;
+        this.personalData57ShowPeticionlist = [];
       }
+      // else if(value == 5.7) {
+      //   $('#myModal').on('hidden.bs.modal', () => {
+      //     // do something…
+      //   })
+      // }
       else if(value == 5.9) {
         this.personalData57ShowAllDepartmentList();
       }
