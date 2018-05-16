@@ -38,14 +38,14 @@ if(!function_exists('checkUserAuth')){
          */
         $CI = get_instance();        
         $CI->load->model('Common_model');
-        $params = array('user_id'=>$user_id,'auth_key'=>$security_stamp,'last_login'=>date('Y-m-d H:i:s'),'last_seen'=>date('Y-m-d H:i:s'),'onLogin'=>$onLogin);
+        $params = array('user_id'=>trim($user_id),'auth_key'=>trim($security_stamp),'last_login'=>date('Y-m-d H:i:s'),'last_seen'=>date('Y-m-d H:i:s'),'onLogin'=>$onLogin);        
         $validate_data = $CI->Common_model->execute_sp(
             array('sp_name'=>'userAuthentication',
                 'params' => $params,
                 'db_name' => 'identities',
                 'return_type' => 'row'
             )
-        );    
+        );       
         
         if(isset($validate_data->authkey) && $validate_data->authkey!=$security_stamp){
             $validate_data->found = 0;

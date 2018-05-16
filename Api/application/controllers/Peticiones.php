@@ -1,6 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require APPPATH . 'libraries/REST_Controller.php';
-class Peticions extends REST_Controller{
+
+class Peticiones extends REST_Controller{
 	function __construct(){
 		parent::__construct();				
 		$this->access_token = $this->post('access_token');	
@@ -11,7 +12,7 @@ class Peticions extends REST_Controller{
 			exit;
 		}
 	}
-	function list_post(){
+	function list_post($return = false){
 		$rd['peticion_list'] = $this->Common_model->execute_sp(
 			array('sp_name'=>'mediagenda.clinica_peticiones_sele',
 				'params' => array("agenda"=>$this->post("agenda_id"),'departamento'=>$this->post('department_id')),
@@ -32,12 +33,12 @@ class Peticions extends REST_Controller{
 		echo returnJsonResponse($message,$success,$rd);
 	}
 	function save_post(){
-		$new = false;
+		$new = 1;
 		$departamento = $this->post('department_id');
-		$prueba = $this->post('prueba'); $peticion = $this->post('peticion'); $agenda = $this->post('agenda');
+		$prueba = $this->post('prueba'); $peticion = $this->post('peticion'); $agenda = $this->post('agenda_id');
 		$id = 0; $plantilla = $this->post('plantilla');
 		if($id = $this->post('peticion_id')){
-			$new = true;
+			$new = 0;
 		}
 		$params = array("nuevo"=>$new,"departamento"=>$departamento,"prueba"=>$prueba,"peticion"=>$peticion,"agenda"=>$agenda,"id"=>$id,"plantilla"=>$plantilla);
 		$res = $this->Common_model->execute_sp(
@@ -47,47 +48,41 @@ class Peticions extends REST_Controller{
 				'return_type' => 'array'
 			)
 		);
-		if($res){
-			$message = "Visit saved successfully"; $success = true;
+		if(!isset($res['code'])){
+			$message = "Peticiones saved successfully"; $success = true;
 		}else{
-			$message = "Some error occured !"; $success = false;
+			$message = $res['message']; $success = false;
 		}
-		$rd = $this->list_post();
+		$rd = $this->list_post(true);
 		echo returnJsonResponse($message,$success,$rd);
 	}
 	function delete_post(){
-		$params = array('id'=>$this->post('peticion_id'));
-		$res = $this->Common_model->execute_sp(
-			array('sp_name'=>'mediagenda.clinica_peticiones_borrar',
-				'params' => $params,
-				'db_name' => 'default',
-				'return_type' => 'row'
-			)
-		);
-		if($res){
-			$rd = $this->list_post(true);
-			$message = "Peticion deleted successfully";
-			echo returnJsonResponse($message,true,$rd);
+		$id_array = explode(',', $this->post('id'));
+		$error = false;
+		$message = $success_message = "";
+		if($id_array){
+			$ec = 0;
+			$sc = 0;			
+			foreach ($id_array as $key => $value) {
+				$action_status = $this->Common_model->execute_sp(
+				array(
+					"sp_name"=>"mediagenda.clinica_peticiones_borrar",
+					"db_name"=>'default',
+					"return_type"=>"array",
+					"params"=>array("id"=>$value)
+				)
+			);				
+			if(isset($action_status['code'])){
+					$ec++;
+					$error = true;				
+				}else{
+					$sc++;					
+				}
+			}
+			$res = buildErrorResponse($error,$ec,$sc);
+			echo returnJsonResponse($res['message'],$res['success'],$this->list_post(true));
 		}else{
-			$message = "Some error occoured.";
-			echo returnJsonResponse($message,false,array());
-		}
-	}
-	function edit_post(){		
-		$res['peticion'] = $this->Common_model->execute_sp(
-			array('sp_name'=>'mediagenda.clinica_peticiones_datos',
-				'params' => array('id'=>$this->post('peticions_id')),
-				'db_name' => 'default',
-				'return_type' => 'row'
-			)
-		);
-		if($rd['assigned_peticions']){
-			$success = true;
-			$message = "";
-		}else{
-			$success = false;
-			$message = "";
-		}
-		echo returnJsonResponse($message,$success,$res);
-	}
+			echo json_encode(array('success'=>false,'message'=>'Please select a Peticiones for delete'));
+		}		
+	}	
 }

@@ -79,6 +79,8 @@ export class ConsultasExternasComponent implements OnInit {
   public addVisitMutuaList: string = '';
   public addVisitVisitType: number = 1;
 
+  public mutuaEditClass: boolean = false;
+
   public modificiarMutua = '1';
 
   public visitorsListData: any;
@@ -184,6 +186,17 @@ export class ConsultasExternasComponent implements OnInit {
   public personalData57ObservacionesTextareaPick: any = '';
   public personalData57PeticionModificarTextareaVal: any = '';
   public personalData57ObservacionesModificarTextareaVal: any = '';
+  public personalData57PeticionAssignSelectedDataId: any = 0;
+  public personalData57PeticionAssignSelectedData: any = '';
+  public personalData57PruebaAssignSelectedData: any = '';
+  public personalData57PeticionAssignSelectedNewData: any = '';
+  public personalData57ShowAssignedPeticions: any = [];
+  public personalData57AssignPeticionsPdfUrl: any = '';
+
+  public fullDate = new Date();
+  public twoDigitMonth = ((this.fullDate.getMonth()+1) === 1)? (this.fullDate.getMonth()+1) : '0' + (this.fullDate.getMonth()+1);
+ 
+  public todayDate = this.fullDate.getDate() + "/" + this.twoDigitMonth + "/" + this.fullDate.getFullYear();
 
   constructor(private _formBuilder: FormBuilder, private globalConfigs: GlobalConfigs, private cookieService: CookieService, public pageTitle: Title, private consultasExternasService: ConsultasExternasService) {
     if(typeof this.appAccessToken === 'undefined' || this.appAccessToken == '') {
@@ -279,9 +292,7 @@ export class ConsultasExternasComponent implements OnInit {
         }
       });
 
-            /* initialize the calendar
-      -----------------------------------------------------------------*/
-
+      /* initialize the calendar-----------------------------------------------------------------*/
       $('#calendar').datepicker({
         inline: true,
         sideBySide: true,
@@ -312,6 +323,8 @@ export class ConsultasExternasComponent implements OnInit {
           }
         }
       });
+
+
       setTimeout(function() {
         $('#calendar .ui-datepicker-prev span').html('<i class="fa fa-chevron-left"></i>');
         $('#calendar .ui-datepicker-next span').html('<i class="fa fa-chevron-right"></i>');
@@ -320,7 +333,6 @@ export class ConsultasExternasComponent implements OnInit {
       $(".modal").on('show.bs.modal', function () {
         $('body, html').animate({"scrollTop": 0}, 300);
       });
-
     }, 500);
   }
 
@@ -349,7 +361,6 @@ export class ConsultasExternasComponent implements OnInit {
     this.consultasExternasService.updatePatientVisit(this.appAccessToken, this.appUserToken, this.selectedVisit, selectedVisitData.ID_malalt, isPrivatOrNot, selectedVisitData.ID_mutua, selectedVisitData.tipovisita, this.confirmVisitPopupData.confirmVisitCantidad, confirmVisitNoCharge)
     .subscribe(resp => {
       console.log(resp);
-
       this.confirmVisitPopupData = {
         first_last_name: '',
         second_last_name: '',
@@ -420,6 +431,7 @@ export class ConsultasExternasComponent implements OnInit {
       }
     });
   }
+
   changeDateFunc() {
     $('#calendar1').datepicker({
       dateFormat : 'yy-mm-dd',
@@ -431,7 +443,7 @@ export class ConsultasExternasComponent implements OnInit {
         this.getChangeVisitDateData();
       }
     });
-    
+
     this.changeVisitDate = $('#calendar1').datepicker("getDate").getFullYear()+'-'+('0'+(parseInt($('#calendar1').datepicker("getDate").getMonth())+1)).slice(-2)+'-'+('0'+$('#calendar1').datepicker("getDate").getDate()).slice(-2);
     this.getChangeVisitDateData();
   }
@@ -482,6 +494,18 @@ export class ConsultasExternasComponent implements OnInit {
         }
         this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
         this.personalData56DiagnosticListSelectAllChkBx = false;
+      }
+    });
+
+    this.consultasExternasService.personalData57ListPeticons(this.appAccessToken, this.appUserToken, this.convertAllCheckBooleanToInteger, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        if(resp.assigned_peticions === false){
+          this.personalData57ShowAssignedPeticions = [];
+        }else{
+          this.personalData57ShowAssignedPeticions = resp.assigned_peticions;
+        }
       }
     });
   }
@@ -612,7 +636,6 @@ export class ConsultasExternasComponent implements OnInit {
 
     let petientId = this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt;
 
-
     this.consultasExternasService.getSelectedPatientData(this.appAccessToken, this.appUserToken, petientId)
     .subscribe(resp => {
       console.log(resp);
@@ -732,7 +755,6 @@ export class ConsultasExternasComponent implements OnInit {
       }
     }
     console.log(processData);
-
     return processData;
   }
 
@@ -1189,8 +1211,6 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-
-
   //-------------------------All Checked for 57Department page------------------------------
   personalData57DepartmentListSelectAllChkBxClicked() {
     if(typeof this.personalData57ShowDepartmentlist !== 'undefined') {
@@ -1219,7 +1239,6 @@ export class ConsultasExternasComponent implements OnInit {
     }
   }
 
-
   personalData57ShowAllPeticionList(){
     this.consultasExternasService.personalData57ShowPeticionList(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId,this.personalData5SelectedAgendasData)
     .subscribe(resp => {
@@ -1232,8 +1251,6 @@ export class ConsultasExternasComponent implements OnInit {
           this.personalData57ShowPeticionlist = [];
         }else{
         this.personalData57ShowPeticionlist = resp.peticion_list;
-        // this.personalData57selectedDepartmentId = 0;
-        // console.log(this.personalData57PeticionListSelectedData);
         }
       }
     });
@@ -1326,7 +1343,6 @@ export class ConsultasExternasComponent implements OnInit {
         this.personalData57PeticionListSelectedData = [];
       }
     });
-
   }
 
   //-------------------------All Checked for 57Peticion page------------------------------
@@ -1355,6 +1371,63 @@ export class ConsultasExternasComponent implements OnInit {
       // console.log(this.personalData56DiagnosticListSelectedData.indexOf(parseInt(targetElem.value)))
       this.personalData57PeticionListSelectedData.splice(this.personalData57PeticionListSelectedData.indexOf(parseInt(targetElem.value)), 1);
     }
+  }
+
+  personalData57PeticionSolicitarBtn(){
+    console.log(this.personalData57PeticionAssignSelectedDataId);
+    console.log(this.personalData57ShowPeticionlist);
+    for(let i=0; i<this.personalData57ShowPeticionlist.length; i++){
+      if(this.personalData57ShowPeticionlist[i].id == this.personalData57PeticionAssignSelectedDataId){
+        this.personalData57PeticionAssignSelectedData = this.personalData57ShowPeticionlist[i].peticion;
+        this.personalData57PruebaAssignSelectedData = this.personalData57ShowPeticionlist[i].prueba;
+      }
+    }
+    console.log(this.personalData57PeticionAssignSelectedData);
+    console.log(this.personalData57PruebaAssignSelectedData);
+    setTimeout(() => {
+      $('.summernote-1').summernote('reset');
+      $('.summernote-1').summernote({
+        toolbar: [
+          // [groupName, [list of button]]
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['strikethrough', 'superscript', 'subscript']],
+          ['fontsize', ['fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']]
+        ]
+      });
+    }, 100)
+  }
+
+  cancelPeticionSolicitarData(){
+    this.personalData57PeticionAssignSelectedDataId = 0;
+    this.personalData57PeticionAssignSelectedData = '';
+    this.personalData57PruebaAssignSelectedData = '';
+  }
+
+  savePeticionSolicitarData(){
+    let editorText1 = $(".summernote-1").summernote("code");
+    let usuario = 'pending';
+    console.log(this.personalData57PeticionAssignSelectedDataId); //peticion_id
+    // usuario send pending for now
+    console.log(this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt);  //patient_id
+    console.log(this.personalData5SelectedAgendasData); //agenda_id
+    console.log(editorText1); //texto
+    // has_peticion send 1 or true for now
+    this.consultasExternasService.personalData57AssignPeticions(this.appAccessToken, this.appUserToken, this.personalData57PeticionAssignSelectedDataId, usuario, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData, editorText1, 1)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.showSuccessErrorAlert = 1;
+        this.successErrorMessage = resp.message;
+        this.autoCloseSuccessErrorMsg();
+        this.personalData57AssignPeticionsPdfUrl = resp.return_data;
+        console.log(this.personalData57AssignPeticionsPdfUrl);
+        window.open(this.personalData57AssignPeticionsPdfUrl);
+      }
+    });
+    // $("#frame").attr("src", this.personalData57AssignPeticionsPdfUrl);
   }
   /* ===================== 5.7 personalData56 Func Ends ====================== */
   
@@ -1420,6 +1493,10 @@ export class ConsultasExternasComponent implements OnInit {
         this.personalDataFunc();
         this.personalData56DiagnosticListSelectedData = [];
         this.personalData56DiagnosticListSelectAllChkBx = false;
+        this.personalData57ShowPeticionlist = [];
+
+        console.log(this.convertAllCheckBooleanToInteger);
+        
       }
       else if(value == 5.1) {
         this.includeInQxFunction();
@@ -1440,6 +1517,7 @@ export class ConsultasExternasComponent implements OnInit {
         this.personalData56ShowAllDiagnostic();
       }
       else if(value == 5.7) {
+        this.personalData57ShowAllDepartmentList();
         this.personalData57PeticionListSelectAllChkBx = false;
         this.personalData57PeticionListSelectedData = [];
       }
@@ -1448,11 +1526,6 @@ export class ConsultasExternasComponent implements OnInit {
         this.personalData57selectedDepartmentId = 0;
         this.personalData57ShowPeticionlist = [];
       }
-      // else if(value == 5.7) {
-      //   $('#myModal').on('hidden.bs.modal', () => {
-      //     // do something…
-      //   })
-      // }
       else if(value == 5.9) {
         this.personalData57ShowAllDepartmentList();
       }
@@ -1748,7 +1821,8 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  patientNameSelected(patientId) {console.log(patientId)
+  patientNameSelected(patientId) {
+    console.log(patientId)
     if(typeof patientId !== 'undefined' && patientId != null && patientId != '' && !isNaN(patientId)) {
       this.consultasExternasService.getSelectedPatientData(this.appAccessToken, this.appUserToken, patientId)
       .subscribe(resp => {
@@ -1784,6 +1858,12 @@ export class ConsultasExternasComponent implements OnInit {
   }
 
   addPatientRecord(formData) {
+    if(this.addVisitMutuaPrivadoRadio === '0'){
+      if(this.addVisitMutuaList == ''){
+        this.mutuaEditClass = true;
+        return false;
+      }
+    }
 
     if(!this.forEdit) {
       this.consultasExternasService.addVisitPetientData(this.appAccessToken, this.appUserToken, formData, this.selectedAgendasData)
@@ -1834,7 +1914,7 @@ export class ConsultasExternasComponent implements OnInit {
             //   onSelect : (selectedDate) => {
             //     this.selectedDate = selectedDate.substring(6) + '/' + selectedDate.substring(0, 2) + '/' + selectedDate.toString().substring(3, 5);
             //     if(typeof this.selectedAgendasData !== 'undefined' && this.selectedAgendasData != '' && this.selectedAgendasData != null) {
-                  this.getVisitorsList();
+            this.getVisitorsList();
             //     }
             //   }
             // });

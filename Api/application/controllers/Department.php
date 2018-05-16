@@ -12,7 +12,7 @@ class Department extends REST_Controller{
 		}
 	}
 	function list_post($return = false){		
-		$rd['department_list'] = $this->Common_model->execute_sp(
+		$rd = $this->Common_model->execute_sp(
 			array('sp_name'=>'mediagenda.clinica_departamentos_sele',
 				'params' => array("agenda"=>$this->post("agenda_id")),
 				'db_name' => 'default',
@@ -22,14 +22,14 @@ class Department extends REST_Controller{
 		if($return){
 			return $rd;
 		}
-		if($rd['department_list']){
+		if(!isset($rd['code'])){
 			$success = true;
 			$message = "success";
 		}else{
 			$success = true;
 			$message = "No recode found";
 		}	
-		echo returnJsonResponse($message,$success,$rd);
+		echo returnJsonResponse($message,$success,array('department_list'=>$rd));
 	}
 	function save_post(){
 		$new = true; $id = 0;
@@ -41,31 +41,43 @@ class Department extends REST_Controller{
 			array('sp_name'=>'mediagenda.clinica_departamentos_grabar',
 				'params' => $params,
 				'db_name' => 'default',
-				'return_type' => 'row'
+				'return_type' => 'row-array'
 			)
 		);
-		if($res){
+		if(!isset($res['code'])){
 			$message = "Patient saved successfully"; $success = true;
 		}else{
-			$message = "Some error occoured!"; $success = false;
+			$message = $res['message']; $success = false;
 		}
+		echo json_encode(array('success'=>$success,'message'=>$message,'department_list'=>$this->list_post(true)));
 	}
 	function delete_post(){
-		$params = array('id'=>$this->post('dept_id'));
-		$res = $this->Common_model->execute_sp(
-			array('sp_name'=>'mediagenda.clinica_departamentos_borrar',
-				'params' => $params,
-				'db_name' => 'default',
-				'return_type' => 'row'
-			)
-		);
-		if($res){
-			$rd = $this->list_post(true);
-			$message = "Department deleted successfully";
-			echo returnJsonResponse($message,true,$rd);
+		$id_array = explode(',', $this->post('id'));
+		$error = false;
+		$message = $success_message = "";
+		if($id_array){
+			$ec = 0;
+			$sc = 0;			
+			foreach ($id_array as $key => $value) {
+				$action_status = $this->Common_model->execute_sp(
+				array(
+					"sp_name"=>"mediagenda.clinica_departamentos_borrar",
+					"db_name"=>'default',
+					"return_type"=>"row",
+					"params"=>array("id"=>$value)
+				)
+			);
+				if($action_status['code']!=0000){
+					$ec++;
+					$error = true;				
+				}else{
+					$sc++;					
+				}
+			}
+			$res = buildErrorResponse($error,$ec,$sc);
+			echo returnJsonResponse($res['message'],$res['success'],array('department_list'=>$this->list_post(true)));
 		}else{
-			$message = "Some error occoured.";
-			echo returnJsonResponse($message,false,array());
-		}
+			echo json_encode(array('success'=>false,'message'=>'Please select a diagnosis for delete'));
+		}		
 	}
 }

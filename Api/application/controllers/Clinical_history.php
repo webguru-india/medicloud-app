@@ -447,13 +447,34 @@ class Clinical_history extends REST_Controller{
 		
 	}
 	function delete_diagnostic_patient_post(){
-		$res = $this->Common_model->execute_sp(array(
-			'sp_name'=>'mediagenda.clinica_diagnosticos_borrar','db_name' => 'default','return_type'=>'array',
-			'params'=>array("id"=>$this->post('diagnostic_id'))));
-
-		$return_data_array = $this->show_post(true);
-		$message = "Diagnostic saved sucessfully";
-		echo returnJsonResponse($message,$success,$return_data_array);
+		$id_array = explode(',', $this->post('diagnostic_id'));
+		$error = false;
+		$message = $success_message = "";
+		if($id_array){
+			$ec = 0;
+			$sc = 0;			
+			foreach ($id_array as $key => $value) {
+				$action_status = $this->Common_model->execute_sp(
+				array(
+					"sp_name"=>"mediagenda.clinica_diagnosticos_borrar",
+					"db_name"=>'default',
+					"return_type"=>"array",
+					"params"=>array("id"=>$value)
+				)
+			);
+				if($action_status['code']!=0000){
+					$ec++;
+					$error = true;				
+				}else{
+					$sc++;					
+				}
+			}
+			$rd_array = $this->show_assigned_diagnostic_post(true);
+			$res = buildErrorResponse($error,$ec,$sc);
+			echo returnJsonResponse($res['message'],$res['success'],array('assign_diagnostic_list'=>$rd_array));
+		}else{
+			echo json_encode(array('success'=>false,'message'=>'Please select a diagnosis for delete'));
+		}
 	}
 	function list_assigned_peticons_post($return = false){
 		if($all = $this->post('today')){
@@ -480,14 +501,19 @@ class Clinical_history extends REST_Controller{
 			'agenda'	=>	$this->post('agenda_id'),
 			'cabecera'	=>	false,
 			'texto'		=>	$this->post('texto')
-		);	
+		);			
+		$this->load->library('pdfgenerator');
+		define('UPLOAD_DIR', 'pdf/');
+		$url = base_url().UPLOAD_DIR.date('Y-m-d')."pdf";
+		$pdf = $this->pdfgenerator->generate($this->post('texto'), $url, false, 'A4', 'portrait');		
+    	@file_put_contents(UPLOAD_DIR.date('Y-m-d')."pdf", $pdf);
 		if($this->post('has_peticion')){
-			$res = $this->Common_model->execute_sp(array('sp_name'=>'clinica_solicitud_insert','db_name'=>'default','return_type'=>'row-array','params'=>$params));
+			$res = $this->Common_model->execute_sp(array('sp_name'=>'mediagenda.clinica_solicitud_insert','db_name'=>'default','return_type'=>'row-array','params'=>$params));
 		}
 		if(!isset($res['code'])){
-			echo json_encode(array('success'=>true,'message'=>'peticions assigned successfully'));
+			echo json_encode(array('success'=>true,'message'=>'peticions assigned successfully','return_data'=>$url));
 		}else{
-			echo json_encode(array('success'=>false,'message'=>$res['code']));
+			echo json_encode(array('success'=>false,'message'=>$res['message']));
 		}
     /*    Dim IM As Boolean = False
         Dim info As New cinformes.infos("PDF", Context.Session("bd").ToString, False, richtextbox1.Value, agenda, Context.Session("usu").ToString)

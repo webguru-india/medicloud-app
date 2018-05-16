@@ -115,15 +115,30 @@ $route['listed-by-mutual-rates'] = 'Clinical_history/listed_by_mutuas_rates';
 
 $route['previous-activity'] = 'Clinical_history/previous_activity';
 $route['print-report-part'] = 'Clinical_history/print_report_part';
-/*=============Diagnostic api=====================*/
+/*=============Diagnostic API=====================*/
 $route['save-diagnostic'] = 'Diagnostic/save';
 $route['show-all-diagnostic'] = 'Diagnostic/show';
 $route['delete-diagnostic'] = 'Diagnostic/delete';
 $route['assign-diagnostic'] = 'Clinical_history/save_diagnostic_patient';
 $route['show-assign-diagnostic'] = 'Clinical_history/show_assigned_diagnostic';
+$route['delete-assign-diagnostic'] = 'Clinical_history/delete_diagnostic_patient';
+/*============ end External Consultation===========*/
+
+/*========= Department API =========================*/
+$route['save-department'] = 'Department/save';
+$route['show-department'] = 'Department/list';
+$route['delete-department'] = 'Department/delete';
+/*===================================================*/
+
+/*========= Peticions API =========================*/
+$route['save-peticions'] = 'Peticiones/save';
+$route['show-peticions'] = 'Peticiones/list';
+$route['delete-peticions'] = 'Peticiones/delete';
+$route['assign-peticions'] = 'Clinical_history/assign_peticons_to_clinic';
+$route['list-peticions'] = 'Clinical_history/list_assigned_peticons';
+/*===================================================*/
 
 
-/*============ end External Consultation====================================*/
 
 /*------------common api------------*/
 $route['load-metges'] = 'Common_controller/load_metges';

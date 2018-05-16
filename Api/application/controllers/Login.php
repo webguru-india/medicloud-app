@@ -28,11 +28,11 @@ Class Login extends REST_Controller{
 		$password = $this->post('password');		
 		$validate_data = $this->Common_model->execute_sp(
 			array('sp_name'=>'validateLoginCredential',
-					'params' => array('center'=>$center,'username'=>$username),
+					'params' => array('center'=>trim($center),'username'=>trim($username)),
 					'db_name' => 'identities',
 					'return_type' => 'row'
 				)
-			);		
+			);	
 		if($validate_data){
 			if(verifyHashedPassword($password,trim($validate_data->PasswordHash))){
 				 $userdata = array(

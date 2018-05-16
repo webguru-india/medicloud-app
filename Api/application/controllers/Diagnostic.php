@@ -21,6 +21,7 @@ class Diagnostic extends REST_Controller{
 				"params"=>array("agenda"=>$agenda)
 			)
 		);
+		$diagnostic_list = (!$diagnostic_list)?array():$diagnostic_list;
 		if($return){
 			return $diagnostic_list;
 		}
@@ -75,7 +76,7 @@ class Diagnostic extends REST_Controller{
 				}
 			}
 			$res = buildErrorResponse($error,$ec,$sc);
-			echo returnJsonResponse($res['message'],$res['success']);
+			echo returnJsonResponse($res['message'],$res['success'],array('diagnostic_list'=>$this->show_post(true)));
 		}else{
 			echo json_encode(array('success'=>false,'message'=>'Please select a diagnosis for delete'));
 		}
