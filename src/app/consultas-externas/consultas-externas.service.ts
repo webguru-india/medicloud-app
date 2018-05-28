@@ -1451,4 +1451,177 @@ export class ConsultasExternasService {
       }
     )
   }
+
+  personalData517PatologiaGrabar(appAccessToken, appUserToken, patologia, agendaId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("patologia", patologia);
+    fd.append("agenda_id", agendaId);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'save-patologia',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData517PatologiaList(appAccessToken, appUserToken, agendaId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("agenda_id", agendaId);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'list-patologia',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData517PatologiaModificar(appAccessToken, appUserToken, patologia, agendaId, Id){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("patologia", patologia);
+    fd.append("agenda_id", agendaId);
+    fd.append("id", Id);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'save-patologia',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData517PatologiaBorrar(appAccessToken, appUserToken, agendaId, patologiaId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("agenda_id", agendaId);
+    fd.append("patologia_id", patologiaId);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'delete-patologia',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  saveRecetasData(appAccessToken, appUserToken, patologia, farmaco, tratamiento, agendaId, posologia, unidades, pauta){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("patologia", patologia);
+    fd.append("farmaco", farmaco);
+    fd.append("tratamiento", tratamiento);
+    fd.append("agenda_id", agendaId);
+    fd.append("posologia", posologia);
+    fd.append("unidades", unidades);
+    fd.append("pauta", pauta);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'save-recetas',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData515RecetasList(appAccessToken, appUserToken, patologiaId, agendaId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("patologia", patologiaId);
+    fd.append("agenda_id", agendaId);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'list-recetas',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
 }

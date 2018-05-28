@@ -80,7 +80,9 @@
 .ng-invalid {
 	border-color: #f00 !important;
 }
-
+.personaldatapopup .radio{margin-top: 0px;}
+.personaldatapopup .radio + .radio{margin-top: 10px;}
+.personaldatapopup .custom-scroll{margin-top: 15px;}
 
 @media only screen and (max-width:767px){
 	.mobile_row{
@@ -108,4 +110,8 @@ textarea{
 
 #summernote-content-align{
 	text-align: center;
+}
+
+#prescribir-button{
+	display: block !important;
 }

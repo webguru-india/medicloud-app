@@ -28,6 +28,8 @@ import { DatosDelCentroMedicoService } from './datos-del-centro-medico/datos-del
 import { HorarioService } from './horario/horario.service';
 import { ConsultasExternasService } from './consultas-externas/consultas-externas.service';
 
+import { PdfSafePipe } from './pdf-safe.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +44,8 @@ import { ConsultasExternasService } from './consultas-externas/consultas-externa
     DatosDelCentroMedicoComponent,
     HorarioComponent,
     ConsultasExternasComponent,
-    ConsultasExternasBkpComponent
+    ConsultasExternasBkpComponent,
+    PdfSafePipe
   ],
   imports: [
     BrowserModule,

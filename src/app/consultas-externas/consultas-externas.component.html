@@ -613,7 +613,7 @@
                               <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                   <a class="btn btn-primary btn-xs" href="javascript:void(0);" (click)="hoursMenuClick(5.7, $event.target)">Anadir</a>
-                                  <a class="btn btn-primary btn-xs" href="javascript:void(0);">Ver</a>
+                                  <button class="btn btn-primary btn-xs" href="" data-toggle="modal" data-target="#pdfModalPeticionsVer" (click)="personalData57AssignedPeticionSelectedShow()" [disabled]="personalData57PeticionAssignListSelectedData == ''">Ver</button>
                                 </div>
                               </div>
                             </div>
@@ -630,7 +630,7 @@
                                   <tr *ngFor="let data of personalData57ShowAssignedPeticions">
                                     <td>
                                       <div class="smart-form">
-                                        <label class="checkbox">
+                                        <label class="radio">
                                           <input type="radio" name="radio" [value]="data.id" [(ngModel)]="personalData57PeticionAssignListSelectedData">
                                           <i></i>
                                         </label>
@@ -1760,7 +1760,7 @@
                                   <tr *ngFor="let data of personalData57ShowPeticionlist">
                                     <td>
                                       <div class="smart-form">
-                                        <label class="checkbox">
+                                        <label class="radio">
                                           <input type="radio" name="radio" [value]="data.id" [(ngModel)]="personalData57PeticionAssignSelectedDataId">
                                           <i></i>
                                         </label>
@@ -1994,6 +1994,496 @@
         </div>
 
 
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.15">
+          <div class="">
+            <div class="widget-body-toolbar">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                  <!-- <h4>Peticion</h4> -->
+                  <p>&nbsp;</p>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                    <div class="row">
+                      <div class="input-group">
+                        <select class="form-control" id="select-1" (change)="specialtyOnChange($event.target.value)">
+                          <option selected disabled>Select Especialidad</option>
+                          <ng-container *ngIf="especialidadData?.length > 0">
+                            <option *ngFor="let data of especialidadData" [selected]="data.id == specialtySelectedId" [value]="data.id">{{data.especialitat}}</option>
+                          </ng-container>
+                        </select>
+                        <i class="fa fa-spinner fa-spin specialty-loader" *ngIf="loadingAgendas"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                    <select class="form-control" id="select-2" (change)="agendasOnChange($event.target.value)">
+                      <option disabled selected>Select Agendas</option>
+                      <ng-container *ngIf="!agendasData === false">
+                        <option *ngFor="let data of agendasData" [selected]="data.ID == selectedAgendasData" [value]="data.ID">{{data.METGE}}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 smart-form">
+                    <select class="form-control" id="select-1" (change)="personalData517PatologiaOnChange($event.target.value)">
+                      <option selected disabled>PATOLOGIA</option>
+                      <!-- <option *ngFor="let data of personalData517PatologiaDataList" [selected]="data.id == this.personalData517selectedPatologiatId" [value]="data.id">{{data.patologia}}</option> -->
+                    </select>
+                  </div>
+                  <p style="clear: both;">&nbsp;</p>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                      <div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-18" data-widget-colorbutton="false" data-widget-editbutton="false">
+                        <header>
+                        </header>
+                        <!-- widget div-->
+                        <div>
+                          <div class="jarviswidget-editbox">
+                            <input class="form-control" type="text">
+                            <span class="note"><i class="fa fa-check text-success"></i> Change title to update and save instantly!</span>
+                          </div>
+                          <div class="widget-body no-padding">
+                            <div class="custom-scroll table-responsive tab_height_200" style="overflow-y: scroll;">
+                              <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th width="100">
+                                      <div class="smart-form">
+                                          <label class="checkbox">
+                                            <input type="checkbox" name="checkbox" [(ngModel)]="personalData518RecetasListSelectAllChkBx">
+                                            <i></i>Select All
+                                          </label>
+                                        </div>
+                                    </th>
+                                    <th>TRATAMIENTO</th>
+                                    <th>POSOLOGIA</th>
+                                    <th>UNIDADES</th>
+                                    <th>PAUTA</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let data of personalData518RecetasData">
+                                    <td>
+                                      <div class="smart-form">
+                                        <label class="checkbox">
+                                          <input type="checkbox" name="checkbox" [value]="data.id" [(ngModel)]="data.personalData518RecetasListSelectedData" (change)="personalData518RecetasListSelected($event.target)">
+                                          <i></i>
+                                        </label>
+                                      </div>
+                                    </td>
+                                    <td>{{data.tratamientos}}</td>
+                                    <td>{{data.posologia}}</td>
+                                    <td>{{data.unidades}}</td>
+                                    <td>{{data.pauta}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- end widget div -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row"> 
+                      <button class="btn btn-primary" href="" (click)="hoursMenuClick(5.17, $event.target);">Configurar</button>
+                      <button class="btn btn-primary" href="" (click)="hoursMenuClick(5.18, $event.target);" [disabled]="personalData517selectedPatologiatId === 0">Anadir</button>
+                      <button class="btn btn-primary" href="" (click)="hoursMenuClick(5.19, $event.target);">Modificar</button>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#">Borrar</button>
+                      <button class="btn btn-primary" (click)="hoursMenuClick(5.11, $event.target);">Cancelar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="clear: both;"></div>
+            </div>
+  
+            <!-- <div class="widget-body-toolbar">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                  <p>&nbsp;</p>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <select class="form-control" id="select-2" (change)="agendasOnChange($event.target.value)">
+                      <option disabled selected>Select Agendas</option>
+                      <ng-container *ngIf="!agendasData === false">
+                        <option *ngFor="let data of agendasData" [selected]="data.ID == selectedAgendasData" [value]="data.ID">{{data.METGE}}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 smart-form">
+                    <select class="form-control" id="select-1" (change)="personalData510PatologiaOnChange($event.target.value)">
+                      <option selected disabled> Especialidad</option>
+                      <option>abc</option>
+                      <option>def</option>
+                      <option>ghy</option>
+                    </select>
+                  </div>
+                  <p style="clear: both;">&nbsp;</p>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                      <div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-18" data-widget-colorbutton="false" data-widget-editbutton="false">
+                        <header>
+                        </header>
+                        <div>
+                          <div class="jarviswidget-editbox">
+                            <input class="form-control" type="text">
+                            <span class="note"><i class="fa fa-check text-success"></i> Change title to update and save instantly!</span>
+                          </div>
+                          <div class="widget-body no-padding">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row"> 
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#Anadir">Anadir</button>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#Modificar">Modificar</button>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#Borrar">Borrar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="clear: both;"></div>
+            </div>  -->
+          </div> 
+        </div> 
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.19">
+          <div class="">
+            <div class="widget-body-toolbar">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                		<div class="row">
+                			<div class="col-sm-12">
+                				<div class="row">
+                					<div class="col-sm-6">
+                						<div class="form-group">
+			                        <label id="prescribir-button">&nbsp;</label>
+			                        <button class="btn btn-primary" href="" data-toggle="modal" data-target="#personalData519BuscarPopup">BUSCAR EN BASE DE DATOS DEL MEDICAMENTO
+                              </button>
+		                        </div>
+                					</div>
+                				</div>
+                			</div>
+                			<div class="col-sm-12">
+                				<div class="form-group">
+                          <label>TRATAMIENTO:</label><br>
+                          <textarea class="form-control"></textarea>
+                        </div>
+                			</div>
+											<div class="col-sm-4">
+                				<div class="form-group">
+                          <label>POSOLOGIA:</label><br>
+                          <input type="text" name="" class="form-control" />
+                        </div>
+                			</div>
+											<div class="col-sm-4">
+                				<div class="form-group">
+                          <label>UNIDADES:</label><br>
+                          <input type="number" value="1" min="1" name="" class="form-control" />
+                        </div>
+                			</div>
+											<div class="col-sm-4">
+                				<div class="form-group">
+                          <label>PAUTA</label><br>
+                          <input type="number" name="" class="form-control" />
+                        </div>
+                			</div>
+											<div class="col-sm-12">
+                				<div class="form-group">
+                          <label>INSTRUCCIONES PARA EL PACIENTE</label><br>
+                          <textarea class="form-control"></textarea>
+                        </div>
+                			</div>
+                		</div>
+                	</div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <button class="btn btn-primary" href="" data-toggle="modal" data-target="#" [disabled]="personalData517PatologiaListSelectedData.length > 0">GRABAR</button>
+                    <button class="btn btn-primary" (click)="hoursMenuClick(5.15, $event.target);">Cancelar</button>
+                  </div>
+                </div>
+              </div>
+              <div style="clear: both;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.18">
+          <div class="">
+            <div class="widget-body-toolbar">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <form [formGroup]="personalData518FormGroup" (ngSubmit)="addTratamientoData(personalData518FormGroup.value)">
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <div class="form-group">
+                                <label id="prescribir-button">&nbsp;</label>
+                                <button class="btn btn-primary" type="button" href="" data-toggle="modal" data-target="#personalData518BuscarPopup">BUSCAR EN BASE DE DATOS DEL MEDICAMENTO
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <label>TRATAMIENTO:</label><br>
+                            <textarea class="form-control" name="personal_data518_tratamiento" placeholder="Tratamiento" formControlName="personalData518Tratamiento"></textarea>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <label>POSOLOGIA:</label><br>
+                            <input type="text" class="form-control" name="personal_data518_posologia" placeholder="Posologia" formControlName="personalData518Posologia"/>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <label>UNIDADES:</label><br>
+                            <input type="number" value="1" min="1" class="form-control" name="personal_data518_unidades" placeholder="Unidades" formControlName="personalData518Unidades"/>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <label>PAUTA</label><br>
+                            <input type="text" class="form-control" name="personal_data518_pauta" placeholder="Pauta" formControlName="personalData518Pauta"/>
+                          </div>
+                        </div>
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <label>INSTRUCCIONES PARA EL PACIENTE</label><br>
+                            <textarea class="form-control" name="personal_data518_Instrucciones" placeholder="Instrucciones para el Paciente" formControlName="personalData518Instrucciones"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <button class="btn btn-primary" type="submit" href="" data-toggle="modal" data-target="#" [disabled]="!personalData518FormGroup.valid">GRABAR</button>
+                      <button class="btn btn-primary" type="button" (click)="hoursMenuClick(5.15, $event.target);">Cancelar</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div style="clear: both;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.17">
+          <div class="">
+            <div class="widget-body-toolbar">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                    <div class="row">
+                      <div class="input-group">
+                        <select class="form-control" id="select-1" (change)="specialtyOnChange($event.target.value)">
+                          <option selected disabled>Select Especialidad</option>
+                          <ng-container *ngIf="especialidadData?.length > 0">
+                            <option *ngFor="let data of especialidadData" [selected]="data.id == specialtySelectedId" [value]="data.id">{{data.especialitat}}</option>
+                          </ng-container>
+                        </select>
+                        <i class="fa fa-spinner fa-spin specialty-loader" *ngIf="loadingAgendas"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                    <select class="form-control" id="select-2" (change)="agendasOnChange($event.target.value)">
+                      <option disabled selected>Select Agendas</option>
+                      <ng-container *ngIf="!agendasData === false">
+                        <option *ngFor="let data of agendasData" [selected]="data.ID == selectedAgendasData" [value]="data.ID">{{data.METGE}}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+                  <p style="clear: both;">&nbsp;</p>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                      <div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-18" data-widget-colorbutton="false" data-widget-editbutton="false">
+                        <header>
+                        </header>
+                        <!-- widget div-->
+                        <div>
+                          <div class="jarviswidget-editbox">
+                            <input class="form-control" type="text">
+                            <span class="note"><i class="fa fa-check text-success"></i> Change title to update and save instantly!</span>
+                          </div>
+                          <div class="widget-body no-padding">
+                            <div class="custom-scroll table-responsive tab_height_200" style="overflow-y: scroll;">
+                              <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th width="100">
+                                      <div class="smart-form">
+                                          <label class="checkbox">
+                                            <input type="checkbox" name="checkbox" [(ngModel)]="personalData517PatologiaListSelectAllChkBx" (change)="personalData517PatologiaSelectAllChkBxClicked()">
+                                            <i></i>Select All
+                                          </label>
+                                        </div>
+                                    </th>
+                                    <th>PATOLOGIA</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let data of personalData517PatologiaDataList">
+                                    <td>
+                                      <div class="smart-form">
+                                        <label class="checkbox">
+                                          <input type="checkbox" name="checkbox" [value]="data.id" [(ngModel)]="data.personalData517PatologiaListSelectedData" (change)="personalData517PatologiaListSelected($event.target)">
+                                          <i></i>
+                                        </label>
+                                      </div>
+                                    </td>
+                                    <td>{{data.patologia}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- end widget div -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#personalData517Anadir" [disabled]="personalData517PatologiaListSelectedData.length > 0">Anadir</button>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#personalData517Modificar" [disabled]="personalData517PatologiaListSelectedData.length != 1">Modificar</button>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#personalData517Borrar" [disabled]="personalData517PatologiaListSelectedData.length < 1">Borrar</button>
+                      <button class="btn btn-primary" (click)="hoursMenuClick(5.15, $event.target);">Cancelar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="clear: both;"></div>
+            </div>
+          </div>
+        </div>
+     
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.16">
+          <div class="">
+            <div class="widget-body-toolbar">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                  <!-- <h4>Peticion</h4> -->
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>Patient</label>
+                          <input class="form-control" id="prepend" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>DNI</label>
+                          <input class="form-control" id="prepend" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>FECHA DE NACIMIENTO</label>
+                          <input class="form-control" id="prepend" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label id="prescribir-button">&nbsp;</label>
+                          <button class="btn btn-primary" href="" data-toggle="modal" data-target="#">BUSCAR EN BASE DE DATOS DEL MEDICAMENTO</button>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>TRATAMIENTO</label>
+                          <input class="form-control" id="prepend" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>POSOLOGIA</label>
+                          <input class="form-control" id="prepend" type="number">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>UNIDADES</label>
+                          <input class="form-control" id="prepend" type="number">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>PAUTA</label>
+                          <input class="form-control" id="prepend" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>INSTRUCCIONES PARA EL PACIENTE</label><br/>
+                          <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>PRESCRIPTOR</label>
+                          <input class="form-control" id="prepend" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>IDIOMA</label>
+                          <select class="form-control" id="select-1">
+                            <option>Language1</option>
+                            <option>Language2</option>
+                            <option>Language3</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>DIRECCION</label>
+                          <input class="form-control" id="prepend" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>POBLACION</label>
+                          <input class="form-control" id="prepend" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Nª COLEGIADO</label>
+                          <input class="form-control" id="prepend" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>ESPECIALIDAD</label>
+                          <input class="form-control" id="prepend" type="text">
+                        </div>
+                      </div>
+                      <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="row"> 
+                          <a class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#">To Print</a>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#">IMPRIMIR</button>
+                      <button class="btn btn-primary" (click)="hoursMenuClick(5.11, $event.target);">Cancelar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="clear: both;"></div>
+            </div>
+          </div>
+        </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.11">
           <div class="">
@@ -2002,23 +2492,29 @@
                 <div class="row">
                   <h4>Recipes Add</h4>
                   <p>&nbsp;</p>
+                  <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                    <select class="form-control" id="select-1" (change)="personalData517PatologiaOnChange($event.target.value)">
+                      <option selected disabled>PATOLOGIA</option>
+                      <option *ngFor="let data of personalData517PatologiaDataList">{{data.patologia}}</option>
+                    </select>
+                  </div> -->
+
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                     <div class="row">
-                      <select class="form-control" id="select-1">
-                        <option>Specially</option>
-                        <option>option1</option>
-                        <option>option1</option>
-                        <option>option1</option>
-                        <option>option1</option>
+                      <select class="form-control" id="select-1" (change)="personalData517PatologiaOnChange($event.target.value)">
+                        <option selected disabled>PATOLOGIA</option>
+                        <option *ngFor="let data of personalData517PatologiaDataList">{{data.patologia}}</option>
                       </select>
+                      <i class="fa fa-spinner fa-spin specialty-loader" *ngIf="loadingAgendas"></i>
                     </div>
                   </div>
+
                   <p style="clear: both;">&nbsp;</p>
                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="row">
                       <div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-18" data-widget-colorbutton="false" data-widget-editbutton="false">
                         <header>
-                          <h2><strong></strong>  </h2>
+                          <h2><strong></strong></h2>
                         </header>
                         <!-- widget div-->
                         <div>
@@ -2090,8 +2586,8 @@
                   </div>
                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="row"> 
-                      <a class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#PrescribePopup">Prescribe</a>
-                      <a class="btn btn-primary" href="javascript:void(0);">Setup</a>
+                      <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5.16, $event.target);">Prescribe</a>
+                      <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5.15, $event.target);">Configurar</a>
                       <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5, $event.target);">Canceler</a>
                     </div>
                   </div>
@@ -2644,6 +3140,7 @@
   </section>
   <div style="clear: both;"></div>
 </div>
+
 <!-- modal starts -->
 <!--DiagonosticsAdd  Modal -->
 <div class="modal fade" id="DiagonosticsAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -3412,34 +3909,107 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12">
-            <div class="form-group smart-form">
+            <div class="form-group">
               <label>Patient</label>
-              <input class="form-control" id="prepend" placeholder="Patient" type="text">
+              <input class="form-control" id="prepend" type="text">
             </div>
           </div>
           <div class="col-md-6">
-            <div class="form-group smart-form">
+            <div class="form-group">
               <label>DNI</label>
-              <input class="form-control" id="prepend" placeholder="Patient" type="text">
+              <input class="form-control" id="prepend" type="text">
             </div>
           </div>
           <div class="col-md-6">
-            <div class="form-group smart-form">
-              <label>Birth Date</label>
-              <input class="form-control" id="prepend" placeholder="Patient" type="text">
+            <div class="form-group">
+              <label>FECHA DE NACIMIENTO</label>
+              <input class="form-control" id="prepend" type="text">
             </div>
-            <p>&nbsp;</p>
-            <h4>Search Database of The Medical product</h4>
-            <p>&nbsp;</p>
           </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>TRATAMIENTO</label>
+              <input class="form-control" id="prepend" type="text">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>POSOLOGIA</label>
+              <input class="form-control" id="prepend" type="number">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>UNIDADES</label>
+              <input class="form-control" id="prepend" type="number">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>PAUTA</label>
+              <input class="form-control" id="prepend" type="text">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>INSTRUCCIONES PARA EL PACIENTE</label><br/>
+              <textarea class="form-control" rows="2"></textarea>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>PRESCRIPTOR</label>
+              <input class="form-control" id="prepend" type="text">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>IDIOMA</label>
+              <select class="form-control" id="select-1">
+                <option>Language1</option>
+                <option>Language2</option>
+                <option>Language3</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>DIRECCION</label>
+              <input class="form-control" id="prepend" type="text">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>POBLACION</label>
+              <input class="form-control" id="prepend" type="text">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Nª COLEGIADO</label>
+              <input class="form-control" id="prepend" type="text">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>ESPECIALIDAD</label>
+              <input class="form-control" id="prepend" type="text">
+            </div>
+          </div>
+          <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="row"> 
+              <a class="btn btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#">To Print</a>
+            </div>
+          </div> -->
         </div>
       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">
-        Grabar
+        IMPRIMIR
         </button>
         <button type="button" class="btn btn-default" data-dismiss="modal">
-        Cancelar
+        CANCELAR
         </button>
       </div>
     </div>
@@ -3812,7 +4382,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="cancelPeticionSolicitarData()">
           Cancelar
         </button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="savePeticionSolicitarData()">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#pdfModalSummernoteSalvar" (click)="savePeticionSolicitarData()">
           Salvar
         </button>
       </div>
@@ -3823,7 +4393,41 @@
 </div>
 <!-- /.modal -->
 
+<!-- Modal pdfModal summernote salvar  -->
+<div class="modal fade bd-example-modal-lg" id="pdfModalSummernoteSalvar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;
+        </button>
+      </div>
+      <div class="modal-body" id="modal-popup-scroll-horizontal">
+          <iframe width="100%" height="500" [src]="personalData57AssignPeticionsPdfUrl | pdfSafe" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 
+<!-- Modal pdf open for Peticions ver -->
+<div class="modal fade bd-example-modal-lg" id="pdfModalPeticionsVer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;
+        </button>
+      </div>
+      <div class="modal-body" id="modal-popup-scroll-horizontal">
+          <!-- <iframe width="100%" height="500" [src]="personalData57AssignPeticionsPdfUrl | pdfSafe" frameborder="0" allowfullscreen></iframe> -->
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 
 <!-- Model of Previous Activity -->
 
@@ -3868,3 +4472,237 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+
+<!-- model for Anadir -->
+<div id="personalData517Anadir" class="modal fade c-model" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <!-- <h4 class="modal-title">Modal Header</h4> -->
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <label for="email">Patologia</label>
+            <input class="form-control" type="text" placeholder="Patologia" [(ngModel)]="personalData517PatologiaData">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData517PatologiaAnadirGrabarButton()" [disabled]="personalData517PatologiaData == ''">
+          Grabar
+        </button>
+      </div>
+     
+    </div>
+
+  </div>
+</div>
+<!-- model for Modificar -->
+<div id="personalData517Modificar" class="modal fade c-model" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <label for="email">Patologia</label>
+            <input class="form-control" type="text" placeholder="Patologia" [(ngModel)]="personalData517PatologiaModificarData"[value]="personalData517PatologiaSelectedToModify">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData517PatologiaModificarGrabarButton()" [disabled]="personalData517PatologiaModificarData == ''">
+          Grabar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- model for Borrar -->
+<div class="modal fade" id="personalData517Borrar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <span>CONFIRME ELIMINACION</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData517PatologiaBorrarButton()">
+        YES
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+        NO
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="personalData518BuscarPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content personaldatapopup">
+      <div class="modal-header">
+        <span>DEPARTMENTO</span>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+        	<div class="col-sm-12">
+        		<h6>BUSCAR POR:</h6>
+        	</div>
+        	<div class="col-sm-4">
+        		<div class="radio">
+        			<label> 
+        				<input type="radio" name="PRINC" checked="" value=""> PRINCIPIO ACTIVO 
+        			</label> 
+        		</div>
+        		<div class="radio">
+        			<label> 
+        				<input type="radio" name="PRINC" checked="" value=""> NOMBRE COMERCIAL
+        			</label> 
+        		</div>
+        	</div>
+        	<div class="col-sm-6">
+        		<select class="form-control">
+        			<option></option>
+        			<option></option>
+        			<option></option>
+        		</select>
+        	</div>
+          <div class="col-sm-12">
+            <div class="custom-scroll table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>NOM</th>
+                    <th>DOSIS</th>
+                    <th>FIC.TECNICA</th>
+                    <th>CODI</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">
+        Anadir
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="personalData519BuscarPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>DEPARTMENTO</span>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+        	<div class="col-sm-12">
+        		<h6>BUSCAR POR:</h6>
+        	</div>
+        	<div class="col-sm-4">
+        		<div class="radio">
+        			<label> 
+        				<input type="radio" name="PRINC" checked="" value=""> PRINCIPIO ACTIVO 
+        			</label> 
+        		</div>
+        		<div class="radio">
+        			<label> 
+        				<input type="radio" name="PRINC" checked="" value=""> NOMBRE COMERCIAL
+        			</label> 
+        		</div>
+        	</div>
+        	<div class="col-sm-6">
+        		<select class="form-control">
+        			<option></option>
+        			<option></option>
+        			<option></option>
+        		</select>
+        	</div>
+          <div class="col-sm-12">
+            <div class="custom-scroll table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>NOM</th>
+                    <th>DOSIS</th>
+                    <th>FIC.TECNICA</th>
+                    <th>CODI</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">
+        Anadir
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
