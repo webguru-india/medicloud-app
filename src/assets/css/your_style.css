@@ -142,6 +142,9 @@
 	#ajax-data-loader p {
 		margin-bottom: 0;
 	}
+	#ajax-data-loader.show-loader {
+		right: 0px;
+	}
 	#ajax-data-loader p .fa {
 		margin-right: 10px;
 	}

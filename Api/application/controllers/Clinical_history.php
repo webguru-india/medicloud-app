@@ -196,12 +196,12 @@ class Clinical_history extends REST_Controller{
 		//Cabecera is deprecated, always false Skip it for now
 	}
 	
-// incluir paciente form
+	// incluir paciente form
 	function intervenciones_list_post(){
 		$qx = true;
 		$agenda = $this->post('agenda_id');		
 	// muatua set in time of profile creation not visit time mutual
-		if($this->post('patient_mutual')==false){			
+		if($this->post('patient_mutual')==false){
 			$params = array('id'	=>	$this->post('malalt_id'));
 			$patient_details = $this->Common_model->execute_sp(
 			array('sp_name'=>'mediagenda.malalts_datos', 'params' => $params,'db_name' => 'default',
@@ -514,10 +514,91 @@ class Clinical_history extends REST_Controller{
 			echo json_encode(array('success'=>true,'message'=>'peticions assigned successfully','return_data'=>$url));
 		}else{
 			echo json_encode(array('success'=>false,'message'=>$res['message']));
+		}    
+	}
+	function prescribe_treatment_details_load_post(){				
+		$treatment = $this->post('treatment'); $posologia = $this->post('posologia');
+		$unidades = $this->post('unidades'); $pauta = $this->post('pauta'); $obs = $this->post('obs');
+		$patient_details = $this->get_patient_details();
+		$agenda_details = $this->get_agenda_details();
+		$doctors_details = $this->get_doctors_details($agenda_details->medico);		
+		$message = ""; $success = true;
+		echo json_encode(array('message'=>'', 'success'=> true,"patient_details" => $patient_details, "agenda_details" => $agenda_details, "doctors_details" => $doctors_details));
+
+	}
+	protected function get_patient_details(){
+		$params = array('id'	=>	$this->post('malat_id'));
+		$patient_details = $this->Common_model->execute_sp(
+			array('sp_name'=>'mediagenda.malalts_datos', 'params' => $params,'db_name' => 'default',
+			'return_type' => 'row'));
+		return $decoded_array = array(
+			"nom" => base64_decode($patient_details->nom),
+			"direccion" => base64_decode($patient_details->direccion),
+			"telefono"	=> base64_decode($patient_details->telefono),
+			"poblacion"	=> base64_decode($patient_details->poblacion),
+			"observaciones"	=> base64_decode($patient_details->observaciones),
+			"privat"	=> $patient_details->privat,
+			"maid"	=> $patient_details->maid,
+			"datai"	=> $patient_details->datan,
+			"id_mutua"	=> $patient_details->oid,
+			"omu"	=> $patient_details->omu,
+			"sms"	=> base64_decode($patient_details->sms),
+			"cog1"	=> base64_decode($patient_details->cog1),
+			"sms_movil"	=> $patient_details->sms_movil,
+			"cog2"	=> base64_decode($patient_details->cog2),
+			"dni" => base64_decode($patient_details->dni)
+		);
+	}
+	protected function get_agenda_details(){
+		$params = array('id'	=>	$this->post('agenda_id'));
+		return $agenda_details = $this->Common_model->execute_sp(
+			array('sp_name'=>'mediagenda.agenda_leer', 'params' => $params,'db_name' => 'default',
+			'return_type' => 'row'));
+	}
+	protected function get_doctors_details($doctor_id){
+		$params = array('id'	=>	$doctor_id);
+		return $agenda_details = $this->Common_model->execute_sp(
+			array('sp_name'=>'mediagenda.metges_sel_id', 'params' => $params,'db_name' => 'default',
+			'return_type' => 'row'));	
+	}
+	public function save_prescribe_post(){
+		$params = array(
+			'farmaco' => $this->post('treatment_id'),
+			'fecha'=>date('Y-m-d H:i:s'),
+			'usuario' => "pending",
+			'id_malalt'	=> $this->post('malalt_id'),
+			'agenda'	=> $this->post('agenda_id'),
+			'unidades'	=> $this->post('unidades'),
+			'pauta'		=> $this->post('pauta'),
+			'posologia'		=> $this->post('posologia'),
+			'instrucciones'	=> $this->post('instrucciones')
+		);
+		$res = $this->Common_model->execute_sp(
+			array('sp_name'=>'mediagenda.clinica_recetas_insert', 'params' => $params,'db_name' => 'default', 'return_type' => 'row-array'));		
+		if(!isset($res['code'])){
+			echo json_encode(array('success'=>true,'message'=>'prescribed successfully','return_data'=>$this->list_assigned_recetas_post(true) ));
+		}else{
+			echo json_encode(array('success'=>false,'message'=>$res['message']));
 		}
-    /*    Dim IM As Boolean = False
-        Dim info As New cinformes.infos("PDF", Context.Session("bd").ToString, False, richtextbox1.Value, agenda, Context.Session("usu").ToString)
-        dat = Nothing
-        */
+	}
+	public function list_assigned_recetas_post($return = false ){				
+		if($this->post('today')){
+			$params = array('id_malalt'=>$this->post('malalt_id'));
+			$sp = "mediagenda.clinica_recetas_sel";
+		}else{
+			$params = array('id_malalt'=>$this->post('malalt_id'), 'agenda'=>$this->post('agenda_id'));
+			$sp = "mediagenda.clinica_recetas_sel_agenda";
+		}		
+		$res['recetas'] = $this->Common_model->execute_sp(
+			array('sp_name'=>$sp, 'params'=>$params,'db_name'=>'default','return_type'=>'array'));		
+
+		if($return){
+			return $res['recetas'];
+		}
+		if(!isset($res['code'])){
+			echo json_encode(array('success'=>true,'message'=>'prescribed successfully','return_data'=>$res));
+		}else{
+			echo json_encode(array('success'=>false,'message'=>$res['message']));
+		}
 	}
 }

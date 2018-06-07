@@ -32,7 +32,8 @@ Class Login extends REST_Controller{
 					'db_name' => 'identities',
 					'return_type' => 'row'
 				)
-			);	
+			);
+		
 		if($validate_data){
 			if(verifyHashedPassword($password,trim($validate_data->PasswordHash))){
 				 $userdata = array(

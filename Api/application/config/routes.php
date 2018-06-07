@@ -138,7 +138,23 @@ $route['assign-peticions'] = 'Clinical_history/assign_peticons_to_clinic';
 $route['list-peticions'] = 'Clinical_history/list_assigned_peticons';
 /*===================================================*/
 
+/**============ Patologia API=================== */
+$route['save-patologia'] = 'Patologia/save';
+$route['list-patologia'] = 'Patologia/list';
+$route['delete-patologia'] = 'Patologia/delete';
+/**============================================= */
 
+/**============ Patologia API=================== */
+$route['save-recetas'] = 'Recetas/save';
+$route['list-recetas'] = 'Recetas/list';
+$route['delete-recetas'] = 'Recetas/delete';
+/**============================================= */
+
+/**============ Recetas ============= */ 
+$route['prescribe-recetas'] = 'Clinical_history/prescribe_treatment_details_load';
+$route['save-prescribtion'] = 'Clinical_history/save_prescribe';
+$route['list-assigned-recetas'] = 'Clinical_history/list_assigned_recetas';
+/**======================================= */
 
 /*------------common api------------*/
 $route['load-metges'] = 'Common_controller/load_metges';

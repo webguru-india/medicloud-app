@@ -59,6 +59,8 @@ export class ConsultasExternasComponent implements OnInit {
   public showSuccessErrorAlert: number = 0;
   public successErrorMessage: string = '';
 
+  public showPreparingData: number = 0;
+
   public isSmsRequired: false;
 
   public malaltData: any = {};
@@ -79,13 +81,35 @@ export class ConsultasExternasComponent implements OnInit {
   public addVisitMutuaList: string = '';
   public addVisitVisitType: number = 1;
 
+  public personalData516PrescribeFormGroup: FormGroup;
+  public personalData516Patient: string = '';
+  // public personalData516DNI: any = '';   As already declared
+  // public personalData516Date: any = '';    As already declared
+  public personalData516Tratamiento: any = '';
+  public personalData516Posologia: any = '';
+  public personalData516Unidades: number = 1;
+  public personalData516Pauta: any = '';
+  public personalData516Instrucciones: any = '';
+  public personalData516Prescriptor: any = '';
+  public personalData516Idioma: any = '';
+  public personalData516Direccion: any = '';
+  public personalData516Poblacion: any = '';
+  public personalData516Colegiado: any = '';
+  // public personalData516Especialidad: any = '';    As already declared
+  
   public personalData518FormGroup: FormGroup;
   public personalData518Tratamiento: string = '';
   public personalData518Posologia: string = '';
   public personalData518Unidades: number = 1;
   public personalData518Pauta: string = '';
   public personalData518Instrucciones: string = '';
-
+  
+  public personalData519FormGroup: FormGroup;
+  public personalData519Tratamiento: string = '';
+  public personalData519Posologia: string = '';
+  public personalData519Unidades: number = 1;
+  public personalData519Pauta: string = '';
+  public personalData519Instrucciones: string = '';
 
   public mutuaEditClass: boolean = false;
 
@@ -202,6 +226,20 @@ export class ConsultasExternasComponent implements OnInit {
   public personalData57AssignPeticionsPdfUrl: any = '';
   public personalData57PeticionAssignListSelectedData: any = '';
 
+  public personalData511selectedPatologiatId: number = 0;
+  public personalData511RecetasDataList: any = [];
+  public personalData511RecetasListSelectedData: any = [];
+  public personalData511RecetasListSelectAllChkBx: boolean =false;
+
+  public personalData515RecetasListSelectedData: any = [];
+  public personalData515RecetasListSelectAllChkBx: boolean = false;
+  public personalData515RecetasDataList: any = [];
+
+  public personalData516fullName: string = '';
+  public personalData516DNI: any = '';
+  public personalData516Date: any = '';
+  public personalData516Especialidad: any = '';
+
   public personalData517PatologiaData: any = '';
   public personalData517PatologiaDataList: any = [];
   public personalData517PatologiaListSelectedData: any = [];
@@ -210,7 +248,11 @@ export class ConsultasExternasComponent implements OnInit {
   public personalData517PatologiaModificarData: any = '';
   public personalData517selectedPatologiatId: number = 0;
 
-  public personalData518RecetasData: any = [];
+  public personalData519TratamientoModifyData: string = ''; 
+  public personalData519PosologiaModifyData: string = ''; 
+  public personalData519UnidadesModifyData: number = 1; 
+  public personalData519PautaModifyData: string = ''; 
+  public personalData519InstruccionesModifyData: string = ''; 
 
   public fullDate = new Date();
   public twoDigitMonth = ((this.fullDate.getMonth()+1) === 1)? (this.fullDate.getMonth()+1) : '0' + (this.fullDate.getMonth()+1);
@@ -280,6 +322,23 @@ export class ConsultasExternasComponent implements OnInit {
       'personalData52Expenses': ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]+([,.][0-9]+)?$/)])]
     });
 
+    this.personalData516PrescribeFormGroup = _formBuilder.group({
+      'personalData516Patient': ['', Validators.required],
+      'personalData516DNI': ['', Validators.required],
+      'personalData516Date': ['', Validators.required],
+      'personalData516Tratamiento': ['', Validators.required],
+      'personalData516Posologia': ['', Validators.required],
+      'personalData516Unidades': [1],
+      'personalData516Pauta': ['', Validators.required],
+      'personalData516Instrucciones': [''],
+      'personalData516Prescriptor': ['', Validators.required],
+      'personalData516Idioma': ['Catala'],
+      'personalData516Direccion': ['', Validators.required],
+      'personalData516Poblacion': ['', Validators.required],
+      'personalData516Colegiado': ['', Validators.required],
+      'personalData516Especialidad': ['', Validators.required]
+    });
+
     this.personalData518FormGroup = _formBuilder.group({
       'personalData518Tratamiento': ['', Validators.required],
       'personalData518Posologia': ['', Validators.required],
@@ -288,6 +347,13 @@ export class ConsultasExternasComponent implements OnInit {
       'personalData518Instrucciones': ['', Validators.required]
     });
   
+    this.personalData519FormGroup = _formBuilder.group({
+      'personalData519Tratamiento': ['', Validators.required],
+      'personalData519Posologia': ['', Validators.required],
+      'personalData519Unidades': [1, Validators.required],
+      'personalData519Pauta': ['', Validators.required],
+      'personalData519Instrucciones': ['', Validators.required]
+    });
     let date = new Date(),
         d = date.getDate(),
         m = date.getMonth(),
@@ -1210,13 +1276,14 @@ export class ConsultasExternasComponent implements OnInit {
     this.consultasExternasService.personalData57ShowPeticionList(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId,this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       if(resp.success === true) {
+        this.showPreparingData = 0;
         if(resp.peticion_list === false){
           this.showSuccessErrorAlert = 1;
           this.successErrorMessage = resp.message;
           this.autoCloseSuccessErrorMsg();
           this.personalData57ShowPeticionlist = [];
         }else{
-        this.personalData57ShowPeticionlist = resp.peticion_list;
+          this.personalData57ShowPeticionlist = resp.peticion_list;
         }
       }
     });
@@ -1374,22 +1441,130 @@ export class ConsultasExternasComponent implements OnInit {
 
   /* ===================== 5.7 personalData56 Func Ends ====================== */
 
-  /* ===================== 5.17 personalData56 Func Start ====================== */
+  /* ===================== 5.11 personalData511 Func Start ====================== */
+  personalData511PatologiaOnChange(targetValue){
+    // this.personalData515RecetasListSelectAllChkBx = false;
+    // this.personalData515RecetasListSelectedData = [];
+    this.personalData511selectedPatologiatId = targetValue;
+    this.showPreparingData = 1;
+    this.consultasExternasService.personalData515RecetasList(this.appAccessToken, this.appUserToken, this.personalData511selectedPatologiatId, this.personalData5SelectedAgendasData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.showPreparingData = 0;
+        if(resp.recetas_list === false){
+          this.personalData511RecetasDataList = [];
+        }else{
+          this.personalData511RecetasDataList = resp.recetas_list;
+        }
+      }
+    });
+  }
 
-  // personalData517Modificar(){
-  //   console.log(this.personalData517PatologiaListSelectedData);
-  //   console.log(this.personalData517PatologiaDataList);
-  //   for(let i=0; i<this.personalData517PatologiaDataList.length; i++){
-  //     if(this.personalData517PatologiaDataList[i].id == this.personalData517PatologiaListSelectedData){
-  //       this.personalData517PatologiaSelectedToModify = this.personalData517PatologiaDataList[i].patologia;
-  //     }
-  //   }
-  // }
+  //-------------------------All Checked for 511Patologia page------------------------------
+  personalData511RecetasListSelectAllChkBxClicked() {
+    if(typeof this.personalData511RecetasDataList !== 'undefined') {
+      this.personalData511RecetasListSelectedData = [];
+      for (var i = 0; i < this.personalData511RecetasDataList.length; i++) {
+        this.personalData511RecetasDataList[i].personalData511RecetasListSelectedData = this.personalData511RecetasListSelectAllChkBx;
+        if(!(!this.personalData511RecetasListSelectAllChkBx)) {
+          this.personalData511RecetasListSelectedData.push(this.personalData511RecetasDataList[i].id);
+        }
+      }
+    }
+  }
+    
+  //--------------------------Check Individual for 511Patologia page-------------------------
+  personalData511RecetasListSelected(targetElem) {
+    this.personalData511RecetasListSelectAllChkBx = this.personalData511RecetasDataList.every(function(item:any) {
+      return item.personalData511RecetasListSelectedData == true;
+    })
+    if(targetElem.checked == true) {
+      this.personalData511RecetasListSelectedData.push(parseInt(targetElem.value));
+    }
+    else {
+      this.personalData511RecetasListSelectedData.splice(this.personalData511RecetasListSelectedData.indexOf(parseInt(targetElem.value)), 1);
+    }
+    console.log(this.personalData511RecetasListSelectedData);
+    // for(let i=0; i<this.personalData511RecetasDataList.length; i++){
+    //   if(this.personalData511RecetasDataList[i].id == this.personalData511RecetasListSelectedData[0]){
+    //     this.personalData517PatologiaSelectedToModify = this.personalData511RecetasDataList[i].patologia;
+    //   }
+    // }
+  }
+  /* ===================== 5.11 personalData511 Func Ends ====================== */
+
+  /* ===================== 5.15 personalData515 Func Start ====================== */
+
+  personalData515RecetasListSelectAllChkBxClicked() {
+    if(typeof this.personalData515RecetasDataList !== 'undefined') {
+      this.personalData515RecetasListSelectedData = [];
+      for (var i = 0; i < this.personalData515RecetasDataList.length; i++) {
+        this.personalData515RecetasDataList[i].personalData515RecetasListSelectedData = this.personalData515RecetasListSelectAllChkBx;
+        if(!(!this.personalData515RecetasListSelectAllChkBx)) {
+          this.personalData515RecetasListSelectedData.push(this.personalData515RecetasDataList[i].id);
+        }
+      }
+    }
+  }
+    
+  //--------------------------Check Individual for 515Patologia page-------------------------
+  personalData515RecetasListSelected(targetElem) {
+    this.personalData515RecetasListSelectAllChkBx = this.personalData515RecetasDataList.every(function(item:any) {
+      return item.personalData515RecetasListSelectedData == true;
+    })
+    if(targetElem.checked == true) {
+      this.personalData515RecetasListSelectedData.push(parseInt(targetElem.value));
+    }
+    else {
+      this.personalData515RecetasListSelectedData.splice(this.personalData515RecetasListSelectedData.indexOf(parseInt(targetElem.value)), 1);
+    }
+    // for(let i=0; i<this.personalData515RecetasDataList.length; i++){
+    //   if(this.personalData515RecetasDataList[i].id == this.personalData515RecetasListSelectedData[0]){
+    //     this.personalData517PatologiaSelectedToModify = this.personalData515RecetasDataList[i].patologia;
+    //   }
+    // }
+    // console.log(this.personalData515RecetasListSelectedData);
+  }
+
+  personalData515RecetasBorrarButton(){
+    this.consultasExternasService.personalData515DeleteRecetas(this.appAccessToken, this.appUserToken, this.personalData515RecetasListSelectedData, this.personalData517selectedPatologiatId, this.personalData5SelectedAgendasData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        if(resp.recetas_list === false){
+          this.personalData515RecetasDataList = [];
+        }else{
+          this.personalData515RecetasDataList = resp.recetas_list;
+        }
+        this.personalData515RecetasListSelectedData = [];
+        this.personalData515RecetasListSelectAllChkBx = false;
+      }
+    });
+  }
+
+  personalData515Cancelar(){
+    this.personalData511selectedPatologiatId = 0;
+    this.personalData511RecetasDataList = [];
+    this.personalData511RecetasListSelectedData = [];
+    this.personalData511RecetasListSelectAllChkBx = false;
+  }
+
+  /* ===================== 5.15 personalData515 Func Ends ====================== */
+
+  /* ===================== 5.16 personalData516 Func Start ====================== */
+  
+  personalData516AddPrescribeData(formData){
+    console.log(formData);
+  }
+  
+  /* ===================== 5.16 personalData516 Func Ends ====================== */
+
+  /* ===================== 5.17 personalData517 Func Start ====================== */
 
   personalData517ShowAllPatologiaList(){
     this.consultasExternasService.personalData517PatologiaList(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
-      console.log(resp);
       if(resp.success === true) {
         if(resp.patologia_list === false){
           this.personalData517PatologiaDataList = [];
@@ -1401,8 +1576,6 @@ export class ConsultasExternasComponent implements OnInit {
   }
 
   personalData517PatologiaAnadirGrabarButton(){
-    console.log(this.personalData517PatologiaData);
-    console.log(this.personalData5SelectedAgendasData); //agenda_id
     this.consultasExternasService.personalData517PatologiaGrabar(this.appAccessToken, this.appUserToken, this.personalData517PatologiaData, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       console.log(resp);
@@ -1419,11 +1592,8 @@ export class ConsultasExternasComponent implements OnInit {
       }
     });
   }
-
-  
   
   personalData517PatologiaModificarGrabarButton(){
-    console.log(this.personalData517PatologiaListSelectedData);
     this.consultasExternasService.personalData517PatologiaModificar(this.appAccessToken, this.appUserToken, this.personalData517PatologiaModificarData, this.personalData5SelectedAgendasData, this.personalData517PatologiaListSelectedData)
     .subscribe(resp => {
       console.log(resp);
@@ -1461,6 +1631,13 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
+  personalData517Cancelar(){
+    this.personalData517selectedPatologiatId = 0;
+    this.personalData515RecetasDataList = [];
+    this.personalData515RecetasListSelectAllChkBx = false;
+    this.personalData515RecetasListSelectedData = [];
+  }
+
   
   //-------------------------All Checked for 517Patologia page------------------------------
   personalData517PatologiaSelectAllChkBxClicked() {
@@ -1477,8 +1654,6 @@ export class ConsultasExternasComponent implements OnInit {
     
   //--------------------------Check Individual for 517Patologia page-------------------------
   personalData517PatologiaListSelected(targetElem) {
-    // this.personalData517PatologiaModificarData = '';
-    // this.personalData517PatologiaListSelectedData = [];
     this.personalData517PatologiaListSelectAllChkBx = this.personalData517PatologiaDataList.every(function(item:any) {
       return item.personalData517PatologiaListSelectedData == true;
     })
@@ -1496,60 +1671,65 @@ export class ConsultasExternasComponent implements OnInit {
   }
 
   personalData517PatologiaOnChange(targetValue){
-    console.log(targetValue);
+    // this.personalData515RecetasListSelectAllChkBx = false;
+    // this.personalData515RecetasListSelectedData = [];
     this.personalData517selectedPatologiatId = targetValue;
-    console.log(this.personalData517selectedPatologiatId);
+    this.showPreparingData = 1;
     this.consultasExternasService.personalData515RecetasList(this.appAccessToken, this.appUserToken, this.personalData517selectedPatologiatId, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       console.log(resp);
       if(resp.success === true) {
+        this.showPreparingData = 0;
         if(resp.recetas_list === false){
-          this.personalData518RecetasData = [];
+          this.personalData515RecetasDataList = [];
         }else{
-          this.personalData518RecetasData = resp.recetas_list;
+          this.personalData515RecetasDataList = resp.recetas_list;
         }
       }
     });
   }
 
-  addTratamientoData(formData) {
-    console.log(this.personalData5SelectedAgendasData);
-    console.log(this.personalData517selectedPatologiatId);
-    console.log(formData);
-    if(formData.personalData518Tratamiento == '' || formData.personalData518Posologia == '' || formData.personalData518Unidades == '' || formData.personalData518Pauta == '' || formData.personalData518Instrucciones == '') {
-      return false;
-    }
-    
+  /* ===================== 5.17 personalData517 Func Ends ====================== */
+
+  /* ===================== 5.18 personalData518 Func Start ====================== */
+
+  personalData518AddTratamientoData(formData) {    
     this.consultasExternasService.saveRecetasData(this.appAccessToken, this.appUserToken, this.personalData517selectedPatologiatId, formData.personalData518Instrucciones, formData.personalData518Tratamiento, this.personalData5SelectedAgendasData, formData.personalData518Posologia, formData.personalData518Unidades, formData.personalData518Pauta)
     .subscribe(resp => {
       if(resp.success === true) {
         this.showSuccessErrorAlert = 1;
         this.successErrorMessage = resp.message;
         this.autoCloseSuccessErrorMsg();
-        this.personalData518RecetasData = resp.recetas_list;
-        this.personalData518FormGroup.controls['personalData518Tratamiento'].setValue('');
-        this.personalData518FormGroup.controls['personalData518Posologia'].setValue('');
-        this.personalData518FormGroup.controls['personalData518Unidades'].setValue(1);
-        this.personalData518FormGroup.controls['personalData518Pauta'].setValue('');
-        this.personalData518FormGroup.controls['personalData518Instrucciones'].setValue('');
+        this.personalData515RecetasDataList = resp.recetas_list;
+        this.personalData518FormGroup.reset({personalData518Unidades: 1});
         this.hoursMenuClick(5.15, '.ribbon');
-        // this.consultasExternasService.personalData515RecetasList(this.appAccessToken, this.appUserToken, this.personalData517selectedPatologiatId, this.personalData5SelectedAgendasData)
-        // .subscribe(resp => {
-        //   console.log(resp);
-        //   if(resp.success === true) {
-        //     if(resp.recetas_list === false){
-        //       this.personalData518RecetasData = [];
-        //     }else{
-        //       this.personalData518RecetasData = resp.recetas_list;
-        //     }
-        //   }
-        // });       
+        this.personalData515RecetasListSelectedData = [];
       }
     });
   }
 
-  /* ===================== 5.17 personalData56 Func Ends ====================== */
+  /* ===================== 5.18 personalData518 Func Ends ====================== */
+
+  /* ===================== 5.19 personalData519 Func Start ====================== */
+
+  personalData519ModifyTratamientoData(formData) {
+    this.consultasExternasService.modifyRecetasData(this.appAccessToken, this.appUserToken, this.personalData517selectedPatologiatId, formData.personalData519Instrucciones, formData.personalData519Tratamiento, this.personalData5SelectedAgendasData, formData.personalData519Posologia, formData.personalData519Unidades, formData.personalData519Pauta, this.personalData515RecetasListSelectedData)
+    .subscribe(resp => {
+      if(resp.success === true) {
+        this.showSuccessErrorAlert = 1;
+        this.successErrorMessage = resp.message;
+        this.autoCloseSuccessErrorMsg();
+        this.personalData515RecetasDataList = resp.recetas_list;
+        this.personalData519FormGroup.reset();
+        this.hoursMenuClick(5.15, '.ribbon');
+        this.personalData515RecetasListSelectedData = [];
+      }
+    });
+  }
+
+  /* ===================== 5.19 personalData519 Func Ends ====================== */
   
+
   hoursMenuClick(value, elem) {
     if(typeof $(elem).attr('class') !== 'undefined' && $(elem).attr('class').indexOf('disabled') > -1) {
       return false;
@@ -1601,6 +1781,13 @@ export class ConsultasExternasComponent implements OnInit {
           $('#calendar .ui-datepicker-prev span').html('<i class="fa fa-chevron-left"></i>');
           $('#calendar .ui-datepicker-next span').html('<i class="fa fa-chevron-right"></i>');
         }, 500);
+
+        this.consultasExternasService.loadSpecialtyData(this.appAccessToken, this.appUserToken)
+        .subscribe(resp => {
+          if(typeof resp.especialidad === 'object') {
+            this.especialidadData = resp.especialidad;
+          }
+        });
       }
       else if(value == 3) {
         this.forceVisitFunc();
@@ -1615,6 +1802,10 @@ export class ConsultasExternasComponent implements OnInit {
         this.personalData57ShowPeticionlist = [];
         this.personalData57PeticionAssignSelectedDataId = 0;
         this.personalData57PeticionAssignListSelectedData = '';
+        this.personalData511selectedPatologiatId = 0;
+        this.personalData511RecetasDataList = [];
+        this.personalData511RecetasListSelectedData = [];
+        this.personalData511RecetasListSelectAllChkBx =false;
       }
       else if(value == 5.1) {
         this.includeInQxFunction();
@@ -1651,9 +1842,12 @@ export class ConsultasExternasComponent implements OnInit {
         this.personalData57ShowAllDepartmentList();
       }
       else if(value == 5.11) {
+        console.log(this.personalData511selectedPatologiatId);
         this.personalData517ShowAllPatologiaList();
         this.personalData517selectedPatologiatId = 0;
-        this.personalData518RecetasData = [];
+        this.personalData515RecetasDataList = [];
+        this.personalData515RecetasListSelectedData = [];
+        this.personalData515RecetasListSelectAllChkBx = false;
       }
       else if(value == 5.14) {
         /*--Data Chart--*/
@@ -1726,13 +1920,38 @@ export class ConsultasExternasComponent implements OnInit {
         this.personalData517ShowAllPatologiaList();
         this.personalData517PatologiaListSelectedData = [];
         this.personalData517PatologiaListSelectAllChkBx = false;
-        // this.personalData517selectedPatologiatId = 0;
-        // this.personalData518RecetasData = [];
+        this.personalData517PatologiaDataList = [];
       }
-      // else if(value == 5.16) {
-      // }
+      else if(value == 5.16) {
+        this.consultasExternasService.personalData516PrescribeRecetas(this.appAccessToken, this.appUserToken, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData)
+        .subscribe(resp => {
+          console.log(resp);
+          if(resp.success === true) {
+            this.personalData516fullName = resp.patient_details.nom + ' ' + resp.patient_details.cog1 + ' '  + resp.patient_details.cog2;
+            this.personalData516DNI = resp.patient_details.dni;
+            this.personalData516Date = resp.patient_details.datai;
+            this.personalData516Especialidad =resp.doctors_details.txtespe;
+          }
+        });
+      }
       else if(value == 5.17) {
         this.personalData517ShowAllPatologiaList();
+      }
+      else if(value == 5.19) {
+        for(let i=0; i<this.personalData515RecetasDataList.length; i++){
+          if(this.personalData515RecetasDataList[i].id == this.personalData515RecetasListSelectedData){
+            this.personalData519TratamientoModifyData = this.personalData515RecetasDataList[i].tratamientos;
+            this.personalData519PosologiaModifyData = this.personalData515RecetasDataList[i].posologia;
+            this.personalData519UnidadesModifyData = this.personalData515RecetasDataList[i].unidades;
+            this.personalData519PautaModifyData = this.personalData515RecetasDataList[i].pauta;
+            this.personalData519InstruccionesModifyData = this.personalData515RecetasDataList[i].farmaco;
+          }
+        }
+        this.personalData519FormGroup.controls['personalData519Tratamiento'].setValue(this.personalData519TratamientoModifyData);
+        this.personalData519FormGroup.controls['personalData519Posologia'].setValue(this.personalData519PosologiaModifyData);
+        this.personalData519FormGroup.controls['personalData519Unidades'].setValue(this.personalData519UnidadesModifyData);
+        this.personalData519FormGroup.controls['personalData519Pauta'].setValue(this.personalData519PautaModifyData);
+        this.personalData519FormGroup.controls['personalData519Instrucciones'].setValue(this.personalData519InstruccionesModifyData);
       }
     }, 500);
   }
@@ -1833,6 +2052,7 @@ export class ConsultasExternasComponent implements OnInit {
   }
   
   agendasOnChange(agendasValue) {
+    this.showPreparingData = 1;
     this.selectedAgendasData = agendasValue;
     this.personalData5SelectedAgendasData = agendasValue;
     this.personalData51SelectedAgendasData = agendasValue;
@@ -1853,6 +2073,7 @@ export class ConsultasExternasComponent implements OnInit {
   }
 
   personalData57departmentOnChange(departmentId){
+    this.showPreparingData = 1;
     this.personalData57selectedDepartmentId = departmentId;
     this.personalData57ShowAllPeticionList();
   }
@@ -2123,6 +2344,7 @@ export class ConsultasExternasComponent implements OnInit {
   getVisitorsList() {
     this.consultasExternasService.visitorsListData(this.appAccessToken, this.appUserToken, this.selectedDate, this.selectedAgendasData)
     .subscribe(resp => {
+      this.showPreparingData = 0;
       this.visitorsListData = {};
       if(!(!resp.success)) {
         this.selectedVisit = [];

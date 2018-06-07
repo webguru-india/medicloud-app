@@ -273,7 +273,7 @@ export class ConsultasExternasService {
   
   visitorsListData(appAccessToken, appUserToken, visitDate, agendaData) {
     let fd = new FormData();
-    $('#ajax-data-loader').css('right', '0px');
+    // $('#ajax-data-loader').css('right', '0px');
     
     fd.append("access_token", appAccessToken);
     fd.append("user_token", appUserToken);
@@ -286,7 +286,7 @@ export class ConsultasExternasService {
     )
     .map(
       (res: Response) => {
-        $('#ajax-data-loader').css('right', '-300px');
+        // $('#ajax-data-loader').css('right', '-300px');
         if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
           window.location.href = this.globalConfigs.baseUrl + 'login';
           this.cookieService.delete('accessToken', '/');
@@ -1597,6 +1597,69 @@ export class ConsultasExternasService {
     )
   }
 
+  modifyRecetasData(appAccessToken, appUserToken, patologia, farmaco, tratamiento, agendaId, posologia, unidades, pauta, id){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("patologia", patologia);
+    fd.append("farmaco", farmaco);
+    fd.append("tratamiento", tratamiento);
+    fd.append("agenda_id", agendaId);
+    fd.append("posologia", posologia);
+    fd.append("unidades", unidades);
+    fd.append("pauta", pauta);
+    fd.append("id", id);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'save-recetas',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData515DeleteRecetas(appAccessToken, appUserToken, recetasId, patologiaId, agendaId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("recetas_id", recetasId);
+    fd.append("patologia", patologiaId);
+    fd.append("agenda_id", agendaId);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'delete-recetas',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
   personalData515RecetasList(appAccessToken, appUserToken, patologiaId, agendaId){
     let fd = new FormData();
 
@@ -1607,6 +1670,34 @@ export class ConsultasExternasService {
     
     return this.http.post(
       this.globalConfigs.apiBaseUrl + 'list-recetas',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+  
+  personalData516PrescribeRecetas(appAccessToken, appUserToken, malatId, agendaId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("malat_id", malatId);
+    fd.append("agenda_id", agendaId);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'prescribe-recetas',
       fd
     )
     .map(
