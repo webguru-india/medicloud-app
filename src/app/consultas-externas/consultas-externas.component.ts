@@ -230,6 +230,8 @@ export class ConsultasExternasComponent implements OnInit {
   public personalData511RecetasDataList: any = [];
   public personalData511RecetasListSelectedData: any = [];
   public personalData511RecetasListSelectAllChkBx: boolean =false;
+  public personalData511ShowAllAssignedRecetas: any = [];
+  public personalData511AssignedRecetasListSelectedData: any = '';
 
   public personalData515RecetasListSelectedData: any = [];
   public personalData515RecetasListSelectAllChkBx: boolean = false;
@@ -239,6 +241,12 @@ export class ConsultasExternasComponent implements OnInit {
   public personalData516DNI: any = '';
   public personalData516Date: any = '';
   public personalData516Especialidad: any = '';
+  public personalData516AssignedRecetasList: any = [];
+  public personalData516SelectedTratamiento: any ='';
+  public personalData516SelectedPosologia: any = '';
+  public personalData516SelectedUnidades: number = 0;
+  public personalData516SelectedPauta: any = '';
+  public personalData516SelectedInstrucciones: any = '';
 
   public personalData517PatologiaData: any = '';
   public personalData517PatologiaDataList: any = [];
@@ -328,7 +336,7 @@ export class ConsultasExternasComponent implements OnInit {
       'personalData516Date': ['', Validators.required],
       'personalData516Tratamiento': ['', Validators.required],
       'personalData516Posologia': ['', Validators.required],
-      'personalData516Unidades': [1],
+      'personalData516Unidades': [1, Validators.required],
       'personalData516Pauta': ['', Validators.required],
       'personalData516Instrucciones': [''],
       'personalData516Prescriptor': ['', Validators.required],
@@ -572,10 +580,10 @@ export class ConsultasExternasComponent implements OnInit {
     this.consultasExternasService.personalData56ShowAssignDiagnosticList(this.appAccessToken, this.appUserToken, this.convertAllCheckBooleanToInteger, this.personalData5SelectedAgendasData, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt)
     .subscribe(resp => {
       if(resp.success === true) {
-        if(resp.assign_diagnostic_list === false){
+        if(resp.assign_diagnostic_list === false) {
           this.personalData56ShowAssignDiagnostic5 = [];
           this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
-        }else{
+        }else {
           this.personalData56ShowAssignDiagnostic5 = resp.assign_diagnostic_list;
         }
         this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
@@ -586,10 +594,23 @@ export class ConsultasExternasComponent implements OnInit {
     this.consultasExternasService.personalData57ListPeticons(this.appAccessToken, this.appUserToken, this.convertAllCheckBooleanToInteger, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       if(resp.success === true) {
-        if(resp.assigned_peticions === false){
+        if(resp.assigned_peticions === false) {
           this.personalData57ShowAssignedPeticions = [];
-        }else{
+        }else {
           this.personalData57ShowAssignedPeticions = resp.assigned_peticions;
+        }
+      }
+    });
+
+    this.consultasExternasService.personalData516ListAssignedRecetas(this.appAccessToken, this.appUserToken, this.convertAllCheckBooleanToInteger, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData)
+    .subscribe(resp => {
+      // console.log(resp);
+      if(resp.success === true) {
+        if(resp.return_data.recetas === false) {
+          this.personalData511ShowAllAssignedRecetas = [];
+        } else {
+          this.personalData511ShowAllAssignedRecetas = resp.return_data.recetas;
+          // console.log(this.personalData511ShowAllAssignedRecetas);
         }
       }
     });
@@ -968,7 +989,7 @@ export class ConsultasExternasComponent implements OnInit {
 
   /* ===================== 5.6 personalData56 Func Starts ====================== */
 
-  personalData56DiagnosisAddButton(){
+  personalData56DiagnosisAddButton() {
     this.consultasExternasService.saveDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData, this.personalData56DiagnosisAdd)
     .subscribe(resp => {
       if(resp.success === true) {
@@ -982,8 +1003,8 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  personalData56DiagnosisModifyButton(){
-    this.consultasExternasService.modifyDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData, this.personalData56DiagnosisModify, this.personalData56DiagnosticListModifiedId)
+  personalData56DiagnosisModifyButton() {
+    this.consultasExternasService.modifyDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData, this.personalData56DiagnosisModify, this.personalData56DiagnosticListSelectedData)
     .subscribe(resp => {
       if(resp.success === true) {
         this.successErrorMessage = resp.message;
@@ -995,14 +1016,14 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  personalData56DiagnosisBorrarButton(){
+  personalData56DiagnosisBorrarButton() {
     this.consultasExternasService.borrarDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData56DiagnosticListSelectedData, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       if(resp.success === true) {
-        if(resp.diagnostic_list === false){
+        if(resp.diagnostic_list === false) {
           this.personalData56ShowAllDiagnosticDataList = [];
           this.personalData56DiagnosticListSelectAllChkBx = false;
-        }else{
+        }else {
           this.personalData56ShowAllDiagnosticDataList = resp.diagnostic_list;
         }
         this.successErrorMessage = resp.message;
@@ -1014,7 +1035,7 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
   
-  personalData56ShowAllDiagnostic(){
+  personalData56ShowAllDiagnostic() {
     this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
     this.consultasExternasService.personalData56ShowAllDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
@@ -1024,7 +1045,7 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  personalData56AssignDiagnostic(){
+  personalData56AssignDiagnostic() {
     this.consultasExternasService.personalData56SelectDiagnosticGrabar(this.appAccessToken, this.appUserToken, this.personalData56DiagnosticSelectDiagnosticIdForGrabar, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       if(resp.success === true) {
@@ -1038,22 +1059,22 @@ export class ConsultasExternasComponent implements OnInit {
   }
 
 
-  personalData56SelectedDiagnosticEdit(){
+  personalData56SelectedDiagnosticEdit() {
     console.log(this.personalData56DiagnosticListSelectedDataDiagnostico5);
   }
 
-  personalData56AssignDiagnosticEditGrabar(){
+  personalData56AssignDiagnosticEditGrabar() {
     this.consultasExternasService.personalData56ShowAllDiagnosticData(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       if(resp.success === true) {
         this.personalData56ShowAllDiagnosticDataList = resp.diagnostic_list;
-        for(let i=0; i< this.personalData56ShowAssignDiagnostic5.length; i++){
-          if(this.personalData56ShowAssignDiagnostic5[i].personalData56DiagnosticListSelectedDataDiagnostico5 == true){
+        for(let i=0; i< this.personalData56ShowAssignDiagnostic5.length; i++) {
+          if(this.personalData56ShowAssignDiagnostic5[i].personalData56DiagnosticListSelectedDataDiagnostico5 == true) {
             this.personalData56DiagnosticListSelectedDataDiagnosticName = this.personalData56ShowAssignDiagnostic5[i].DIAGNOSTIC;
           }
         }
-        for(let j=0; j<this.personalData56ShowAllDiagnosticDataList.length; j++){
-          if(this.personalData56ShowAllDiagnosticDataList[j].diagnostic === this.personalData56DiagnosticListSelectedDataDiagnosticName){
+        for(let j=0; j<this.personalData56ShowAllDiagnosticDataList.length; j++) {
+          if(this.personalData56ShowAllDiagnosticDataList[j].diagnostic === this.personalData56DiagnosticListSelectedDataDiagnosticName) {
             this.personalData56DiagnosticDiagnosticIdForSelectedDiagnostic = this.personalData56ShowAllDiagnosticDataList[j].id;
           }
         }
@@ -1076,13 +1097,13 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  personalData56AssignDiagnosticEditCancelar(){
+  personalData56AssignDiagnosticEditCancelar() {
     this.consultasExternasService.personalData56ShowAssignDiagnosticList(this.appAccessToken, this.appUserToken, this.convertAllCheckBooleanToInteger, this.personalData5SelectedAgendasData, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt)
     .subscribe(resp => {
       if(resp.success === true) {
-        if(resp.assign_diagnostic_list === false){
+        if(resp.assign_diagnostic_list === false) {
           this.personalData56ShowAssignDiagnostic5 = [];
-        }else{
+        }else {
         this.personalData56ShowAssignDiagnostic5 = resp.assign_diagnostic_list;
         this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
         }
@@ -1090,14 +1111,14 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  personalData56DiagnosisDelete(){
+  personalData56DiagnosisDelete() {
     this.consultasExternasService.personalData56SelectDiagnosticDeleted(this.appAccessToken, this.appUserToken, this.personalData56DiagnosticListSelectedDataDiagnostico5, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       if(resp.success === true) {
-        if(resp.assign_diagnostic_list === false){
+        if(resp.assign_diagnostic_list === false) {
           this.personalData56ShowAssignDiagnostic5 = [];
           this.personalData56DiagnosticListSelectAllChkBxDiagnostico5 = false;
-        }else{
+        }else {
           this.personalData56ShowAssignDiagnostic5 = resp.assign_diagnostic_list;
         }
         this.personalData56DiagnosticListSelectedDataDiagnostico5 = [];
@@ -1129,16 +1150,18 @@ export class ConsultasExternasComponent implements OnInit {
     })
     if(targetElem.checked == true) {
       this.personalData56DiagnosticListSelectedData.push(parseInt(targetElem.value));
-      this.personalData56DiagnosticListModifiedId = parseInt(targetElem.value);
-      for(let i=0; i<this.personalData56ShowAllDiagnosticDataList.length; i++){
-        if(this.personalData56ShowAllDiagnosticDataList[i].id == this.personalData56DiagnosticListModifiedId){
-          this.personalData56DiagnosticListModifiedName = this.personalData56ShowAllDiagnosticDataList[i].diagnostic;
-        }
-      }
+      // this.personalData56DiagnosticListModifiedId = parseInt(targetElem.value);
     }
     else {
       this.personalData56DiagnosticListSelectedData.splice(this.personalData56DiagnosticListSelectedData.indexOf(parseInt(targetElem.value)), 1);
     }
+    for(let i=0; i<this.personalData56ShowAllDiagnosticDataList.length; i++) {
+      if(this.personalData56ShowAllDiagnosticDataList[i].id == this.personalData56DiagnosticListSelectedData) {
+        this.personalData56DiagnosticListModifiedName = this.personalData56ShowAllDiagnosticDataList[i].diagnostic;
+      }
+    }
+    console.log(this.personalData56DiagnosticListSelectedData);
+    console.log(this.personalData56DiagnosticListModifiedName);
   }
 
 
@@ -1172,7 +1195,7 @@ export class ConsultasExternasComponent implements OnInit {
   
 
   /* ===================== 5.7 personalData56 Func Starts ====================== */
-  personalData57ShowAllDepartmentList(){
+  personalData57ShowAllDepartmentList() {
     this.consultasExternasService.personalData57ShowDepartment(this.appAccessToken, this.appUserToken,this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       if(resp.success === true) {
@@ -1183,7 +1206,7 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  personalData57DepartmentAnadirGrabarBtn(){
+  personalData57DepartmentAnadirGrabarBtn() {
     this.consultasExternasService.personalData57DepartmentSave(this.appAccessToken, this.appUserToken, this.personalData57DepartmentName, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       if(resp.success === true) {
@@ -1196,24 +1219,27 @@ export class ConsultasExternasComponent implements OnInit {
       }
     });
   }
-
-  personalData57DepartmentModificarBtn(){
-    this.consultasExternasService.personalData57ShowDepartment(this.appAccessToken, this.appUserToken,this.personalData5SelectedAgendasData)
-    .subscribe(resp => {
-      if(resp.success === true) {
-        this.personalData57ShowDepartmentlist = resp.department_list;
-        for(let i=0; i<this.personalData57ShowDepartmentlist.length; i++){
-          if(this.personalData57ShowDepartmentlist[i].id == this.personalData57DepartmentListSelectedData){
-            this.personalData57DepartmentModificarNamePick = this.personalData57ShowDepartmentlist[i].departamento;
-          }
-        }
-      }
-    });
-  }
   
-  personalData57DepartmentModificarGrabarBtn(){
+  // personalData57DepartmentModificarBtn(){
+  //   this.consultasExternasService.personalData57ShowDepartment(this.appAccessToken, this.appUserToken,this.personalData5SelectedAgendasData)
+  //   .subscribe(resp => {
+  //     if(resp.success === true) {
+  //       this.personalData57ShowDepartmentlist = resp.department_list;
+  //       for(let i=0; i<this.personalData57ShowDepartmentlist.length; i++){
+  //         if(this.personalData57ShowDepartmentlist[i].id == this.personalData57DepartmentListSelectedData){
+  //           this.personalData57DepartmentModificarNamePick = this.personalData57ShowDepartmentlist[i].departamento;
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
+
+  personalData57DepartmentModificarGrabarBtn() {
+    console.log(this.personalData57DepartmentListSelectedData);
+    console.log(this.personalData57DepartmentModifiedName);
     this.consultasExternasService.personalData57DepartmentModificar(this.appAccessToken, this.appUserToken, this.personalData57DepartmentListSelectedData, this.personalData57DepartmentModifiedName, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
+      console.log(resp);
       if(resp.success === true) {
         this.showSuccessErrorAlert = 1;
         this.successErrorMessage = resp.message;
@@ -1224,20 +1250,21 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  personalData57DepartmentModificarCancelarBtn(){
-    this.personalData57DepartmentListSelectedData = [];
-  }
+  // personalData57DepartmentModificarCancelarBtn(){
+  //   this.personalData57DepartmentListSelectedData = [];
+  // }
 
-  personalData57DepartmentBorrarButton(){
+
+  personalData57DepartmentBorrarButton() {
     this.consultasExternasService.personalData57DepartmentDelete(this.appAccessToken, this.appUserToken, this.personalData57DepartmentListSelectedData, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       if(resp.success === true) {
         this.showSuccessErrorAlert = 1;
         this.successErrorMessage = resp.message;
         this.autoCloseSuccessErrorMsg();
-        if(resp.department_list === false){
+        if(resp.department_list === false) {
           this.personalData57ShowDepartmentlist = [];
-        }else{
+        }else {
         this.personalData57ShowDepartmentlist = resp.department_list;
         }
         this.personalData57DepartmentListSelectAllChkBx = false;
@@ -1270,26 +1297,32 @@ export class ConsultasExternasComponent implements OnInit {
     else {
       this.personalData57DepartmentListSelectedData.splice(this.personalData57DepartmentListSelectedData.indexOf(parseInt(targetElem.value)), 1);
     }
+    console.log(this.personalData57DepartmentListSelectedData);
+    for(let i=0; i<this.personalData57ShowDepartmentlist.length; i++) {
+      if(this.personalData57ShowDepartmentlist[i].id == this.personalData57DepartmentListSelectedData) {
+        this.personalData57DepartmentModificarNamePick = this.personalData57ShowDepartmentlist[i].departamento;
+      }
+    }
   }
 
-  personalData57ShowAllPeticionList(){
+  personalData57ShowAllPeticionList() {
     this.consultasExternasService.personalData57ShowPeticionList(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId,this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       if(resp.success === true) {
         this.showPreparingData = 0;
-        if(resp.peticion_list === false){
+        if(resp.peticion_list === false) {
           this.showSuccessErrorAlert = 1;
           this.successErrorMessage = resp.message;
           this.autoCloseSuccessErrorMsg();
           this.personalData57ShowPeticionlist = [];
-        }else{
+        }else {
           this.personalData57ShowPeticionlist = resp.peticion_list;
         }
       }
     });
   }
 
-  personalData57PruebaAnadirGrabar(){
+  personalData57PruebaAnadirGrabar() {
     this.consultasExternasService.personalData57PruebaAnadirGrabar(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId, this.personalData57ObservacionesTextareaVal, this.personalData57PeticionTextareaVal, this.personalData5SelectedAgendasData, this.personalData57PlantillaSelectVal)
     .subscribe(resp => {
       if(resp.success === true) {
@@ -1304,22 +1337,7 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  personalData57PruebaModificarBtn(){
-    this.consultasExternasService.personalData57ShowPeticionList(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId,this.personalData5SelectedAgendasData)
-    .subscribe(resp => {
-      if(resp.success === true) {
-        this.personalData57ShowPeticionlist = resp.peticion_list;
-        for(let i=0; i<this.personalData57ShowPeticionlist.length; i++){
-          if(this.personalData57ShowPeticionlist[i].id == this.personalData57PeticionListSelectedData){
-            this.personalData57PeticionTextareaPick = this.personalData57ShowPeticionlist[i].peticion;
-            this.personalData57ObservacionesTextareaPick = this.personalData57ShowPeticionlist[i].prueba;
-          }
-        }
-      }
-    });
-  }
-
-  personalData57PruebaModificarGrabarBtn(){
+  personalData57PruebaModificarGrabarBtn() {
     this.consultasExternasService.personalData57PruebaModificarGrabar(this.appAccessToken, this.appUserToken, this.personalData57selectedDepartmentId, this.personalData57ObservacionesModificarTextareaVal, this.personalData57PeticionModificarTextareaVal, this.personalData5SelectedAgendasData, this.personalData57PlantillaSelectVal, this.personalData57PeticionListSelectedData)
     .subscribe(resp => {
       if(resp.success === true) {
@@ -1334,23 +1352,17 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  personalData57PruebaModificarCancelarBtn(){
-    this.personalData57PeticionListSelectedData = [];
-    this.personalData57PeticionModificarTextareaVal = '';
-    this.personalData57ObservacionesModificarTextareaVal = '';
-  }
-
-  personalData57PruebaBorrarButton(){
+  personalData57PruebaBorrarButton() {
     this.consultasExternasService.personalData57PruebaBorrar(this.appAccessToken, this.appUserToken, this.personalData57PeticionListSelectedData, this.personalData57selectedDepartmentId, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       if(resp.success === true) {
         this.showSuccessErrorAlert = 1;
         this.successErrorMessage = resp.message;
         this.autoCloseSuccessErrorMsg();
-        if(resp.peticion_list === false){
+        if(resp.peticion_list === false) {
           this.personalData57ShowPeticionlist = [];
           this.personalData57PeticionListSelectAllChkBx = false;
-        }else{
+        }else {
         this.personalData57ShowPeticionlist = resp.peticion_list;
         }
         this.personalData57PeticionListSelectedData = [];
@@ -1382,11 +1394,17 @@ export class ConsultasExternasComponent implements OnInit {
     else {
       this.personalData57PeticionListSelectedData.splice(this.personalData57PeticionListSelectedData.indexOf(parseInt(targetElem.value)), 1);
     }
+    for(let i=0; i<this.personalData57ShowPeticionlist.length; i++) {
+      if(this.personalData57ShowPeticionlist[i].id == this.personalData57PeticionListSelectedData) {
+        this.personalData57PeticionTextareaPick = this.personalData57ShowPeticionlist[i].peticion;
+        this.personalData57ObservacionesTextareaPick = this.personalData57ShowPeticionlist[i].prueba;
+      }
+    }
   }
 
-  personalData57PeticionSolicitarBtn(){
-    for(let i=0; i<this.personalData57ShowPeticionlist.length; i++){
-      if(this.personalData57ShowPeticionlist[i].id == this.personalData57PeticionAssignSelectedDataId){
+  personalData57PeticionSolicitarBtn() {
+    for(let i=0; i<this.personalData57ShowPeticionlist.length; i++) {
+      if(this.personalData57ShowPeticionlist[i].id == this.personalData57PeticionAssignSelectedDataId) {
         this.personalData57PeticionAssignSelectedData = this.personalData57ShowPeticionlist[i].peticion;
         this.personalData57PruebaAssignSelectedData = this.personalData57ShowPeticionlist[i].prueba;
       }
@@ -1407,13 +1425,13 @@ export class ConsultasExternasComponent implements OnInit {
     }, 100)
   }
 
-  cancelPeticionSolicitarData(){
+  cancelPeticionSolicitarData() {
     this.personalData57PeticionAssignSelectedDataId = 0;
     this.personalData57PeticionAssignSelectedData = '';
     this.personalData57PruebaAssignSelectedData = '';
   }
 
-  savePeticionSolicitarData(){
+  savePeticionSolicitarData() {
     let editorText1 = $(".summernote-1").summernote("code");
     let usuario = 'pending';
     // console.log(this.personalData57PeticionAssignSelectedDataId); //peticion_id
@@ -1435,14 +1453,14 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  personalData57AssignedPeticionSelectedShow(){
+  personalData57AssignedPeticionSelectedShow() {
     console.log(this.personalData57PeticionAssignListSelectedData);
   }
 
   /* ===================== 5.7 personalData56 Func Ends ====================== */
 
   /* ===================== 5.11 personalData511 Func Start ====================== */
-  personalData511PatologiaOnChange(targetValue){
+  personalData511PatologiaOnChange(targetValue) {
     // this.personalData515RecetasListSelectAllChkBx = false;
     // this.personalData515RecetasListSelectedData = [];
     this.personalData511selectedPatologiatId = targetValue;
@@ -1452,9 +1470,9 @@ export class ConsultasExternasComponent implements OnInit {
       console.log(resp);
       if(resp.success === true) {
         this.showPreparingData = 0;
-        if(resp.recetas_list === false){
+        if(resp.recetas_list === false) {
           this.personalData511RecetasDataList = [];
-        }else{
+        }else {
           this.personalData511RecetasDataList = resp.recetas_list;
         }
       }
@@ -1486,8 +1504,8 @@ export class ConsultasExternasComponent implements OnInit {
       this.personalData511RecetasListSelectedData.splice(this.personalData511RecetasListSelectedData.indexOf(parseInt(targetElem.value)), 1);
     }
     console.log(this.personalData511RecetasListSelectedData);
-    // for(let i=0; i<this.personalData511RecetasDataList.length; i++){
-    //   if(this.personalData511RecetasDataList[i].id == this.personalData511RecetasListSelectedData[0]){
+    // for(let i=0; i<this.personalData511RecetasDataList.length; i++) {
+    //   if(this.personalData511RecetasDataList[i].id == this.personalData511RecetasListSelectedData[0]) {
     //     this.personalData517PatologiaSelectedToModify = this.personalData511RecetasDataList[i].patologia;
     //   }
     // }
@@ -1519,22 +1537,22 @@ export class ConsultasExternasComponent implements OnInit {
     else {
       this.personalData515RecetasListSelectedData.splice(this.personalData515RecetasListSelectedData.indexOf(parseInt(targetElem.value)), 1);
     }
-    // for(let i=0; i<this.personalData515RecetasDataList.length; i++){
-    //   if(this.personalData515RecetasDataList[i].id == this.personalData515RecetasListSelectedData[0]){
+    // for(let i=0; i<this.personalData515RecetasDataList.length; i++) {
+    //   if(this.personalData515RecetasDataList[i].id == this.personalData515RecetasListSelectedData[0]) {
     //     this.personalData517PatologiaSelectedToModify = this.personalData515RecetasDataList[i].patologia;
     //   }
     // }
     // console.log(this.personalData515RecetasListSelectedData);
   }
 
-  personalData515RecetasBorrarButton(){
+  personalData515RecetasBorrarButton() {
     this.consultasExternasService.personalData515DeleteRecetas(this.appAccessToken, this.appUserToken, this.personalData515RecetasListSelectedData, this.personalData517selectedPatologiatId, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       console.log(resp);
       if(resp.success === true) {
-        if(resp.recetas_list === false){
+        if(resp.recetas_list === false) {
           this.personalData515RecetasDataList = [];
-        }else{
+        }else {
           this.personalData515RecetasDataList = resp.recetas_list;
         }
         this.personalData515RecetasListSelectedData = [];
@@ -1543,7 +1561,7 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  personalData515Cancelar(){
+  personalData515Cancelar() {
     this.personalData511selectedPatologiatId = 0;
     this.personalData511RecetasDataList = [];
     this.personalData511RecetasListSelectedData = [];
@@ -1554,28 +1572,40 @@ export class ConsultasExternasComponent implements OnInit {
 
   /* ===================== 5.16 personalData516 Func Start ====================== */
   
-  personalData516AddPrescribeData(formData){
-    console.log(formData);
+  personalData516AddPrescribeData(formData) {
+    this.consultasExternasService.personalData516SavePrescribtion(this.appAccessToken, this.appUserToken, this.personalData511RecetasListSelectedData, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData, formData.personalData516Unidades, formData.personalData516Pauta, formData.personalData516Posologia, formData.personalData516Instrucciones)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.showSuccessErrorAlert = 1;
+        this.successErrorMessage = resp.message;
+        this.autoCloseSuccessErrorMsg();
+        this.personalData516AssignedRecetasList = resp.return_data;
+        this.personalData511RecetasListSelectedData = [];
+        this.personalData516PrescribeFormGroup.reset({personalData516Unidades: 1, personalData516Idioma: 'Catala'});
+        this.hoursMenuClick(5.11, '.ribbon');
+      }
+    })
   }
   
   /* ===================== 5.16 personalData516 Func Ends ====================== */
 
   /* ===================== 5.17 personalData517 Func Start ====================== */
 
-  personalData517ShowAllPatologiaList(){
+  personalData517ShowAllPatologiaList() {
     this.consultasExternasService.personalData517PatologiaList(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       if(resp.success === true) {
-        if(resp.patologia_list === false){
+        if(resp.patologia_list === false) {
           this.personalData517PatologiaDataList = [];
-        }else{
+        }else {
           this.personalData517PatologiaDataList = resp.patologia_list;
         }
       }
     });
   }
 
-  personalData517PatologiaAnadirGrabarButton(){
+  personalData517PatologiaAnadirGrabarButton() {
     this.consultasExternasService.personalData517PatologiaGrabar(this.appAccessToken, this.appUserToken, this.personalData517PatologiaData, this.personalData5SelectedAgendasData)
     .subscribe(resp => {
       console.log(resp);
@@ -1583,9 +1613,9 @@ export class ConsultasExternasComponent implements OnInit {
         this.showSuccessErrorAlert = 1;
         this.successErrorMessage = resp.message;
         this.autoCloseSuccessErrorMsg();
-        if(resp.patologia_list === false){
+        if(resp.patologia_list === false) {
           this.personalData517PatologiaDataList = [];
-        }else{
+        }else {
           this.personalData517PatologiaDataList = resp.patologia_list;
         }
         this.personalData517PatologiaData = '';
@@ -1593,7 +1623,7 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
   
-  personalData517PatologiaModificarGrabarButton(){
+  personalData517PatologiaModificarGrabarButton() {
     this.consultasExternasService.personalData517PatologiaModificar(this.appAccessToken, this.appUserToken, this.personalData517PatologiaModificarData, this.personalData5SelectedAgendasData, this.personalData517PatologiaListSelectedData)
     .subscribe(resp => {
       console.log(resp);
@@ -1601,9 +1631,9 @@ export class ConsultasExternasComponent implements OnInit {
         this.showSuccessErrorAlert = 1;
         this.successErrorMessage = resp.message;
         this.autoCloseSuccessErrorMsg();
-        if(resp.patologia_list === false){
+        if(resp.patologia_list === false) {
           this.personalData517PatologiaDataList = [];
-        }else{
+        }else {
           this.personalData517PatologiaDataList = resp.patologia_list;
         }
         this.personalData517PatologiaModificarData = '';
@@ -1612,7 +1642,7 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  personalData517PatologiaBorrarButton(){
+  personalData517PatologiaBorrarButton() {
     this.consultasExternasService.personalData517PatologiaBorrar(this.appAccessToken, this.appUserToken, this.personalData5SelectedAgendasData, this.personalData517PatologiaListSelectedData)
     .subscribe(resp => {
       console.log(resp);
@@ -1620,9 +1650,9 @@ export class ConsultasExternasComponent implements OnInit {
         this.showSuccessErrorAlert = 1;
         this.successErrorMessage = resp.message;
         this.autoCloseSuccessErrorMsg();
-        if(resp.patologia_list === false){
+        if(resp.patologia_list === false) {
           this.personalData517PatologiaDataList = [];
-        }else{
+        }else {
           this.personalData517PatologiaDataList = resp.patologia_list;
         }
         this.personalData517PatologiaListSelectedData = [];
@@ -1631,7 +1661,7 @@ export class ConsultasExternasComponent implements OnInit {
     });
   }
 
-  personalData517Cancelar(){
+  personalData517Cancelar() {
     this.personalData517selectedPatologiatId = 0;
     this.personalData515RecetasDataList = [];
     this.personalData515RecetasListSelectAllChkBx = false;
@@ -1663,14 +1693,14 @@ export class ConsultasExternasComponent implements OnInit {
     else {
       this.personalData517PatologiaListSelectedData.splice(this.personalData517PatologiaListSelectedData.indexOf(parseInt(targetElem.value)), 1);
     }
-    for(let i=0; i<this.personalData517PatologiaDataList.length; i++){
-      if(this.personalData517PatologiaDataList[i].id == this.personalData517PatologiaListSelectedData[0]){
+    for(let i=0; i<this.personalData517PatologiaDataList.length; i++) {
+      if(this.personalData517PatologiaDataList[i].id == this.personalData517PatologiaListSelectedData[0]) {
         this.personalData517PatologiaSelectedToModify = this.personalData517PatologiaDataList[i].patologia;
       }
     }
   }
 
-  personalData517PatologiaOnChange(targetValue){
+  personalData517PatologiaOnChange(targetValue) {
     // this.personalData515RecetasListSelectAllChkBx = false;
     // this.personalData515RecetasListSelectedData = [];
     this.personalData517selectedPatologiatId = targetValue;
@@ -1680,9 +1710,9 @@ export class ConsultasExternasComponent implements OnInit {
       console.log(resp);
       if(resp.success === true) {
         this.showPreparingData = 0;
-        if(resp.recetas_list === false){
+        if(resp.recetas_list === false) {
           this.personalData515RecetasDataList = [];
-        }else{
+        }else {
           this.personalData515RecetasDataList = resp.recetas_list;
         }
       }
@@ -1797,15 +1827,16 @@ export class ConsultasExternasComponent implements OnInit {
       }
       else if(value == 5) {
         this.personalDataFunc();
+        this.personalData57ShowPeticionlist = [];
         this.personalData56DiagnosticListSelectedData = [];
         this.personalData56DiagnosticListSelectAllChkBx = false;
-        this.personalData57ShowPeticionlist = [];
         this.personalData57PeticionAssignSelectedDataId = 0;
         this.personalData57PeticionAssignListSelectedData = '';
-        this.personalData511selectedPatologiatId = 0;
         this.personalData511RecetasDataList = [];
         this.personalData511RecetasListSelectedData = [];
         this.personalData511RecetasListSelectAllChkBx =false;
+        this.personalData511selectedPatologiatId = 0;
+        this.personalData511AssignedRecetasListSelectedData = '';
       }
       else if(value == 5.1) {
         this.includeInQxFunction();
@@ -1923,6 +1954,16 @@ export class ConsultasExternasComponent implements OnInit {
         this.personalData517PatologiaDataList = [];
       }
       else if(value == 5.16) {
+        console.log(this.personalData511RecetasDataList);
+        for(let i=0; i<this.personalData511RecetasDataList.length; i++) {
+          if(this.personalData511RecetasDataList[i].id == this.personalData511RecetasListSelectedData) {
+            this.personalData516SelectedTratamiento = this.personalData511RecetasDataList[i].tratamientos;
+            this.personalData516SelectedPosologia = this.personalData511RecetasDataList[i].posologia;
+            this.personalData516SelectedUnidades = this.personalData511RecetasDataList[i].unidades;
+            this.personalData516SelectedPauta = this.personalData511RecetasDataList[i].pauta;
+            this.personalData516SelectedInstrucciones = this.personalData511RecetasDataList[i].farmaco;
+          }
+        }
         this.consultasExternasService.personalData516PrescribeRecetas(this.appAccessToken, this.appUserToken, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData)
         .subscribe(resp => {
           console.log(resp);
@@ -1930,7 +1971,7 @@ export class ConsultasExternasComponent implements OnInit {
             this.personalData516fullName = resp.patient_details.nom + ' ' + resp.patient_details.cog1 + ' '  + resp.patient_details.cog2;
             this.personalData516DNI = resp.patient_details.dni;
             this.personalData516Date = resp.patient_details.datai;
-            this.personalData516Especialidad =resp.doctors_details.txtespe;
+            this.personalData516Especialidad = resp.doctors_details.txtespe;
           }
         });
       }
@@ -1938,8 +1979,8 @@ export class ConsultasExternasComponent implements OnInit {
         this.personalData517ShowAllPatologiaList();
       }
       else if(value == 5.19) {
-        for(let i=0; i<this.personalData515RecetasDataList.length; i++){
-          if(this.personalData515RecetasDataList[i].id == this.personalData515RecetasListSelectedData){
+        for(let i=0; i<this.personalData515RecetasDataList.length; i++) {
+          if(this.personalData515RecetasDataList[i].id == this.personalData515RecetasListSelectedData) {
             this.personalData519TratamientoModifyData = this.personalData515RecetasDataList[i].tratamientos;
             this.personalData519PosologiaModifyData = this.personalData515RecetasDataList[i].posologia;
             this.personalData519UnidadesModifyData = this.personalData515RecetasDataList[i].unidades;
@@ -2072,9 +2113,10 @@ export class ConsultasExternasComponent implements OnInit {
     this.personalData54SelectedAgendasData = agendasValue;
   }
 
-  personalData57departmentOnChange(departmentId){
+  personalData57departmentOnChange(departmentId) {
     this.showPreparingData = 1;
     this.personalData57selectedDepartmentId = departmentId;
+    this.personalData57PeticionListSelectedData = [];
     this.personalData57ShowAllPeticionList();
   }
 
@@ -2207,8 +2249,8 @@ export class ConsultasExternasComponent implements OnInit {
   }
 
   addPatientRecord(formData) {
-    if(this.addVisitMutuaPrivadoRadio === '0'){
-      if(this.addVisitMutuaList == ''){
+    if(this.addVisitMutuaPrivadoRadio === '0') {
+      if(this.addVisitMutuaList == '') {
         this.mutuaEditClass = true;
         return false;
       }

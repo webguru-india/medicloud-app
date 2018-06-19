@@ -1452,6 +1452,35 @@ export class ConsultasExternasService {
     )
   }
 
+  personalData516ListAssignedRecetas(appAccessToken, appUserToken, today, malaltId, agendaId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("today", today);
+    fd.append("malalt_id", malaltId);
+    fd.append("agenda_id", agendaId);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'list-assigned-recetas',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
   personalData517PatologiaGrabar(appAccessToken, appUserToken, patologia, agendaId){
     let fd = new FormData();
 
@@ -1698,6 +1727,39 @@ export class ConsultasExternasService {
     
     return this.http.post(
       this.globalConfigs.apiBaseUrl + 'prescribe-recetas',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData516SavePrescribtion(appAccessToken, appUserToken, treatmentId, malatId, agendaId, unidades, pauta, posologia, instrucciones){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("treatment_id", treatmentId );
+    fd.append("malalt_id", malatId);
+    fd.append("agenda_id", agendaId);
+    fd.append("unidades", unidades);
+    fd.append("pauta", pauta);
+    fd.append("posologia", posologia);
+    fd.append("instrucciones", instrucciones);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'save-prescribtion',
       fd
     )
     .map(

@@ -630,7 +630,7 @@
                                     <td>
                                       <div class="smart-form">
                                         <label class="radio">
-                                          <input type="radio" name="radio" [value]="data.id" [(ngModel)]="personalData57PeticionAssignListSelectedData">
+                                          <input type="radio" name="radioPeticions" [value]="data.id" [(ngModel)]="personalData57PeticionAssignListSelectedData">
                                           <i></i>
                                         </label>
                                       </div>
@@ -672,44 +672,31 @@
                           <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                               <a class="btn btn-primary btn-xs" href="javascript:void(0);" (click)="hoursMenuClick(5.11, $event.target)">Anadir</a>
-                              <a class="btn btn-primary btn-xs" href="javascript:void(0);">See</a>
+                              <button class="btn btn-primary btn-xs" href="javascript:void(0);" [disabled]="personalData511AssignedRecetasListSelectedData == ''">Ver</button>
                             </div>
                           </div>
                         </div>
-                        <div class="custom-scroll table-responsive tab_height_200" style="overflow-y: scroll;">
+                        <div class="custom-scroll table-responsive tab_height_130" style="overflow-y: scroll;">
                           <table class="table table-bordered">
                             <thead>
                               <tr>
-                                <th>Option1</th>
-                                <th>Option2</th>
-                                <th>Option3</th>
+                                <th width="50"></th>
+                                <th width="200">TRATAMIENTO</th>
+                                <th>FECHA</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
+                              <tr *ngFor="let data of personalData511ShowAllAssignedRecetas">
+                                <td>
+                                  <div class="smart-form">
+                                    <label class="radio">
+                                      <input type="radio" name="radioRecetas" [value]="data.id" [(ngModel)]="personalData511AssignedRecetasListSelectedData">
+                                      <i></i>
+                                    </label>
+                                  </div>
+                                </td>
+                                <td>{{data.farmaco}}</td>
+                                <td>{{data.fecha | date:'dd-MM-yyyy'}}</td>
                               </tr>
                             </tbody>
                           </table>
@@ -725,7 +712,7 @@
                 <div class="mobile_row">
                   <div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-18" data-widget-colorbutton="false" data-widget-editbutton="false">
                     <header>
-                      <h2><strong>Reports</strong>  </h2>
+                      <h2><strong>Reports</strong></h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -1695,7 +1682,7 @@
                       <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DiagonosticsAddBtnPopupAdanir" [disabled]="personalData56DiagnosticListSelectedData.length > 0">Anadir</button>
                       <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DiagonosticsAddBtnPopupModificar" [disabled]="personalData56DiagnosticListSelectedData.length != 1">Modificar</button>
                       <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DiagonosticsAddBtnPopupBorrar" [disabled]="personalData56DiagnosticListSelectedData.length == 0">Borrar</button>
-                      <button class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5, $event.target); openDiagonisticModal()">Cancelar</button>
+                      <button class="btn btn-default" href="javascript:void(0);" (click)="hoursMenuClick(5, $event.target); openDiagonisticModal()">Cancelar</button>
                       <!-- <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5, $event.target)">
                         Cancelar
                       </a> -->
@@ -1726,7 +1713,7 @@
                     </div>
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <button class="btn btn-primary" (click)="hoursMenuClick(5.8, $event.target);">Configurar</button>
-                    <button class="btn btn-primary" (click)="hoursMenuClick(5, $event.target);">Cancelar</button>
+                    <button class="btn btn-default" (click)="hoursMenuClick(5, $event.target);">Cancelar</button>
                   </div>
                   <p style="clear: both;">&nbsp;</p>
                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -1880,9 +1867,9 @@
                     <div class="row"> 
                       <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5.9, $event.target);">Configuracion</a>
                       <button class="btn btn-primary" href="" data-toggle="modal" data-target="#peticionPruebaAnadirPopup" [disabled]="personalData57selectedDepartmentId == 0 || personalData57PeticionListSelectedData.length > 0">Anadir</button>
-                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#peticionPruebaModificarPopup" [disabled]="personalData57selectedDepartmentId === 0 || personalData57PeticionListSelectedData.length != 1" (click)="personalData57PruebaModificarBtn()">Modificar</button>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#peticionPruebaModificarPopup" [disabled]="personalData57selectedDepartmentId === 0 || personalData57PeticionListSelectedData.length != 1">Modificar</button>
                       <button class="btn btn-primary" href="" data-toggle="modal" data-target="#peticionPruebaBorrarPopup" [disabled]="personalData57selectedDepartmentId === 0 || personalData57PeticionListSelectedData.length < 1">Borrar</button>
-                      <button class="btn btn-primary" (click)="hoursMenuClick(5.7, $event.target);">Cancelar</button>
+                      <button class="btn btn-default" (click)="hoursMenuClick(5.7, $event.target);">Cancelar</button>
                     </div>
                   </div>
                 </div>
@@ -1980,9 +1967,9 @@
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="row"> 
                       <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DepartmentAnadirPopup" [disabled]="personalData57DepartmentListSelectedData.length > 0">Anadir</button>
-                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DepartmentModificarPopup" (click)="personalData57DepartmentModificarBtn()" [disabled]="personalData57DepartmentListSelectedData.length != 1">Modificar</button>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DepartmentModificarPopup" [disabled]="personalData57DepartmentListSelectedData.length != 1">Modificar</button>
                       <button class="btn btn-primary" href="" data-toggle="modal" data-target="#DepartmentBorrarPopup" [disabled]="personalData57DepartmentListSelectedData.length < 1">Borrar</button>
-                      <button class="btn btn-primary" href="" (click)="hoursMenuClick(5.8, $event.target);">Cancelar</button>
+                      <button class="btn btn-default" href="" (click)="hoursMenuClick(5.8, $event.target);">Cancelar</button>
                     </div>
                   </div>
                 </div>
@@ -2340,31 +2327,31 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>TRATAMIENTO</label>
-                            <input class="form-control" placeholder="TRATAMIENTO" formControlName="personalData516Tratamiento" type="text">
+                            <input class="form-control" placeholder="TRATAMIENTO" formControlName="personalData516Tratamiento" type="text" [ngModel]="personalData516SelectedTratamiento">
                           </div>
                         </div>
                         <div class="col-md-4">
                           <div class="form-group">
                             <label>POSOLOGIA</label>
-                            <input class="form-control" placeholder="POSOLOGIA" formControlName="personalData516Posologia" type="text">
+                            <input class="form-control" placeholder="POSOLOGIA" formControlName="personalData516Posologia" type="text" [ngModel]="personalData516SelectedPosologia">
                           </div>
                         </div>
                         <div class="col-md-4">
                           <div class="form-group">
                             <label>UNIDADES</label>
-                            <input class="form-control" value="1" min="1" placeholder="UNIDADES" formControlName="personalData516Unidades" type="number">
+                            <input class="form-control" value="1" min="1" placeholder="UNIDADES" formControlName="personalData516Unidades" type="number" [ngModel]="personalData516SelectedUnidades">
                           </div>
                         </div>
                         <div class="col-md-4">
                           <div class="form-group">
                             <label>PAUTA</label>
-                            <input class="form-control" placeholder="PAUTA" formControlName="personalData516Pauta" type="text">
+                            <input class="form-control" placeholder="PAUTA" formControlName="personalData516Pauta" type="text" [ngModel]="personalData516SelectedPauta">
                           </div>
                         </div>
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>INSTRUCCIONES PARA EL PACIENTE</label><br/>
-                            <textarea class="form-control" rows="2" formControlName="personalData516Instrucciones"></textarea>
+                            <textarea class="form-control" rows="2" formControlName="personalData516Instrucciones" [ngModel]="personalData516SelectedInstrucciones"></textarea>
                           </div>
                         </div>
                         <div class="col-md-4">
@@ -2433,7 +2420,7 @@
                     <div class="row">
                       <select class="form-control" id="select-1" (change)="personalData511PatologiaOnChange($event.target.value)">
                         <option selected disabled>PATOLOGIA</option>
-                        <!-- <option *ngFor="let data of personalData517PatologiaDataList" [selected]="data.id == this.personalData511selectedPatologiatId" [value]="data.id">{{data.patologia}}</option> -->
+                        <option *ngFor="let data of personalData517PatologiaDataList" [selected]="data.id == this.personalData511selectedPatologiatId" [value]="data.id">{{data.patologia}}</option>
                       </select>
                       <i class="fa fa-spinner fa-spin specialty-loader" *ngIf="loadingAgendas"></i>
                     </div>
@@ -3211,7 +3198,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData57DepartmentModificarGrabarBtn()">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData56DiagnosisModifyButton()">
         Anadir
         </button>
       </div>
@@ -3281,7 +3268,7 @@
 <!--  DepartmentAnadir End -->
 
 <!--  DepartmentModificar Modal Start -->
-<div class="modal fade" id="DepartmentModificarPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="DepartmentModificarPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -3297,9 +3284,6 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData57DepartmentModificarGrabarBtn()" [disabled]="personalData57DepartmentModifiedName == ''">
         Grabar
-        </button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="personalData57DepartmentModificarCancelarBtn()">
-        Cancelar
         </button>
       </div>
     </div>
@@ -3368,7 +3352,7 @@
 <!--  peticionPruebaAnadir End -->
 
 <!--peticionPruebaModificar Modal Start  -->
-<div class="modal fade" id="peticionPruebaModificarPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="peticionPruebaModificarPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- <div class="modal-header">
@@ -3393,7 +3377,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData57PruebaModificarGrabarBtn()" [disabled]="personalData57PeticionModificarTextareaVal == '' || personalData57ObservacionesModificarTextareaVal == ''">Grabar
         </button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="personalData57PruebaModificarCancelarBtn()">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
         Cancelar
         </button>
       </div>
@@ -4305,7 +4289,7 @@
         <div class="row">
           <div class="col-md-12">
             <label for="email">Patologia</label>
-            <input class="form-control" type="text" placeholder="Patologia" [(ngModel)]="personalData517PatologiaModificarData"[value]="personalData517PatologiaSelectedToModify">
+            <input class="form-control" type="text" placeholder="Patologia" [(ngModel)]="personalData517PatologiaModificarData" [value]="personalData517PatologiaSelectedToModify">
           </div>
         </div>
       </div>
