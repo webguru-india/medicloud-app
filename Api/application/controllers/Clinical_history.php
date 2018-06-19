@@ -572,7 +572,7 @@ class Clinical_history extends REST_Controller{
 			'pauta'		=> $this->post('pauta'),
 			'posologia'		=> $this->post('posologia'),
 			'instrucciones'	=> $this->post('instrucciones')
-		);
+		);		
 		$res = $this->Common_model->execute_sp(
 			array('sp_name'=>'mediagenda.clinica_recetas_insert', 'params' => $params,'db_name' => 'default', 'return_type' => 'row-array'));		
 		if(!isset($res['code'])){
