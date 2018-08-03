@@ -1722,7 +1722,7 @@ export class ConsultasExternasService {
 
     fd.append("access_token", appAccessToken);
     fd.append("user_token", appUserToken);
-    fd.append("malat_id", malatId);
+    fd.append("malalt_id", malatId);
     fd.append("agenda_id", agendaId);
     
     return this.http.post(
@@ -1745,7 +1745,7 @@ export class ConsultasExternasService {
     )
   }
 
-  personalData516SavePrescribtion(appAccessToken, appUserToken, treatmentId, malatId, agendaId, unidades, pauta, posologia, instrucciones){
+  personalData516SavePrescribtion(appAccessToken, appUserToken, treatmentId, malatId, agendaId, unidades, pauta, posologia, instrucciones, direccion, treatmentName){
     let fd = new FormData();
 
     fd.append("access_token", appAccessToken);
@@ -1757,9 +1757,217 @@ export class ConsultasExternasService {
     fd.append("pauta", pauta);
     fd.append("posologia", posologia);
     fd.append("instrucciones", instrucciones);
+    fd.append("direccion", direccion);
+    fd.append("treatment_name", treatmentName);
     
     return this.http.post(
       this.globalConfigs.apiBaseUrl + 'save-prescribtion',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData520SaveInfromes(appAccessToken, appUserToken, title, editorInformation, malatId, agendaId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("title", title);
+    fd.append("editor_information", editorInformation);
+    fd.append("id_malalt", malatId);
+    fd.append("agenda_id", agendaId);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'save-information',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData513ImageGrabar(appAccessToken, appUserToken, date, title, description, imageWidth, imageHeight, malatId, agendaId, imageValue){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("date", date);
+    fd.append("title", title);
+    fd.append("description", description);
+    fd.append("image_width", imageWidth);
+    fd.append("image_height", imageHeight);
+    fd.append("id_malalt", malatId);
+    fd.append("agenda", agendaId);
+    fd.append("file", imageValue);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'save_imagenes',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+  
+  personalData512GetAllImagesData(appAccessToken, appUserToken, malatId, agendaId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("id_malalt", malatId);
+    fd.append("agenda", agendaId);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'get_all_imagens',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData512SelectedImageRemove(appAccessToken, appUserToken, imagenId, malatId, agendaId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("imagen_id", imagenId);
+    fd.append("id_malalt", malatId);
+    fd.append("agenda", agendaId);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'delete_imagen',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+
+  personalData512SelectedImageEnlarge(appAccessToken, appUserToken, imagenId){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("imagen_id", imagenId);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'get_imagen',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+  
+  personalData521ImageGrabarEdit(appAccessToken, appUserToken, id, title, description, imageValue){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("id", id);
+    fd.append("title", title);
+    fd.append("description", description);
+    fd.append("file", imageValue);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'edit_imagen_description',
+      fd
+    )
+    .map(
+      (res: Response) => {
+        if(typeof res.json().logged_out !== 'undefined' && res.json().logged_out === true) {
+          window.location.href = this.globalConfigs.baseUrl + 'login';
+          this.cookieService.delete('accessToken', '/');
+          this.cookieService.delete('userToken', '/');
+        }
+        else {
+          this.cookieService.set('accessToken', appAccessToken, 1, '/');
+          this.cookieService.set('userToken', appUserToken, 1, '/');
+        }
+        return res.json();
+      }
+    )
+  }
+  
+  personalData522EditedImage(appAccessToken, appUserToken, id, imageValue){
+    let fd = new FormData();
+
+    fd.append("access_token", appAccessToken);
+    fd.append("user_token", appUserToken);
+    fd.append("id", id);
+    fd.append("file", imageValue);
+    
+    return this.http.post(
+      this.globalConfigs.apiBaseUrl + 'edit_imagen',
       fd
     )
     .map(

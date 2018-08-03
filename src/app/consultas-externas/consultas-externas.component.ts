@@ -70,8 +70,6 @@ export class ConsultasExternasComponent implements OnInit {
   public patientFirstName: any = '';
   public searchedPatientName: any = [];
 
-
-
   public addVisitFormGroup: FormGroup;
   public addVisitMutuaPrivadoRadio: string = '0';
   public addVisitTelephono: string = '';
@@ -233,6 +231,20 @@ export class ConsultasExternasComponent implements OnInit {
   public personalData511ShowAllAssignedRecetas: any = [];
   public personalData511AssignedRecetasListSelectedData: any = '';
 
+  public personalData512getAllImagesData: any = [];
+  public personalData512SelectedImageId: any = '';
+  public personalData512SelectedImage: any = '';
+
+  // public personalData513ImageUrl: any = '';
+  public personalData513ImageName: any = '';
+  public personalData513ImageWidth: any = '';
+  public personalData513ImageHeight: any = '';
+  public personalData513ImageResizedHeight: any = '';
+  public personalData513GetDate: any = '';
+  public personalData513Title: any = '';
+  public personalData513Description: any = '';
+  public personalData513ResizedImageUrl: any = '';
+
   public personalData515RecetasListSelectedData: any = [];
   public personalData515RecetasListSelectAllChkBx: boolean = false;
   public personalData515RecetasDataList: any = [];
@@ -247,6 +259,7 @@ export class ConsultasExternasComponent implements OnInit {
   public personalData516SelectedUnidades: number = 0;
   public personalData516SelectedPauta: any = '';
   public personalData516SelectedInstrucciones: any = '';
+  public personalData516RecetasPdfUrl: any = '';
 
   public personalData517PatologiaData: any = '';
   public personalData517PatologiaDataList: any = [];
@@ -261,6 +274,24 @@ export class ConsultasExternasComponent implements OnInit {
   public personalData519UnidadesModifyData: number = 1; 
   public personalData519PautaModifyData: string = ''; 
   public personalData519InstruccionesModifyData: string = ''; 
+
+  public personalData520InfromesSummernoteTitulo: any = '';
+
+  public personalData521SelectedImageDate: any = '';
+  public personalData521SelectedImageTitle: any = '';
+  public personalData521SelectedImageDescription: any = '';
+  public personalData521ImageName: any = '';
+  public personalData521ImageWidth: any = '';
+  public personalData521ImageHeight: any = '';
+  public personalData521ImageResizedHeight: any = '';
+  public personalData521ResizedImageUrl: any = '';
+  // public personalData521Title: any = '';
+  // public personalData521Description: any = '';
+
+  public personalData522SelectedImage: any = '';
+  public personalData522Image: any = '';
+  public personalData522EditedImageURL: any = '';
+
 
   public fullDate = new Date();
   public twoDigitMonth = ((this.fullDate.getMonth()+1) === 1)? (this.fullDate.getMonth()+1) : '0' + (this.fullDate.getMonth()+1);
@@ -1194,7 +1225,7 @@ export class ConsultasExternasComponent implements OnInit {
   /* ===================== 5.6 personalData56 Func Ends ====================== */
   
 
-  /* ===================== 5.7 personalData56 Func Starts ====================== */
+  /* ===================== 5.7 personalData57 Func Starts ====================== */
   personalData57ShowAllDepartmentList() {
     this.consultasExternasService.personalData57ShowDepartment(this.appAccessToken, this.appUserToken,this.personalData5SelectedAgendasData)
     .subscribe(resp => {
@@ -1457,7 +1488,7 @@ export class ConsultasExternasComponent implements OnInit {
     console.log(this.personalData57PeticionAssignListSelectedData);
   }
 
-  /* ===================== 5.7 personalData56 Func Ends ====================== */
+  /* ===================== 5.7 personalData57 Func Ends ====================== */
 
   /* ===================== 5.11 personalData511 Func Start ====================== */
   personalData511PatologiaOnChange(targetValue) {
@@ -1469,6 +1500,8 @@ export class ConsultasExternasComponent implements OnInit {
     .subscribe(resp => {
       console.log(resp);
       if(resp.success === true) {
+        this.personalData511RecetasListSelectedData = [];
+        this.personalData511RecetasListSelectAllChkBx = false;
         this.showPreparingData = 0;
         if(resp.recetas_list === false) {
           this.personalData511RecetasDataList = [];
@@ -1511,6 +1544,190 @@ export class ConsultasExternasComponent implements OnInit {
     // }
   }
   /* ===================== 5.11 personalData511 Func Ends ====================== */
+
+  /* ===================== 5.12 personalData512 Func Start ====================== */
+
+  personalData512SelectedImageRemove() {
+    console.log(this.personalData512SelectedImageId);
+    this.consultasExternasService.personalData512SelectedImageRemove(this.appAccessToken, this.appUserToken, this.personalData512SelectedImageId, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.showSuccessErrorAlert = 1;
+        this.successErrorMessage = resp.message;
+        this.autoCloseSuccessErrorMsg();
+        this.personalData512getAllImagesData = resp.imagenes_list;
+        this.personalData512SelectedImageId = '';
+      }
+    })
+  }
+
+  personalData512SelectedImageEnlarge() {
+    console.log(this.personalData512SelectedImageId);
+    this.showPreparingData = 1;
+    this.consultasExternasService.personalData512SelectedImageEnlarge(this.appAccessToken, this.appUserToken, this.personalData512SelectedImageId)
+    .subscribe(resp => {
+      this.showPreparingData = 0;
+      console.log(resp);
+      this.personalData512SelectedImage = resp.image[0].Content;
+    })
+  }
+
+  personalData512SelectedImageEnlargeModalClose() {
+    this.showPreparingData = 0;
+    this.personalData512SelectedImage = '';
+  }
+
+  /* ===================== 5.12 personalData512 Func End ====================== */
+
+  /* ===================== 5.13 personalData513 Func Start ====================== */
+
+  onSelectFile(e) {
+    console.log(e);
+    // this.files = event.target.files;
+    // console.log(event.target.files[0].name);
+    this.personalData513ImageName = e.target.files[0].name;
+    if (e.target.files && e.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        // this.personalData513ImageUrl = reader.result;
+
+        // var canvas = <HTMLCanvasElement> document.getElementById("imageCanvas");
+        // var ctx = canvas.getContext("2d");
+        // ===============================  OR ==============================
+        var canvas : any = document.getElementById("imageCanvas");
+        var ctx = canvas.getContext("2d");
+        var image = new Image();
+        image.onload = () => {
+          // console.log(image.width);
+          // console.log(image.height);
+          if(image.width > 800) {
+            console.log('hello1')
+            this.personalData513ImageWidth = image.width;
+            this.personalData513ImageHeight = image.height;
+            this.personalData513ImageResizedHeight = Math.trunc((800*image.height)/image.width);
+            // console.log(this.personalData513ImageResizedHeight);
+            canvas.width = 800;
+            canvas.height = this.personalData513ImageResizedHeight;
+            ctx.drawImage(image, 0, 0, 800, this.personalData513ImageResizedHeight);
+
+            this.personalData513ResizedImageUrl = canvas.toDataURL("image/*");
+            // document.getElementById('image').src = dataurl;
+            console.log(this.personalData513ResizedImageUrl);
+          }
+          else {
+            console.log('hello2')
+            this.personalData513ResizedImageUrl = reader.result;
+            console.log(this.personalData513ResizedImageUrl);
+          }
+        }
+        image.src = reader.result;
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  }
+
+  personalData513GetImageGrabar() {
+    console.log(this.personalData513GetDate);
+    console.log(this.personalData513Title);
+    console.log(this.personalData513Description);
+    //pass a static value as width
+    console.log(this.personalData513ImageResizedHeight);
+    console.log(this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt);
+    console.log(this.personalData5SelectedAgendasData);
+    console.log(this.personalData513ResizedImageUrl);
+    this.consultasExternasService.personalData513ImageGrabar(this.appAccessToken, this.appUserToken, this.personalData513GetDate, this.personalData513Title, this.personalData513Description, 800, this.personalData513ImageResizedHeight, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData, this.personalData513ResizedImageUrl)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.showSuccessErrorAlert = 1;
+        this.successErrorMessage = resp.message;
+        this.autoCloseSuccessErrorMsg();
+        this.personalData513ImageName = '';
+        this.personalData513ResizedImageUrl = '';
+        this.personalData513GetDate = '';
+        this.personalData513Title = '';
+        this.personalData513Description = '';
+        this.hoursMenuClick(5.12, '.ribbon');
+      }
+    });
+  }
+
+  /* ===================== 5.13 personalData513 Func Ends ====================== */
+
+  
+  /* ===================== 5.21 personalData521 Func Start ====================== */
+  
+  onSelectFileEdit(e) {
+    console.log(e);
+    // this.files = event.target.files;
+    // console.log(event.target.files[0].name);
+    this.personalData521ImageName = e.target.files[0].name;
+    if (e.target.files && e.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+
+        // var canvas = <HTMLCanvasElement> document.getElementById("imageCanvas");
+        // var ctx = canvas.getContext("2d");
+        // ===============================  OR ==============================
+        var canvas : any = document.getElementById("imageCanvasOfEdit");
+        var ctx = canvas.getContext("2d");
+        var image = new Image();
+        image.onload = () => {
+          // console.log(image.width);
+          // console.log(image.height);
+          if(image.width > 800) {
+            console.log('hello12')
+            this.personalData521ImageWidth = image.width;
+            this.personalData521ImageHeight = image.height;
+            this.personalData521ImageResizedHeight = Math.trunc((800*image.height)/image.width);
+            // console.log(this.personalData513ImageResizedHeight);
+            canvas.width = 800;
+            canvas.height = this.personalData521ImageResizedHeight;
+            ctx.drawImage(image, 0, 0, 800, this.personalData521ImageResizedHeight);
+
+            this.personalData521ResizedImageUrl = canvas.toDataURL("image/*");
+            // document.getElementById('image').src = dataurl;
+            console.log(this.personalData521ResizedImageUrl);
+          }
+          else {
+            console.log('hello22')
+            this.personalData521ResizedImageUrl = reader.result;
+            console.log(this.personalData521ResizedImageUrl);
+          }
+        }
+        image.src = reader.result;
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  }
+
+  personalData521GetImageGrabar() {
+    console.log(this.personalData512SelectedImageId);
+    console.log(this.personalData521SelectedImageTitle);
+    console.log(this.personalData521SelectedImageDescription);
+    //pass a static value as width
+    console.log(this.personalData521ResizedImageUrl);
+    this.consultasExternasService.personalData521ImageGrabarEdit(this.appAccessToken, this.appUserToken, this.personalData512SelectedImageId, this.personalData521SelectedImageTitle, this.personalData521SelectedImageDescription, this.personalData521ResizedImageUrl)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.showSuccessErrorAlert = 1;
+        this.successErrorMessage = resp.message;
+        this.autoCloseSuccessErrorMsg();
+        this.personalData512SelectedImageId = '';
+        this.personalData521ImageName = '';
+        this.personalData521ResizedImageUrl = '';
+        this.personalData521SelectedImageTitle = '';
+        this.personalData521SelectedImageDescription = '';
+        this.hoursMenuClick(5.12, '.ribbon'); 
+      }
+    });
+  }
+  
+  /* ===================== 5.21 personalData521 Func Ends ====================== */
 
   /* ===================== 5.15 personalData515 Func Start ====================== */
 
@@ -1573,7 +1790,14 @@ export class ConsultasExternasComponent implements OnInit {
   /* ===================== 5.16 personalData516 Func Start ====================== */
   
   personalData516AddPrescribeData(formData) {
-    this.consultasExternasService.personalData516SavePrescribtion(this.appAccessToken, this.appUserToken, this.personalData511RecetasListSelectedData, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData, formData.personalData516Unidades, formData.personalData516Pauta, formData.personalData516Posologia, formData.personalData516Instrucciones)
+    // console.log(this.personalData511RecetasListSelectedData);
+    // console.log(formData.personalData516Unidades);
+    // console.log(formData.personalData516Pauta);
+    // console.log(formData.personalData516Posologia);
+    // console.log(formData.personalData516Instrucciones);
+    // console.log(formData.personalData516Direccion);
+    // console.log(formData.personalData516Tratamiento);
+    this.consultasExternasService.personalData516SavePrescribtion(this.appAccessToken, this.appUserToken, this.personalData511RecetasListSelectedData, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData, formData.personalData516Unidades, formData.personalData516Pauta, formData.personalData516Posologia, formData.personalData516Instrucciones, formData.personalData516Direccion, formData.personalData516Tratamiento)
     .subscribe(resp => {
       console.log(resp);
       if(resp.success === true) {
@@ -1581,7 +1805,8 @@ export class ConsultasExternasComponent implements OnInit {
         this.successErrorMessage = resp.message;
         this.autoCloseSuccessErrorMsg();
         this.personalData516AssignedRecetasList = resp.return_data;
-        this.personalData511RecetasListSelectedData = [];
+        this.personalData516RecetasPdfUrl = resp.pdf;
+        // this.personalData511RecetasListSelectedData = [];
         this.personalData516PrescribeFormGroup.reset({personalData516Unidades: 1, personalData516Idioma: 'Catala'});
         this.hoursMenuClick(5.11, '.ribbon');
       }
@@ -1759,7 +1984,53 @@ export class ConsultasExternasComponent implements OnInit {
 
   /* ===================== 5.19 personalData519 Func Ends ====================== */
   
+  /* ===================== 5.20 personalData520 Infromes Func Start ====================== */
 
+  personalData520InfromesVacio() {
+    setTimeout(() => {
+      $('.summernote-2').summernote('reset');
+      $('.summernote-2').summernote({
+        toolbar: [
+          // [groupName, [list of button]]
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['strikethrough', 'superscript', 'subscript']],
+          ['fontsize', ['fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']]
+        ]
+      });
+    }, 100)
+  }
+
+  personalData520InfromesSummernoteGrabar() {
+    let summernote2Text = $(".summernote-2").summernote("code");
+    console.log(summernote2Text);
+    console.log(this.personalData520InfromesSummernoteTitulo);
+    console.log(this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt);
+    console.log(this.personalData5SelectedAgendasData);
+    this.consultasExternasService.personalData520SaveInfromes(this.appAccessToken, this.appUserToken, this.personalData520InfromesSummernoteTitulo, summernote2Text, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData)
+    .subscribe(resp => {
+      console.log(resp);
+      if(resp.success === true) {
+        this.showSuccessErrorAlert = 1;
+        this.successErrorMessage = resp.message;
+        this.autoCloseSuccessErrorMsg();
+        this.personalData520InfromesSummernoteTitulo = '';
+      }
+    })
+  }
+
+  /* ===================== 5.20 personalData520 Infromes Func Ends ====================== */
+
+  /* ===================== 5.22 personalData522 Infromes Func Start ====================== */
+
+  personalData522EditedImageSave() {
+    console.log(this.personalData522EditedImageURL);
+    console.log(this.personalData512SelectedImageId);
+  }
+
+  /* ===================== 5.22 personalData522 Infromes Func Ends ====================== */
   hoursMenuClick(value, elem) {
     if(typeof $(elem).attr('class') !== 'undefined' && $(elem).attr('class').indexOf('disabled') > -1) {
       return false;
@@ -1837,6 +2108,17 @@ export class ConsultasExternasComponent implements OnInit {
         this.personalData511RecetasListSelectAllChkBx =false;
         this.personalData511selectedPatologiatId = 0;
         this.personalData511AssignedRecetasListSelectedData = '';
+        this.personalData512SelectedImageId = '';
+        this.consultasExternasService.personalData512GetAllImagesData(this.appAccessToken, this.appUserToken, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData)
+        .subscribe(resp => {
+          console.log(resp);
+          if(resp.success === true) {
+            this.showPreparingData = 0;
+            this.personalData512getAllImagesData = resp.imagenes_list;
+            this.personalData521ImageName = '';
+            this.personalData521ResizedImageUrl = '';
+          }
+        });
       }
       else if(value == 5.1) {
         this.includeInQxFunction();
@@ -1879,6 +2161,19 @@ export class ConsultasExternasComponent implements OnInit {
         this.personalData515RecetasDataList = [];
         this.personalData515RecetasListSelectedData = [];
         this.personalData515RecetasListSelectAllChkBx = false;
+      }
+      else if(value == 5.12) {
+        this.showPreparingData = 1;
+        this.consultasExternasService.personalData512GetAllImagesData(this.appAccessToken, this.appUserToken, this.getVisitDataFromVisitId(this.selectedVisit).ID_malalt, this.personalData5SelectedAgendasData)
+        .subscribe(resp => {
+          console.log(resp);
+          if(resp.success === true) {
+            this.showPreparingData = 0;
+            this.personalData512getAllImagesData = resp.imagenes_list;
+            this.personalData521ImageName = '';
+            this.personalData521ResizedImageUrl = '';
+          }
+        })
       }
       else if(value == 5.14) {
         /*--Data Chart--*/
@@ -1993,6 +2288,163 @@ export class ConsultasExternasComponent implements OnInit {
         this.personalData519FormGroup.controls['personalData519Unidades'].setValue(this.personalData519UnidadesModifyData);
         this.personalData519FormGroup.controls['personalData519Pauta'].setValue(this.personalData519PautaModifyData);
         this.personalData519FormGroup.controls['personalData519Instrucciones'].setValue(this.personalData519InstruccionesModifyData);
+      }
+      else if(value == 5.21) {
+        console.log(this.personalData512SelectedImageId);
+        console.log(this.personalData512getAllImagesData);
+        this.showPreparingData = 1;
+        this.consultasExternasService.personalData512SelectedImageEnlarge(this.appAccessToken, this.appUserToken, this.personalData512SelectedImageId)
+        .subscribe(resp => {
+          this.showPreparingData = 0;
+          console.log(resp);
+          this.personalData521ResizedImageUrl = resp.image[0].Content;
+        })
+        for(let i=0; i<this.personalData512getAllImagesData.length; i++) {
+          if(this.personalData512SelectedImageId == this.personalData512getAllImagesData[i].id) {
+            this.personalData521SelectedImageDate = this.personalData512getAllImagesData[i].data.slice(0,10);
+            this.personalData521SelectedImageTitle = this.personalData512getAllImagesData[i].title;
+            this.personalData521SelectedImageDescription = this.personalData512getAllImagesData[i].comentaris;
+          }
+        }
+        console.log(this.personalData521SelectedImageDate);
+        console.log(this.personalData521SelectedImageTitle);
+        console.log(this.personalData521SelectedImageDescription);
+      }
+      else if(value == 5.22) {
+        // var _that = this;
+        console.log(this.personalData512SelectedImageId);
+        this.showPreparingData = 1;
+        this.consultasExternasService.personalData512SelectedImageEnlarge(this.appAccessToken, this.appUserToken, this.personalData512SelectedImageId)
+        .subscribe(resp => {
+          this.showPreparingData = 0;
+          console.log(resp);
+          this.personalData522SelectedImage = resp.image[0].Content;
+          
+          $('#target').on('load', () => {
+            /* Enable Cross Origin Image Editing */
+            console.log(this.personalData522SelectedImage);
+            var r, canvasProp;
+            var cropperWidth = $('.cropper-image').width() - 10,
+            cropperheight = $('.cropper-image').height() - 12,
+            imageObj = $("#target")[0], // Show image preview
+            orgImgWidth = imageObj.naturalWidth,
+            canvas = $("#canvas-crop-preview")[0],
+            context = canvas.getContext("2d"),
+            jcrop_api = '', // The variable jcrop_api will hold a reference to the -- // Jcrop API once Jcrop is instantiated.
+            // imgRatio = (imageObj.naturalWidth - parseInt($(".cropper-image").width())),
+            brightnessVal = $('#brightnessRange').val(),
+            contrastVal = $('#contrastRange').val(),
+
+            bright = document.getElementById('brightnessRange');
+            bright.addEventListener('input', () => {
+              // console.log(parseInt(bright.value, 10));
+              brightness(parseInt((<HTMLInputElement>bright).value, 10));
+            }, false);
+            
+            let con = document.getElementById('contrastRange');
+            con.addEventListener('input', () => {
+              console.log(parseFloat((<HTMLInputElement>con).value));
+              contrast(parseFloat((<HTMLInputElement>con).value));
+            }, false);
+            
+            let initJcrop = function() // The function is pretty simple
+            {
+              // Invoke Jcrop in typical fashion
+              console.log(cropperWidth,cropperheight);
+              $('#target').Jcrop({
+                setSelect: [10,10,cropperWidth,cropperheight],
+                allowSelect: false,
+                onChange : showCoords,
+                onSelect : updatePreview,
+                // onRelease:  clearCoords
+              },function(){
+                jcrop_api = this;
+                // jcrop_api.setSelect([10,10,cropperWidth,cropperheight]);
+              });
+            },
+            updatePreview = function(c) {
+              if(parseInt(c.w) > 0) {
+                canvas.width = 300; //c.w
+                canvas.height = (300*c.h)/c.w;
+                r = orgImgWidth / $('.cropper-image').width();
+                canvasProp = c;
+                drawPreviewCanvas();
+              }
+            },
+            brightness = function (amount) {
+              brightnessVal = amount;
+              $("#brightness-val").text((brightnessVal+100)/2);
+              drawPreviewCanvas();
+            },
+            contrast = function (amount) {
+              contrastVal = amount;
+              $("#contrast-val").text(Math.floor(contrastVal*50));
+              drawPreviewCanvas();
+            },
+            drawPreviewCanvas = function() {
+              context.drawImage(imageObj, canvasProp.x*r, canvasProp.y*r, canvasProp.w*r, canvasProp.h*r, 0, 0, canvas.width, canvas.height);
+              context.drawImage(canvas, 0, 0, canvas.width, canvas.height);
+              var imgData = context.getImageData(0, 0, canvas.width, canvas.height);
+              var pixelData = imgData.data; // original array modified, but canvas not updated
+              /// no change, just exit
+              // if (amount === 0) return;
+              var brightnessVal1 = parseFloat(brightnessVal) || 0;
+              for (var i = 0; i < pixelData.length; i += 4) {
+                pixelData[i] += brightnessVal1;
+                pixelData[i + 1] += brightnessVal1;
+                pixelData[i + 2] += brightnessVal1
+              }
+
+              var contrastVal1 = (parseFloat(contrastVal) || 0);
+              // console.log(contrastVal1)
+              for (var i = 0; i < pixelData.length; i += 4) {
+                pixelData[i] = ((((pixelData[i] / 255) - 0.5) * contrastVal1) + 0.5) * 255;
+                pixelData[i + 1] = ((((pixelData[i + 1] / 255) - 0.5) * contrastVal1) + 0.5) * 255;
+                pixelData[i + 2] = ((((pixelData[i + 2] / 255) - 0.5) * contrastVal1) + 0.5) * 255;
+              }
+              context.putImageData(imgData, 0, 0);
+            },
+            // getImage = function() {
+            //   image.src = canvas.toDataURL();
+            //   console.log(image.src)
+            // },
+            showCoords = function(c) // Simple event handler,called from onChange and onSelect // event handlers,as per the Jcrop invocation above
+            {
+              $('#x1').val(c.x);
+              $('#y1').val(c.y);
+              // $('#x2').val(c.x2);
+              // $('#y2').val(c.y2);
+              $('#w').val(c.w);
+              $('#h').val(c.h);
+            };
+            $('#resetBtn').on('click', function() {
+              (<HTMLInputElement>bright).value = '0';
+              (<HTMLInputElement>con).value = '1';
+              brightness(0);
+              contrast(1);
+              initJcrop();
+            });
+            
+            $('#saveBtn').on('click', () => {
+              canvas.src = canvas.toDataURL();
+              this.personalData522EditedImageURL = canvas.src;
+              console.log(canvas.src);
+              console.log(this.personalData512SelectedImageId);
+              this.consultasExternasService.personalData522EditedImage(this.appAccessToken, this.appUserToken, this.personalData512SelectedImageId,canvas.src)
+              .subscribe(resp => {
+                console.log(resp);
+                if(resp.success === true) {
+                  this.showSuccessErrorAlert = 1;
+                  this.successErrorMessage = resp.message;
+                  this.autoCloseSuccessErrorMsg();
+                  this.hoursMenuClick(5.12, '.ribbon');
+                }
+              });
+            });
+            initJcrop();
+          });
+          
+        });
       }
     }, 500);
   }

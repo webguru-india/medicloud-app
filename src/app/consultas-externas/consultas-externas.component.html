@@ -712,7 +712,7 @@
                 <div class="mobile_row">
                   <div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-18" data-widget-colorbutton="false" data-widget-editbutton="false">
                     <header>
-                      <h2><strong>Reports</strong></h2>
+                      <h2><strong>Infromes</strong></h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -738,41 +738,28 @@
                             </div>
                           </div>
                         </div>
-                        <div class="custom-scroll table-responsive tab_height_200" style="overflow-y: scroll;">
+                        <div class="custom-scroll table-responsive tab_height_130" style="overflow-y: scroll;">
                           <table class="table table-bordered">
                             <thead>
                               <tr>
-                                <th>Option1</th>
-                                <th>Option2</th>
-                                <th>Option3</th>
+                                <th width="50"></th>
+                                <th width="170">FECHA</th>
+                                <th>TITULO</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
-                              </tr>
+                              <!-- <tr *ngFor="let data of personalData511ShowAllAssignedRecetas">
+                                <td>
+                                  <div class="smart-form">
+                                    <label class="radio">
+                                      <input type="radio" name="radioRecetas" [value]="data.id" [(ngModel)]="personalData511AssignedRecetasListSelectedData">
+                                      <i></i>
+                                    </label>
+                                  </div>
+                                </td>
+                                <td>{{data.fecha | date:'dd-MM-yyyy'}}</td>
+                                <td>{{data.farmaco}}</td>
+                              </tr> -->
                             </tbody>
                           </table>
                         </div>
@@ -811,36 +798,14 @@
                           <table class="table table-bordered">
                             <thead>
                               <tr>
-                                <th>Option1</th>
-                                <th>Option2</th>
-                                <th>Option3</th>
+                                <th width="170">FECHA</th>
+                                <th>TIPO</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem Ipsum is simply dummy text.</td>
-                                <td>xyz</td>
-                                <td>xyz</td>
+                              <tr *ngFor="let data of personalData512getAllImagesData">
+                                <td>{{data.data | date:'dd-MM-yyyy'}}</td>
+                                <td>{{data.title}}</td>
                               </tr>
                             </tbody>
                           </table>
@@ -1345,9 +1310,7 @@
               <div style="clear: both;"></div>
             </div>
           </form>
-        </div>
-
-        
+        </div>        
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.3">
           <div class="">
@@ -1430,8 +1393,6 @@
             </div>
           </div>
         </div>
-
-
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.4">
           <div class="">
@@ -1540,8 +1501,6 @@
           </div>
         </div>
 
-
-
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.5">
           <div class="">
             <div class="widget-body-toolbar">
@@ -1596,8 +1555,6 @@
             </div>
           </div>
         </div>
-
-
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.6">
           <div class="">
@@ -1704,13 +1661,13 @@
                 <div class="row">
                   <h4>PETICION</h4>
                   <p>&nbsp;</p>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 smart-form">
-                      <select class="form-control" id="select-1" (change)="personalData57departmentOnChange($event.target.value)">
-                        <option selected disabled>Select Departamento</option>
-                        <option *ngFor="let data of personalData57ShowDepartmentlist" [value]="data.id">{{data.departamento}}
-                        </option>
-                      </select>
-                    </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 smart-form">
+                    <select class="form-control" id="select-1" (change)="personalData57departmentOnChange($event.target.value)">
+                      <option selected disabled>Select Departamento</option>
+                      <option *ngFor="let data of personalData57ShowDepartmentlist" [value]="data.id">{{data.departamento}}
+                      </option>
+                    </select>
+                  </div>
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <button class="btn btn-primary" (click)="hoursMenuClick(5.8, $event.target);">Configurar</button>
                     <button class="btn btn-default" (click)="hoursMenuClick(5, $event.target);">Cancelar</button>
@@ -2397,7 +2354,7 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                       <div class="row">
-                        <button class="btn btn-primary" href="" data-toggle="modal" data-target="#" [disabled]='!personalData516PrescribeFormGroup.valid'>IMPRIMIR</button>
+                        <button class="btn btn-primary" href="" data-toggle="modal" data-target="#pdfModal516Recetas" [disabled]='!personalData516PrescribeFormGroup.valid'>IMPRIMIR</button>
                         <button class="btn btn-default" (click)="hoursMenuClick(5.11, $event.target); personalData516PrescribeFormGroup.reset({personalData516Unidades: 1, personalData516Idioma: 'Catala'})">Cancelar</button>
                       </div>
                     </div>
@@ -2501,8 +2458,6 @@
           </div>
         </div>
 
-
-
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.12">
           <div class="">
             <div class="widget-body-toolbar">
@@ -2510,7 +2465,7 @@
                 <div class="row">
                   <h4>Image Add</h4>
                   <p style="clear: both;">&nbsp;</p>
-                  <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="row">
                       <div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-18" data-widget-colorbutton="false" data-widget-editbutton="false">
                         <header>
@@ -2531,41 +2486,25 @@
                               <table class="table table-bordered">
                                 <thead>
                                   <tr>
-                                    <th>Date</th>
+                                    <th width="80"></th>
+                                    <th width="100">Date</th>
                                     <th>Theme</th>
                                     <th>To Content</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                  </tr>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                  </tr>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                  </tr>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                  </tr>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                  </tr>
-                                  <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
+                                  <tr *ngFor="let data of personalData512getAllImagesData">
+                                    <td>
+                                      <div class="smart-form">
+                                        <label class="radio">
+                                          <input type="radio" name="radio" [value]="data.id" [(ngModel)]="personalData512SelectedImageId">
+                                          <i></i>
+                                        </label>
+                                      </div>
+                                    </td>
+                                    <td>{{data.data | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{data.title}}</td>
+                                    <td>{{data.comentaris}}</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -2577,17 +2516,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                  <!-- <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                     <div class="image_wrapper">
                       <img src="http://news.berkeley.edu/wp-content/uploads/2015/02/FieldAwe300.jpg" alt="Images">
                     </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  </div> -->
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="row"> 
-                      <a class="btn btn-primary" href="javascript:void(0);">Remove</a>
-                      <a class="btn btn-primary" href="javascript:void(0);">Enlarge</a>
-                      <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5.13, $event.target);">Get Image</a>
-                      <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5, $event.target);">Cancelar</a>
+                      <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5.13, $event.target);">Obtener Imagen</a>
+                      <button class="btn btn-primary" href="" data-toggle="modal" (click)="personalData512SelectedImageEnlarge()" data-target="#personalData512SelectedImageEnlargeModal" [disabled]="personalData512SelectedImageId == ''">Visor</button>
+                      <button class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5.22, $event.target);" [disabled]="personalData512SelectedImageId == ''">Amplier</button>
+                      <button class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5.21, $event.target);" [disabled]="personalData512SelectedImageId == ''">Modificar</button>
+                      <button class="btn btn-primary" href="" data-toggle="modal" data-target="#personalData512SelectedImageRemoveModal" [disabled]="personalData512SelectedImageId == ''">Borrar</button>
+                      <a class="btn btn-default" href="javascript:void(0);" (click)="hoursMenuClick(5, $event.target);">Cancelar</a>
                     </div>
                   </div>
                 </div>
@@ -2597,75 +2538,236 @@
           </div>
         </div>
 
-
-
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.13">
           <div class="">
             <div class="widget-body-toolbar">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="row">
-                  <h4>Image Add Popup</h4>
+                  <!-- <h4>Image Add Popup</h4> -->
                   <p style="clear: both;">&nbsp;</p>
                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
                     <div class="row">
                       <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                        <label class="label">Load Image File</label>
+                        <label class="label">Cargar archivo de imagen</label>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="input input-file">
-                          <span class="button"><input type="file" id="file" name="file" onchange="this.parentNode.nextSibling.value = this.value">Browse</span><input type="text" placeholder="Include some files" readonly="">
+                          <span class="button"><input type="file" accept="image/*" id="file" name="file" (change)="onSelectFile($event)">Obtener Imagen</span><input *ngIf="!personalData513ImageName" type="text" placeholder="Incluir archivo de imagen" [(ngModel)]="personalData513ImageName" readonly="" [class]="personalData513ImageName == '' ? 'ng-invalid' : ''"><input *ngIf="personalData513ImageName" type="text" [(ngModel)]="personalData513ImageName" readonly="">
                         </div>
                       </div>
                     </div>
                   </div>
                   <p>&nbsp;</p>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="row"> 
                       <a class="btn btn-primary" href="javascript:void(0);">Anadir</a>
                     </div>
-                  </div>
+                  </div> -->
                   <p style="clear: both;">&nbsp;</p>
-                  <h4>Image Section</h4>
+                  <h4>Sección de imagen</h4>
                   <p>&nbsp;</p>
-                  <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
-                    <div class="image_wrapper">
-                      <img src="http://news.berkeley.edu/wp-content/uploads/2015/02/FieldAwe300.jpg" alt="Images">
+                  <div *ngIf="personalData513ImageName">
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-8">
+                      Archivo:
                     </div>
+                    <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
+                      <label class="input">
+                      {{personalData513ImageName}}
+                      </label>
+                    </div>
+                    <p>&nbsp;</p>
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-8">
+                      Tamaño:
+                    </div>
+                    <div class="col-lg-11 col-md-11 col-sm-10 col-xs-12">
+                      <label class="input">
+                        Anchura: {{personalData513ImageWidth}}, Altura: {{personalData513ImageHeight}}. Imagen modificada al ancho: 800, Altura: {{personalData513ImageResizedHeight}}
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <div class="image_wrapper" *ngIf="!personalData513ResizedImageUrl">
+                      <img src="../../assets/img/placeholder.gif" height="200" width="300" alt="Images">
+                    </div>
+                    <div class="image_wrapper" *ngIf="personalData513ResizedImageUrl">
+                      <img [src]="personalData513ResizedImageUrl" width="300" alt="Images">
+                    </div>
+                    <canvas hidden id="imageCanvas"></canvas>
                   </div>
                   <p>&nbsp;</p>
                   <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12 smart-form">
                     <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                      Birth Date:
+                      Fecha:
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
-                      <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                      <input type="text" name="startdate" id="startdate5" placeholder="Date">
+                      <label class="input">
+                      <input type="date" [(ngModel)]="personalData513GetDate" name="startdate" placeholder="Date" [class]="personalData513GetDate == '' ? 'ng-invalid' : ''">
                       </label>
                     </div>
                     <p>&nbsp;</p>
                     <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                      Theme(The Key Word):
+                      Tema(O Palabra Clave):
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
-                      <select class="form-control" id="select-1">
-                        <option>option1</option>
-                        <option>option2</option>
-                        <option>option3</option>
-                      </select>
+                      <label class="input">
+                      <input type="text" [(ngModel)]="personalData513Title" name="title" id="title" [class]="personalData513Title == '' ? 'ng-invalid' : ''">
+                      </label>
                     </div>
                     <p>&nbsp;</p>
                     <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                      Comments:
+                      Comentarios:
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
                       <label class="textarea textarea-resizable">                    
-                      <textarea rows="3" class="custom-scroll"></textarea> 
+                      <textarea rows="3" class="custom-scroll" [(ngModel)]="personalData513Description" [class]="personalData513Description == '' ? 'ng-invalid' : ''"></textarea> 
                       </label>
                     </div>
                     <p>&nbsp;</p>
                   </div>
-                  <a class="btn btn-primary" href="javascript:void(0);">Salvar</a>
-                  <a class="btn btn-primary" href="javascript:void(0);" (click)="hoursMenuClick(5.12, $event.target);">Cancelar</a>
+                  <div class="getImageButtons">
+                    <button class="btn btn-primary" href="javascript:void(0);" (click)="personalData513GetImageGrabar()" [disabled]="personalData513ImageName == '' || personalData513GetDate == '' || personalData513Title == '' || personalData513Description == ''">Grabar</button>
+                    <a class="btn btn-default" href="javascript:void(0);" (click)="hoursMenuClick(5.12, $event.target);">Cancelar</a>
+                  </div>
+                </div>
+              </div>
+              <div style="clear: both;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!--======================================== for modify image data section========================================-->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.21">
+          <div class="">
+            <div class="widget-body-toolbar">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                  <!-- <h4>Image Add Popup</h4> -->
+                  <p style="clear: both;">&nbsp;</p>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                    <div class="row">
+                      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                        <label class="label">Cargar archivo de imagen</label>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="input input-file">
+                          <span class="button"><input type="file" accept="image/*" id="file" name="file" (change)="onSelectFileEdit($event)">Obtener Imagen</span><input *ngIf="!personalData521ImageName" type="text" placeholder="Incluir archivo de imagen" [(ngModel)]="personalData521ImageName" readonly=""><input *ngIf="personalData521ImageName" type="text" [(ngModel)]="personalData521ImageName" readonly="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p>&nbsp;</p>
+                  <p style="clear: both;">&nbsp;</p>
+                  <h4>Sección de imagen</h4>
+                  <p>&nbsp;</p>
+                  <div *ngIf="personalData521ImageName">
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-8">
+                      Archivo:
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
+                      <label class="input">
+                      {{personalData521ImageName}}
+                      </label>
+                    </div>
+                    <p>&nbsp;</p>
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-8">
+                      Tamaño:
+                    </div>
+                    <div class="col-lg-11 col-md-11 col-sm-10 col-xs-12">
+                      <label class="input">
+                        Anchura: {{personalData521ImageWidth}}, Altura: {{personalData521ImageHeight}}. Imagen modificada al ancho: 800, Altura: {{personalData521ImageResizedHeight}}
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <div class="image_wrapper" *ngIf="!personalData521ResizedImageUrl">
+                      <img src="../../assets/img/placeholder.gif" height="200" width="300" alt="Images">
+                    </div>
+                    <div class="image_wrapper" *ngIf="personalData521ResizedImageUrl">
+                      <img [src]="personalData521ResizedImageUrl" width="300" alt="Images">
+                    </div>
+                    <canvas hidden id="imageCanvasOfEdit"></canvas>
+                  </div>
+                  <p>&nbsp;</p>
+                  <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12 smart-form">
+                    <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                      Fecha:
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
+                      <label class="input">
+                      <input type="date" name="startdate" placeholder="Date" disabled [value]="personalData521SelectedImageDate">
+                      </label>
+                    </div>
+                    <p>&nbsp;</p>
+                    <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                      Tema(O Palabra Clave):
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
+                      <label class="input">
+                      <input type="text" name="title" id="title" [(ngModel)]="personalData521SelectedImageTitle" [value]="personalData521SelectedImageTitle" [class]="personalData521SelectedImageTitle == '' ? 'ng-invalid' : ''">
+                      </label>
+                    </div>
+                    <p>&nbsp;</p>
+                    <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                      Comentarios:
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
+                      <label class="textarea textarea-resizable">                    
+                      <textarea rows="3" class="custom-scroll" [(ngModel)]="personalData521SelectedImageDescription" [value]="personalData521SelectedImageDescription" [class]="personalData521SelectedImageDescription == '' ? 'ng-invalid' : ''"></textarea> 
+                      </label>
+                    </div>
+                    <p>&nbsp;</p>
+                  </div>
+                  <div class="getImageButtons">
+                    <button class="btn btn-primary" href="javascript:void(0);" (click)="personalData521GetImageGrabar()" [disabled]="personalData521SelectedImageTitle == '' || personalData521SelectedImageDescription == ''">Grabar</button>
+                    <a class="btn btn-default" href="javascript:void(0);" (click)="hoursMenuClick(5.12, $event.target);">Cancelar</a>
+                  </div>
+                </div>
+              </div>
+              <div style="clear: both;"></div>
+            </div>
+          </div>
+        </div>
+
+        
+        <!--======================================== for edit image size/contrast/brightness section========================================-->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 5.22">
+          <div class="">
+            <div class="widget-body-toolbar">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                  <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="canvas-image">
+                      <canvas id="canvas"></canvas>
+                      <canvas id="canvas-crop-preview"></canvas>
+                    </div>
+                  </div><br> -->
+                  <div class="clearfix">
+                    <div class="cropper-image">
+                      <img [src]="personalData522SelectedImage" id="target" alt="[Jcrop Example]" />
+                    </div>
+                    <div class="canvas-image">
+                      <canvas id="canvas-crop-preview"></canvas>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-10">
+                      <label for="brightness">Brightness:</label>
+                      <span id="brightness-val">50</span>
+                      <input id="brightnessRange" name="brightness" type="range"  min="-100" max="+100" step="2" value="0">
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-10">
+                      <label for="contrast">Contrast:</label>
+                      <span id="contrast-val">50</span>
+                      <input id="contrastRange" name="contrast" type="range"  min="0" max="2" step="0.1" value="1">
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-10">
+                      <nav class="filters">
+                        <button id="resetBtn" class="btn btn-primary">Reset Photo</button>
+                        <button id="saveBtn" (click)="personalData522EditedImageSave()" class="btn btn-primary">Save Image</button>
+                        <button class="btn btn-default" href="javascript:void(0);" (click)="hoursMenuClick(5.12, $event.target);">Cancelar</button>
+                      </nav>
+                    </div>
+                  </div>                    
                 </div>
               </div>
               <div style="clear: both;"></div>
@@ -2713,8 +2815,6 @@
             </div>
           </div>
         </div>
-
-
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 6">
           <div class="">
@@ -2821,8 +2921,6 @@
             </div>
           </div>
         </div>
-
-
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 6.1">
           <div class="">
@@ -2943,9 +3041,6 @@
             </div>
           </div>
         </div>
-
-
-
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="hoursDropDownMenuVal == 7">
           <div class="">
@@ -3273,6 +3368,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <span>DEPARTMENTO</span>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;
+        </button>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -3296,6 +3394,9 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;
+        </button>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -3355,11 +3456,11 @@
 <div class="modal fade" id="peticionPruebaModificarPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <!-- <div class="modal-header">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
         &times;
         </button>
-      </div> -->
+      </div>
       <div class="modal-body" >
         <div class="row">
           <div class="col-md-12">
@@ -3391,6 +3492,9 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;
+        </button>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -3804,7 +3908,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
         &times;
         </button>
-        <h4 class="modal-title" id="myModalLabel">Reports Add</h4>
+        <h4 class="modal-title" id="myModalLabel">Infromes Anadir</h4>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -3829,13 +3933,13 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="row">
                 <button type="button" class="btn btn-primary">
-                Of Template
+                De Plantilla
                 </button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
-                Empty
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#personalData520Infromes" (click)="personalData520InfromesVacio()">
+                Vacio
                 </button>
                 <button type="button" class="btn btn-primary" (click)="reportAddShowMore = true">
-                External Info
+                Info External
                 </button>
               </div>
             </div>
@@ -3850,7 +3954,7 @@
                     </label>
                     <p>&nbsp;</p>
                     <div class="input input-file">
-                      <span class="button"><input type="file" id="file" name="file" onchange="this.parentNode.nextSibling.value = this.value">Browse</span><input type="text" placeholder="Include some files" readonly="">
+                      <span class="button"><input type="file" id="file" name="file" accept="application/pdf" onchange="this.parentNode.nextSibling.value = this.value">Browse</span><input type="text" placeholder="Include some files" readonly="">
                     </div>
                     <p>&nbsp;</p>
                   </div>
@@ -3860,7 +3964,6 @@
               <button type="button" class="btn btn-primary">Grabar</button>
               <button type="button" class="btn btn-default" (click)="reportAddShowMore = false">Cancelar</button>
             </div>
-
           </div>
         </div>
       </div>
@@ -4072,10 +4175,10 @@
                 data-widget-sortable="false"
                 
                 -->
-              <header>
+              <!-- <header>
                 <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
                 <h2>Summernote (Lightweight)</h2>
-              </header>
+              </header> -->
               <!-- widget div-->
               <div>
                 <!-- widget edit box -->
@@ -4110,7 +4213,7 @@
 </div>
 <!-- /.modal -->
 
-<!--peticionSolicitar  Modal -->
+<!--Summernote for peticionSolicitar Modal -->
 <div class="modal fade" id="peticionSolicitar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -4124,11 +4227,10 @@
         <div class="row">
           <div class="col-md-12">
             <div class="jarviswidget jarviswidget-color-blue" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-sortable="false">
-            
-              <header>
+              <!-- <header>
                 <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
                 <h2>Summernote (Lightweight)</h2>
-              </header>
+              </header> -->
               <!-- widget div-->
               <div>
                 <!-- widget edit box -->
@@ -4169,6 +4271,64 @@
 </div>
 <!-- /.modal -->
 
+<!--Summernote for Infromes Vacio Modal -->
+<div class="modal fade" id="personalData520Infromes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;
+        </button>
+        <!-- <h4 class="modal-title" id="myModalLabel">To Wright</h4> -->
+      </div>
+      <div class="modal-body">
+        <div class="row summernote2-title-row">
+          <label>TITULO: </label>
+          <input type="text" size="52" [(ngModel)]="personalData520InfromesSummernoteTitulo">
+          <button type="button" size="15" class="btn btn-primary summernote2-title-button" data-dismiss="modal" (click)="personalData520InfromesSummernoteGrabar()">Grabar</button>
+        </div><br>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="jarviswidget jarviswidget-color-blue" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-sortable="false">
+              <!-- <header>
+                <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
+                <h2>Summernote (Lightweight)</h2>
+              </header> -->
+              <!-- widget div-->
+              <div>
+                <!-- widget edit box -->
+                <div class="jarviswidget-editbox">
+                  <!-- This area used as dropdown edit box -->
+                </div>
+                <!-- end widget edit box -->
+                <!-- widget content -->
+                <div class="widget-body no-padding">
+                  <div class="summernote-2">
+                  </div>
+                </div>
+                <!-- end widget content -->
+              </div>
+              <!-- end widget div -->
+            </div>
+            <!-- end widget -->
+          </div>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" >
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-default" data-toggle="modal">
+          Salvar
+        </button>
+      </div> -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <!-- Modal pdfModal summernote salvar  -->
 <div class="modal fade bd-example-modal-lg" id="pdfModalSummernoteSalvar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -4179,7 +4339,25 @@
         </button>
       </div>
       <div class="modal-body" id="modal-popup-scroll-horizontal">
-          <iframe width="100%" height="500" [src]="personalData57AssignPeticionsPdfUrl | pdfSafe" frameborder="0" allowfullscreen></iframe>
+        <iframe width="100%" height="500" [src]="personalData57AssignPeticionsPdfUrl | pdfSafe" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!-- Modal pdf for 516Recetas -->
+<div class="modal fade bd-example-modal-lg" id="pdfModal516Recetas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;
+        </button>
+      </div>
+      <div class="modal-body" id="modal-popup-scroll-horizontal">
+        <iframe width="100%" height="500" [src]="personalData516RecetasPdfUrl | pdfSafe" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -4197,7 +4375,7 @@
         </button>
       </div>
       <div class="modal-body" id="modal-popup-scroll-horizontal">
-          <!-- <iframe width="100%" height="500" [src]="personalData57AssignPeticionsPdfUrl | pdfSafe" frameborder="0" allowfullscreen></iframe> -->
+        <!-- <iframe width="100%" height="500" [src]="personalData57AssignPeticionsPdfUrl | pdfSafe" frameborder="0" allowfullscreen></iframe> -->
       </div>
     </div>
     <!-- /.modal-content -->
@@ -4206,7 +4384,6 @@
 </div>
 
 <!-- Model of Previous Activity -->
-
 <div class="modal fade bd-example-modal-lg" id="my-modal-previous-activity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -4249,7 +4426,6 @@
 </div>
 <!-- /.modal -->
 
-
 <!-- model for Anadir -->
 <div id="personalData517Anadir" class="modal fade c-model" role="dialog">
   <div class="modal-dialog">
@@ -4278,6 +4454,7 @@
 
   </div>
 </div>
+
 <!-- model for Modificar -->
 <div id="personalData517Modificar" class="modal fade c-model" role="dialog">
   <div class="modal-dialog">
@@ -4350,3 +4527,50 @@
     </div>
   </div>
 </div>
+
+<!--Image Remove Modal -->
+<div class="modal fade" id="personalData512SelectedImageRemoveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <span>CONFIRME ELIMINACION</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="personalData512SelectedImageRemove()">
+          YES
+          </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+          NO
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.modal -->
+
+<!--Image Enlarge Modal -->
+<div class="modal fade" id="personalData512SelectedImageEnlargeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" (click)="personalData512SelectedImageEnlargeModalClose()">&times;</button>
+        </div>
+        <div class="modal-body no-padding">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="image_wrapper image-align" *ngIf="personalData512SelectedImage">
+                <img [src]="personalData512SelectedImage" class="img-responsive" alt="Images">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.modal -->

@@ -27,6 +27,7 @@
         "./assets/css/smartadmin-rtl.min.css",
         "./assets/css/your_style.css",
         "./assets/css/demo.min.css",
+        "./assets/css/jquery.Jcrop.css",
         "styles.css"
       ],
       "scripts": [
@@ -59,7 +60,8 @@
         "./assets/js/app.min.js",
         "./assets/js/speech/voicecommand.min.js",
         "./assets/js/smart-chat-ui/smart.chat.ui.min.js",
-        "./assets/js/smart-chat-ui/smart.chat.manager.min.js"
+        "./assets/js/smart-chat-ui/smart.chat.manager.min.js",
+        "./assets/js/jquery.Jcrop.js"
       ],
 
       "environmentSource": "environments/environment.ts",

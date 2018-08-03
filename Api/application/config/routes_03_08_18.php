@@ -156,22 +156,6 @@ $route['save-prescribtion'] = 'Clinical_history/save_prescribe';
 $route['list-assigned-recetas'] = 'Clinical_history/list_assigned_recetas';
 /**======================================= */
 
-
-
-/**=========================================*/
-$route['save-information'] = 'Informes/save';
-/**=========================================*/
-
-/**============ Imagenes ============= */ 
-$route['save_imagenes'] = 'Imagenes/save_imagenes';
-$route['image_upload'] = 'Imagenes/image_upload';
-$route['get_imagen'] = 'Imagenes/get_imagen';
-$route['get_all_imagens'] = 'Imagenes/get_all_imagens';
-$route['delete_imagen'] = 'Imagenes/delete_imagen';
-$route['edit_imagen'] = 'Imagenes/edit_imagen';
-$route['edit_imagen_description'] = 'Imagenes/edit_imagen_description';
-/**======================================= */
-
 /*------------common api------------*/
 $route['load-metges'] = 'Common_controller/load_metges';
 $route['load-agendas'] = 'Common_controller/load_agendas';
